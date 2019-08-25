@@ -21,7 +21,7 @@ public class Cleric extends AbstractUnit {
    * @param movement
    *     the number of panels a unit can move
    */
-  public Cleric(final int hitPoints, final int movement, final Location location,
+  public Cleric(int hitPoints, final int movement, Location location,
       IEquipableItem... items) {
     super(hitPoints, movement, location, 3, items);
   }
@@ -33,7 +33,7 @@ public class Cleric extends AbstractUnit {
    *     the item to equip
    */
   @Override
-  public void equipItem(final IEquipableItem item) {
+  public void equipItem(IEquipableItem item) {
     if (item instanceof Staff) {
       equippedItem = item;
     }

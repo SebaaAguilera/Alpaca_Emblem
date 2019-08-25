@@ -13,7 +13,7 @@ import model.map.Location;
  */
 public class Fighter extends AbstractUnit {
 
-  public Fighter(final int hitPoints, final int movement, final Location location,
+  public Fighter(int hitPoints, final int movement, Location location,
       IEquipableItem... items) {
     super(hitPoints, movement, location, 3, items);
   }
@@ -25,7 +25,7 @@ public class Fighter extends AbstractUnit {
    *     the item to equip
    */
   @Override
-  public void equipItem(final IEquipableItem item) {
+  public void equipItem(IEquipableItem item) {
     if (item instanceof Axe) {
       equippedItem = item;
     }

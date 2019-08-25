@@ -20,17 +20,17 @@ import model.map.Location;
  */
 public abstract class AbstractUnit implements IUnit {
 
-  protected final List<IEquipableItem> items = new ArrayList<>();
-  private final int currentHitPoints;
+  protected List<IEquipableItem> items = new ArrayList<>();
+  private int maxHitPoints;
+  private int currentHitPoints;
   private final int movement;
   protected IEquipableItem equippedItem;
   private Location location;
 
   /**
    * Creates a new Unit.
-   *
    * @param hitPoints
-   *     the maximum amount of damage a unit can sustain
+   *     the maximum amount of damage a unit can sustain, at the begining max=current
    * @param movement
    *     the number of panels a unit can move
    * @param location
@@ -38,8 +38,9 @@ public abstract class AbstractUnit implements IUnit {
    * @param maxItems
    *     maximum amount of items this unit can carry
    */
-  protected AbstractUnit(final int hitPoints, final int movement,
-      final Location location, final int maxItems, final IEquipableItem... items) {
+  protected AbstractUnit(int hitPoints, final int movement,
+                         Location location, final int maxItems, IEquipableItem... items) {
+    this.maxHitPoints = hitPoints;
     this.currentHitPoints = hitPoints;
     this.movement = movement;
     this.location = location;
@@ -62,7 +63,7 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
-  public void setEquippedItem(final IEquipableItem item) {
+  public void setEquippedItem(IEquipableItem item) {
     this.equippedItem = item;
   }
 
@@ -72,7 +73,7 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
-  public void setLocation(final Location location) {
+  public void setLocation(Location location) { //location had a final
     this.location = location;
   }
 

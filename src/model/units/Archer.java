@@ -26,8 +26,8 @@ public class Archer extends AbstractUnit {
    * @param items
    *     the items carried by this unit
    */
-  public Archer(final int hitPoints, final int movement, final Location position,
-      final IEquipableItem... items) {
+  public Archer(int hitPoints, final int movement, Location position,
+      IEquipableItem... items) {
     super(hitPoints, movement, position, 3, items);
   }
 
@@ -40,7 +40,7 @@ public class Archer extends AbstractUnit {
    *     the item to equip
    */
   @Override
-  public void equipItem(final IEquipableItem item) {
+  public void equipItem(IEquipableItem item) { //final IEquipableItem item
     if (item instanceof Bow) {
       equippedItem = item;
     }
