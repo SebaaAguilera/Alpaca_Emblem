@@ -21,7 +21,7 @@ import model.map.Location;
 public abstract class AbstractUnit implements IUnit {
 
   protected List<IEquipableItem> items = new ArrayList<>();
-  private int maxHitPoints;
+  private final int maxHitPoints;
   private int currentHitPoints;
   private final int movement;
   protected IEquipableItem equippedItem;
@@ -50,6 +50,11 @@ public abstract class AbstractUnit implements IUnit {
   @Override
   public int getCurrentHitPoints() {
     return currentHitPoints;
+  }
+
+  @Override
+  public void setCurrentHitPoints(int currentHitPoints) {
+    this.currentHitPoints = currentHitPoints;
   }
 
   @Override
@@ -89,4 +94,29 @@ public abstract class AbstractUnit implements IUnit {
       setLocation(targetLocation);
     }
   }
+
+  @Override
+  public boolean inRange(IUnit enemy) {
+    Location enemyLocation = enemy.getLocation();
+    double distance = getLocation().distanceTo(enemyLocation);
+    if (getEquippedItem().getMinRange()>distance && getEquippedItem().getMaxRange()<distance){
+      return true;
+    }
+    return false;
+  }
+
+  @Override
+  public void attack(IUnit enemy) {
+    if (inRange(enemy)){
+      int currentHitPoints = enemy.getCurrentHitPoints() - getEquippedItem().getPower();
+      if (currentHitPoints<=0){
+        enemy.setCurrentHitPoints(0);
+      } else {
+        enemy.setCurrentHitPoints(currentHitPoints);
+      }
+
+    }
+  }
+
+
 }

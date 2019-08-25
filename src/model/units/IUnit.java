@@ -29,6 +29,11 @@ public interface IUnit {
   int getCurrentHitPoints();
 
   /**
+   * updates the currentHitPoints
+   */
+  void setCurrentHitPoints(int currentHitPoints);
+
+  /**
    * @return the items carried by this unit
    */
   List<IEquipableItem> getItems();
@@ -65,4 +70,14 @@ public interface IUnit {
    * If the other location is out of this unit's movement range, the unit doesn't move.
    */
   void moveTo(Location targetLocation);
+
+  /**
+   * @return true if the enemy is in range
+   */
+  boolean inRange(IUnit enemy);
+
+  /**
+   * attack an enemy unit
+   */
+  void attack(IUnit enemy);
 }
