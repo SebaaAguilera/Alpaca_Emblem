@@ -1,5 +1,7 @@
 package model.items;
 
+import model.units.*;
+
 /**
  * @author Ignacio Slater Muñoz
  * @since
@@ -25,5 +27,26 @@ public class Bow extends AbstractItem {
     super(name, power, minRange, maxRange);
     this.minRange = Math.max(minRange, 2);
     this.maxRange = Math.max(maxRange, this.minRange);
+  }
+
+  @Override
+  public void equipToArcher(Archer archer) {
+    super.equipTo(archer);
+  }
+
+  @Override
+  public void equipToCleric(Cleric cleric) {
+  }
+
+  @Override
+  public void equipToFighter(Fighter fighter) {
+  }
+
+  @Override
+  public void equipToHero(Hero hero) {
+  }
+
+  @Override
+  public void equipToSwordMaster(SwordMaster swordMaster) {
   }
 }

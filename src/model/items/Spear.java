@@ -1,5 +1,7 @@
 package model.items;
 
+import model.units.*;
+
 /**
  * This class represents a <i>spear</i>.
  * <p>
@@ -24,5 +26,26 @@ public class Spear extends AbstractItem {
    */
   public Spear(final String name, final int power, final int minRange, final int maxRange) {
     super(name, power, minRange, maxRange);
+  }
+
+  @Override
+  public void equipToArcher(Archer archer) {
+  }
+
+  @Override
+  public void equipToCleric(Cleric cleric) {
+  }
+
+  @Override
+  public void equipToFighter(Fighter fighter) {
+  }
+
+  @Override
+  public void equipToHero(Hero hero) {
+    super.equipTo(hero);
+  }
+
+  @Override
+  public void equipToSwordMaster(SwordMaster swordMaster) {
   }
 }

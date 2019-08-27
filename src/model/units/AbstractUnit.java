@@ -48,6 +48,11 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
+  public void equipItem(IEquipableItem item) {
+    //this.equippedItem = item;
+  }
+
+  @Override
   public int getCurrentHitPoints() {
     return currentHitPoints;
   }

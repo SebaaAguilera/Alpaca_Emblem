@@ -26,8 +26,6 @@ public class Fighter extends AbstractUnit {
    */
   @Override
   public void equipItem(IEquipableItem item) {
-    if (item instanceof Axe) {
-      equippedItem = item;
-    }
+    item.equipToFighter(this);
   }
 }

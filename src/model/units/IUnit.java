@@ -14,7 +14,7 @@ import model.map.Location;
  * @since 1.0
  */
 public interface IUnit {
-
+  
   /**
    * Sets the currently equipped item of this unit.
    *

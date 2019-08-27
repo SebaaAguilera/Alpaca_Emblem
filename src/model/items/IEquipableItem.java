@@ -1,6 +1,6 @@
 package model.items;
 
-import model.units.IUnit;
+import model.units.*;
 
 /**
  * This interface represents the <i>weapons</i> that the units of the game can use.
@@ -45,4 +45,14 @@ public interface IEquipableItem {
    * @return the maximum range of the item
    */
   int getMaxRange();
+
+  void equipToArcher(Archer archer);
+
+  void equipToCleric(Cleric cleric);
+
+  void equipToFighter(Fighter fighter);
+
+  void equipToHero(Hero hero);
+
+  void equipToSwordMaster(SwordMaster swordMaster);
 }
