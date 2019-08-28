@@ -29,23 +29,26 @@ public class Spear extends AbstractItem {
   }
 
   @Override
-  public void equipToArcher(Archer archer) {
-  }
-
-  @Override
-  public void equipToCleric(Cleric cleric) {
-  }
-
-  @Override
-  public void equipToFighter(Fighter fighter) {
-  }
-
-  @Override
   public void equipToHero(Hero hero) {
     super.equipTo(hero);
   }
 
   @Override
-  public void equipToSwordMaster(SwordMaster swordMaster) {
+  public void attackTo(IUnit unit) {
+   unit.attackedWithSpear(this);
   }
+
+
+  public double damagedByAxe(Axe axe){
+    return 1.5*axe.getPower();
+  }
+
+  public double damagedBySword(Sword sword){
+    return sword.getPower()-20;
+
+  }
+
+
+
+
 }

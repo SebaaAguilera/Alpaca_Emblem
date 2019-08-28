@@ -75,4 +75,14 @@ public interface IEquipableItem {
    * equips item to an unit if it's possible
    */
   void equipToSwordMaster(SwordMaster swordMaster);
+
+
+
+  void attackTo(IUnit unit);
+
+  double damagedBySword(Sword sword);
+
+  double damagedByAxe(Axe axe);
+
+  double damagedBySpear(Spear spear);
 }

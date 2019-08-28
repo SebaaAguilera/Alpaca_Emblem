@@ -21,7 +21,7 @@ public class Cleric extends AbstractUnit {
    * @param movement
    *     the number of panels a unit can move
    */
-  public Cleric(int hitPoints, final int movement, Location location,
+  public Cleric(double hitPoints, final int movement, Location location,
       IEquipableItem... items) {
     super(hitPoints, movement, location, 3, items);
   }

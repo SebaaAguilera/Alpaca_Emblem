@@ -1,7 +1,6 @@
 package model.units;
 
-import model.items.Axe;
-import model.items.IEquipableItem;
+import model.items.*;
 import model.map.Location;
 
 /**
@@ -13,7 +12,7 @@ import model.map.Location;
  */
 public class Fighter extends AbstractUnit {
 
-  public Fighter(int hitPoints, final int movement, Location location,
+  public Fighter(double hitPoints, final int movement, Location location,
       IEquipableItem... items) {
     super(hitPoints, movement, location, 3, items);
   }
@@ -27,5 +26,18 @@ public class Fighter extends AbstractUnit {
   @Override
   public void equipItem(IEquipableItem item) {
     item.equipToFighter(this);
+  }
+
+
+  @Override
+  public void attackedWithSpear(Spear spear){
+    double damage = this.getEquippedItem().damagedBySpear(spear);
+    setCurrentHitPoints(this.getCurrentHitPoints()-damage);
+  }
+
+  @Override
+  public void attackedWithSword(Sword sword){
+    double damage =  this.getEquippedItem().damagedBySword(sword);
+    setCurrentHitPoints(this.getCurrentHitPoints()-damage);
   }
 }

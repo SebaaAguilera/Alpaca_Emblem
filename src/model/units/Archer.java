@@ -1,7 +1,6 @@
 package model.units;
 
-import model.items.Bow;
-import model.items.IEquipableItem;
+import model.items.*;
 import model.map.Location;
 
 /**
@@ -26,7 +25,7 @@ public class Archer extends AbstractUnit {
    * @param items
    *     the items carried by this unit
    */
-  public Archer(int hitPoints, final int movement, Location position,
+  public Archer(double hitPoints, final int movement, Location position,
       IEquipableItem... items) {
     super(hitPoints, movement, position, 3, items);
   }
@@ -43,6 +42,7 @@ public class Archer extends AbstractUnit {
   public void equipItem(IEquipableItem item) { //final IEquipableItem item
     item.equipToArcher(this);
   }
+
 
 
 

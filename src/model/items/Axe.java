@@ -28,24 +28,23 @@ public class Axe extends AbstractItem {
     super(name, power, minRange, maxRange);
   }
 
-  @Override
-  public void equipToArcher(Archer archer) {
-  }
-
-  @Override
-  public void equipToCleric(Cleric cleric) {
-  }
-
-  @Override
   public void equipToFighter(Fighter fighter) {
     super.equipTo(fighter);
   }
 
   @Override
-  public void equipToHero(Hero hero) {
+  public void attackTo(IUnit unit) {
+    unit.attackedWithAxe(this);
   }
 
-  @Override
-  public void equipToSwordMaster(SwordMaster swordMaster) {
+  public double damagedBySword(Sword sword){
+    return 1.5*sword.getPower();
   }
+
+  public double damagedBySpear(Spear spear){
+    return spear.getPower()-20;
+  }
+
+
+
 }

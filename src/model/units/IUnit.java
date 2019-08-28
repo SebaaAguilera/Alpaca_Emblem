@@ -1,6 +1,8 @@
 package model.units;
 
 import java.util.List;
+
+import model.items.*;
 import model.items.IEquipableItem;
 import model.map.Location;
 
@@ -26,12 +28,12 @@ public interface IUnit {
   /**
    * @return hit points of the unit
    */
-  int getCurrentHitPoints();
+  double getCurrentHitPoints();
 
   /**
    * updates the currentHitPoints
    */
-  void setCurrentHitPoints(int currentHitPoints);
+  void setCurrentHitPoints(double currentHitPoints);
 
   /**
    * @return the items carried by this unit
@@ -85,4 +87,13 @@ public interface IUnit {
    * attack an enemy unit
    */
   void attack(IUnit enemy);
+
+  void attackedWithAxe(Axe axe);
+
+  void attackedWithBow(Bow bow);
+
+  void attackedWithSpear(Spear spear);
+
+  void attackedWithSword(Sword sword);
+
 }

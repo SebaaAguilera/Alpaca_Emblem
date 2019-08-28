@@ -1,7 +1,6 @@
 package model.units;
 
-import model.items.Sword;
-import model.items.IEquipableItem;
+import model.items.*;
 import model.map.Location;
 
 /**
@@ -14,7 +13,7 @@ import model.map.Location;
  */
 public class SwordMaster extends AbstractUnit {
 
-  public SwordMaster(int hitPoints, final int movement, Location location,
+  public SwordMaster(double hitPoints, final int movement, Location location,
       IEquipableItem... items) {
     super(hitPoints, movement, location, 3, items);
   }
@@ -29,4 +28,17 @@ public class SwordMaster extends AbstractUnit {
   public void equipItem(IEquipableItem item) {
     item.equipToSwordMaster(this);
   }
+
+  @Override
+  public void attackedWithSpear(Spear spear){
+    double damage = this.getEquippedItem().damagedBySpear(spear);
+    setCurrentHitPoints(this.getCurrentHitPoints()-damage);
+  }
+
+  @Override
+  public void attackedWithAxe(Axe axe){
+    double damage = this.getEquippedItem().damagedByAxe(axe);
+    setCurrentHitPoints(this.getCurrentHitPoints()-damage);
+  }
+
 }

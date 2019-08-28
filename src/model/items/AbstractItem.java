@@ -1,6 +1,6 @@
 package model.items;
 
-import model.units.IUnit;
+import model.units.*;
 
 /**
  * Abstract class that defines some common information and behaviour between all items.
@@ -40,6 +40,46 @@ public abstract class AbstractItem implements IEquipableItem {
     unit.setEquippedItem(this);
     owner = unit;
   }
+  @Override
+  public void equipToArcher(Archer archer) {
+    // Method body intentionally left empty
+  }
+
+  @Override
+  public void equipToCleric(Cleric cleric) {
+    // Method body intentionally left empty
+  }
+
+  @Override
+  public void equipToFighter(Fighter fighter){
+    // Method body intentionally left empty
+  }
+
+  @Override
+  public void equipToHero(Hero hero) {
+    // Method body intentionally left empty
+  }
+
+  @Override
+  public void equipToSwordMaster(SwordMaster swordMaster) {
+    // Method body intentionally left empty
+  }
+
+  @Override
+  public void attackTo(IUnit unit){
+    //
+  }
+
+  @Override
+  public double damagedBySword(Sword sword) {
+        return 0;
+    }
+
+  @Override
+  public double damagedByAxe(Axe axe) { return 0; }
+
+  @Override
+  public double damagedBySpear(Spear spear) { return 0; }
 
   @Override
   public IUnit getOwner() {
@@ -65,4 +105,6 @@ public abstract class AbstractItem implements IEquipableItem {
   public int getMaxRange() {
     return maxRange;
   }
+
+
 }

@@ -29,23 +29,14 @@ public class Staff extends AbstractItem {
   }
 
   @Override
-  public void equipToArcher(Archer archer) {
-  }
-
-  @Override
   public void equipToCleric(Cleric cleric) {
     super.equipTo(cleric);
   }
 
   @Override
-  public void equipToFighter(Fighter fighter) {
+  public void attackTo(IUnit enemy) {
+    // Method body intentionally left empty
   }
 
-  @Override
-  public void equipToHero(Hero hero) {
-  }
 
-  @Override
-  public void equipToSwordMaster(SwordMaster swordMaster) {
-  }
 }

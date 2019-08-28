@@ -5,7 +5,8 @@ import static java.lang.Math.min;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import model.items.IEquipableItem;
+
+import model.items.*;
 import model.map.Location;
 
 /**
@@ -21,11 +22,11 @@ import model.map.Location;
 public abstract class AbstractUnit implements IUnit {
 
   protected List<IEquipableItem> items = new ArrayList<>();
-  private final int maxHitPoints;
-  private int currentHitPoints;
+  private final double maxHitPoints;
+  protected double currentHitPoints;
   private final int movement;
   protected IEquipableItem equippedItem;
-  protected int maxItems;
+  protected final int maxItems;
   private Location location;
 
   /**
@@ -39,7 +40,7 @@ public abstract class AbstractUnit implements IUnit {
    * @param maxItems
    *     maximum amount of items this unit can carry
    */
-  protected AbstractUnit(int hitPoints, final int movement,
+  protected AbstractUnit(double hitPoints, final int movement,
                          Location location, final int maxItems, IEquipableItem... items) {
     this.maxHitPoints = hitPoints;
     this.currentHitPoints = hitPoints;
@@ -50,12 +51,10 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
-  public int getCurrentHitPoints() {
-    return currentHitPoints;
-  }
+  public double getCurrentHitPoints() { return currentHitPoints; }
 
   @Override
-  public void setCurrentHitPoints(int currentHitPoints) {
+  public void setCurrentHitPoints(double currentHitPoints) {
     this.currentHitPoints = currentHitPoints;
   }
 
@@ -108,7 +107,7 @@ public abstract class AbstractUnit implements IUnit {
   public boolean inRange(IUnit enemy) {
     Location enemyLocation = enemy.getLocation();
     double distance = getLocation().distanceTo(enemyLocation);
-    if (getEquippedItem().getMinRange()>distance && getEquippedItem().getMaxRange()<distance){
+    if (getEquippedItem().getMinRange() < distance && distance < getEquippedItem().getMaxRange()){
       return true;
     }
     return false;
@@ -116,15 +115,27 @@ public abstract class AbstractUnit implements IUnit {
 
   @Override
   public void attack(IUnit enemy) {
-    if (inRange(enemy)){
-      int currentHitPoints = enemy.getCurrentHitPoints() - getEquippedItem().getPower();
-      if (currentHitPoints<=0){
-        enemy.setCurrentHitPoints(0);
-      } else {
-        enemy.setCurrentHitPoints(currentHitPoints);
-      }
+    getEquippedItem().attackTo(enemy);
+  }
 
-    }
+  @Override
+  public void attackedWithSpear(Spear spear){
+    setCurrentHitPoints(this.getCurrentHitPoints()-spear.getPower());
+  }
+
+  @Override
+  public void attackedWithAxe(Axe axe){
+    setCurrentHitPoints(this.getCurrentHitPoints()-axe.getPower());
+  }
+
+  @Override
+  public void attackedWithSword(Sword sword){
+    setCurrentHitPoints(this.getCurrentHitPoints()-sword.getPower());
+  }
+
+  @Override
+  public void attackedWithBow(Bow bow){
+    setCurrentHitPoints(this.getCurrentHitPoints()-bow.getPower());
   }
 
 

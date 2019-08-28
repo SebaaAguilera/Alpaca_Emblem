@@ -28,24 +28,21 @@ public class Sword extends AbstractItem {
     super(name, power, minRange, maxRange);
   }
 
-  @Override
-  public void equipToArcher(Archer archer) {
-  }
 
-  @Override
-  public void equipToCleric(Cleric cleric) {
-  }
-
-  @Override
-  public void equipToFighter(Fighter fighter) {
-  }
-
-  @Override
-  public void equipToHero(Hero hero) {
-  }
-
-  @Override
   public void equipToSwordMaster(SwordMaster swordMaster) {
     super.equipTo(swordMaster);
   }
+
+
+  public void attackTo(IUnit unit) {
+    unit.attackedWithSword(this);
+  }
+
+  public double damagedBySpear(Spear spear){
+    return 1.5*spear.getPower();
+  }
+  public double damagedByAxe(Axe axe){
+    return axe.getPower()-20;
+  }
+
 }

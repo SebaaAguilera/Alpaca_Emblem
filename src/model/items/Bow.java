@@ -35,18 +35,14 @@ public class Bow extends AbstractItem {
   }
 
   @Override
-  public void equipToCleric(Cleric cleric) {
+  public void attackTo(IUnit unit) {
+    unit.attackedWithBow(this);
   }
 
-  @Override
-  public void equipToFighter(Fighter fighter) {
-  }
 
-  @Override
-  public void equipToHero(Hero hero) {
-  }
 
-  @Override
-  public void equipToSwordMaster(SwordMaster swordMaster) {
-  }
+
+
+
+
 }
