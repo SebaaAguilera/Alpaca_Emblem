@@ -50,6 +50,11 @@ public interface IUnit {
   void setEquippedItem(IEquipableItem item);
 
   /**
+   * @param item the item is going to be saved
+   */
+  void setSavedItem(IEquipableItem item);
+
+  /**
    * @return the current location of the unit
    */
   Location getLocation();

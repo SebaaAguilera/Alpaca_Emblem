@@ -1,5 +1,10 @@
 package model.units;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import org.junit.jupiter.api.Test;
+
 /**
  * Test set for the alpaca unit
  *
@@ -19,4 +24,5 @@ public class AlpacaTest extends AbstractTestUnit {
   public Alpaca getTestUnit() {
     return alpaca;
   }
+
 }

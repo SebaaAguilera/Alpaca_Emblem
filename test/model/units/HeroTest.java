@@ -28,6 +28,9 @@ public class HeroTest extends AbstractTestUnit {
     return hero;
   }
 
+  /**
+   * Checks if the spear is equipped correctly to the unit
+   */
   @Override
   @Test
   public void equipSpearTest() {

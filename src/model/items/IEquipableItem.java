@@ -46,13 +46,33 @@ public interface IEquipableItem {
    */
   int getMaxRange();
 
+  /**
+   * @param archer
+   * equips item to an unit if it's possible
+   */
   void equipToArcher(Archer archer);
 
+  /**
+   * @param cleric
+   * equips item to an unit if it's possible
+   */
   void equipToCleric(Cleric cleric);
 
+  /**
+   * @param fighter
+   * equips item to an unit if it's possible
+   */
   void equipToFighter(Fighter fighter);
 
+  /**
+   * @param hero
+   * equips item to an unit if it's possible
+   */
   void equipToHero(Hero hero);
 
+  /**
+   * @param swordMaster
+   * equips item to an unit if it's possible
+   */
   void equipToSwordMaster(SwordMaster swordMaster);
 }

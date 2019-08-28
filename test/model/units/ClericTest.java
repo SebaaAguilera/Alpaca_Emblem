@@ -28,6 +28,9 @@ public class ClericTest extends AbstractTestUnit {
     return cleric;
   }
 
+  /**
+   * Checks if the staff is equipped correctly to the unit
+   */
   @Test
   @Override
   public void equipStaffTest() {

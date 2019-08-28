@@ -25,6 +25,7 @@ public abstract class AbstractUnit implements IUnit {
   private int currentHitPoints;
   private final int movement;
   protected IEquipableItem equippedItem;
+  protected int maxItems;
   private Location location;
 
   /**
@@ -44,12 +45,8 @@ public abstract class AbstractUnit implements IUnit {
     this.currentHitPoints = hitPoints;
     this.movement = movement;
     this.location = location;
+    this.maxItems = maxItems;
     this.items.addAll(Arrays.asList(items).subList(0, min(maxItems, items.length)));
-  }
-
-  @Override
-  public void equipItem(IEquipableItem item) {
-    //this.equippedItem = item;
   }
 
   @Override
@@ -75,6 +72,13 @@ public abstract class AbstractUnit implements IUnit {
   @Override
   public void setEquippedItem(IEquipableItem item) {
     this.equippedItem = item;
+  }
+
+  @Override
+  public void setSavedItem(IEquipableItem item) {
+    if(items.size()<maxItems){
+      items.add(item);
+    }
   }
 
   @Override

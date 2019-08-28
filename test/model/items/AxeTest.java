@@ -46,6 +46,9 @@ class AxeTest extends AbstractTestItem {
     return wrongAxe;
   }
 
+  /**
+   * @return the item being tested
+   */
   @Override
   public IEquipableItem getTestItem() {
     return axe;
