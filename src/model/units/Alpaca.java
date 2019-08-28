@@ -39,6 +39,16 @@ public class Alpaca extends AbstractUnit {
     // Method body intentionally left empty
   }
 
+  @Override
+  public void attack(IUnit enemy) {
+    // Method body intentionally left empty
+  }
+
+  @Override
+  public void combat(IUnit enemy) {
+    // Method body intentionally left empty
+  }
+
 
 
 }

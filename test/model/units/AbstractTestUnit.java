@@ -206,4 +206,10 @@ public abstract class AbstractTestUnit implements ITestUnit {
   public Alpaca getTargetAlpaca() {
     return targetAlpaca;
   }
+
+  @Override
+  @Test
+  public void setCombat() {
+    getTestUnit().combat(getTestUnit());
+  }
 }

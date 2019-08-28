@@ -36,4 +36,14 @@ public class Cleric extends AbstractUnit {
   public void equipItem(IEquipableItem item) {
     item.equipToCleric(this);
   }
+
+  @Override
+  public void attack(IUnit enemy) {
+    // Method body intentionally left empty
+  }
+
+  @Override
+  public void combat(IUnit enemy) {
+    // Method body intentionally left empty
+  }
 }

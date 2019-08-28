@@ -88,6 +88,8 @@ public interface IUnit {
    */
   void attack(IUnit enemy);
 
+  void combat(IUnit enemy);
+
   void attackedWithAxe(Axe axe);
 
   void attackedWithBow(Bow bow);

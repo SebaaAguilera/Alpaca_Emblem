@@ -67,7 +67,7 @@ public abstract class AbstractItem implements IEquipableItem {
 
   @Override
   public void attackTo(IUnit unit){
-    //
+    // Method body intentionally left empty
   }
 
   @Override
