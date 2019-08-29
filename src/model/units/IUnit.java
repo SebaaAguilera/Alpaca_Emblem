@@ -90,6 +90,8 @@ public interface IUnit {
 
   void combat(IUnit enemy);
 
+  void attacked(IEquipableItem item);
+
   void attackedWithAxe(Axe axe);
 
   void attackedWithBow(Bow bow);

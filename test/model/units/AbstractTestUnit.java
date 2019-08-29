@@ -210,6 +210,6 @@ public abstract class AbstractTestUnit implements ITestUnit {
   @Override
   @Test
   public void setCombat() {
-    getTestUnit().combat(getTestUnit());
+    //tha combats have to be tested case by case
   }
 }
