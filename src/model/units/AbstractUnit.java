@@ -74,7 +74,7 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
-  public void setSavedItem(IEquipableItem item) {
+  public void saveItem(IEquipableItem item) {
     if(items.size()<maxItems){
       items.add(item);
     }
@@ -120,9 +120,9 @@ public abstract class AbstractUnit implements IUnit {
 
   @Override
   public void combat(IUnit enemy) {
-    if (this.getCurrentHitPoints()==0 && !this.inRange(enemy)) return;
+    if (this.getCurrentHitPoints()==0 || !this.inRange(enemy)) return;
     this.attack(enemy);
-    if (enemy.getCurrentHitPoints()==0 && !enemy.inRange(this)) return;
+    if (enemy.getCurrentHitPoints()==0 || !enemy.inRange(this)) return;
     enemy.attack(this);
   }
 

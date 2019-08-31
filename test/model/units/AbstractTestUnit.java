@@ -24,6 +24,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   protected Staff staff;
   protected Spear spear;
 
+
   @Override
   public void setTargetAlpaca() {
     targetAlpaca = new Alpaca(50, 2, field.getCell(1, 0));
@@ -50,6 +51,11 @@ public abstract class AbstractTestUnit implements ITestUnit {
         new Location(1, 0), new Location(1, 1), new Location(1, 2), new Location(2, 0),
         new Location(2, 1), new Location(2, 2));
   }
+
+
+  // 20 21 22
+  // 10 11 12
+  // 00 01 02
 
   /**
    * Set up the main unit that's going to be tested in the test set
@@ -106,6 +112,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   @Override
   public void checkEquippedItem(IEquipableItem item) {
     assertNull(getTestUnit().getEquippedItem());
+    getTestUnit().saveItem(item);
     getTestUnit().equipItem(item);
     assertNull(getTestUnit().getEquippedItem());
   }

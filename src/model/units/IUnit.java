@@ -54,7 +54,7 @@ public interface IUnit {
   /**
    * @param item the item is going to be saved
    */
-  void setSavedItem(IEquipableItem item);
+  void saveItem(IEquipableItem item);
 
   /**
    * @return the current location of the unit
