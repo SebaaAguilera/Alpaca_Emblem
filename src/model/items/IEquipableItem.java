@@ -85,4 +85,6 @@ public interface IEquipableItem {
   double damagedByAxe(Axe axe);
 
   double damagedBySpear(Spear spear);
+
+  boolean inRange(IUnit enemy);
 }

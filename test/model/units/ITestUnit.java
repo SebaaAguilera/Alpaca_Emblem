@@ -103,10 +103,22 @@ public interface ITestUnit {
    */
   Field getField();
 
+  void setCombatUnits();
+
   /**
    * @return the target Alpaca
    */
   Alpaca getTargetAlpaca();
 
-  void setCombat();
+  Archer getTargetArcher();
+
+  Cleric getTargetCleric();
+
+  Fighter getTargetFighter();
+
+  Hero getTargetHero();
+
+  SwordMaster getTargetSwordMaster();
+
+  void testCombat();
 }

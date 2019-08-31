@@ -17,7 +17,7 @@ public class ClericTest extends AbstractTestUnit {
    */
   @Override
   public void setTestUnit() {
-    cleric = new Cleric(50, 2, field.getCell(0, 0));
+    cleric = new Cleric(100, 2, field.getCell(0, 0));
   }
 
   /**

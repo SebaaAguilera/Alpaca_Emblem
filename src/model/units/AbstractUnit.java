@@ -104,25 +104,15 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
-  public boolean inRange(IUnit enemy) {
-    Location enemyLocation = enemy.getLocation();
-    double distance = getLocation().distanceTo(enemyLocation);
-    if (getEquippedItem().getMinRange() < distance && distance < getEquippedItem().getMaxRange()){
-      return true;
-    }
-    return false;
-  }
-
-  @Override
   public void attack(IUnit enemy) {
     getEquippedItem().attackTo(enemy);
   }
 
   @Override
   public void combat(IUnit enemy) {
-    if (this.getCurrentHitPoints()==0 || !this.inRange(enemy)) return;
+    if (this.getCurrentHitPoints()==0 || this.getEquippedItem()==null || !this.getEquippedItem().inRange(enemy)) return;
     this.attack(enemy);
-    if (enemy.getCurrentHitPoints()==0 || !enemy.inRange(this)) return;
+    if (enemy.getCurrentHitPoints()==0 || enemy.getEquippedItem()==null ||!enemy.getEquippedItem().inRange(this)) return;
     enemy.attack(this);
   }
 

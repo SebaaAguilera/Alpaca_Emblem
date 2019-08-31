@@ -20,7 +20,7 @@ public class ArcherTest extends AbstractTestUnit {
    */
   @Override
   public void setTestUnit() {
-    archer = new Archer(50, 2, field.getCell(0, 0));
+    archer = new Archer(100, 2, field.getCell(0, 0));
   }
 
   /**
@@ -41,5 +41,24 @@ public class ArcherTest extends AbstractTestUnit {
     archer.saveItem(bow);
     archer.equipItem(bow);
     assertEquals(bow, archer.getEquippedItem());
+  }
+
+  @Test
+  @Override
+  public void testCombat() {
+    setCombatUnits();
+    double testUnitHP = archer.getCurrentHitPoints();
+    archer.saveItem(bow);
+    archer.equipItem(bow);
+    Alpaca targetAlpaca = getTargetAlpaca();
+    double targetFighterHP = targetAlpaca.getCurrentHitPoints();
+    archer.combat(targetAlpaca);
+    assertEquals(targetFighterHP-archer.getEquippedItem().getPower(), targetAlpaca.getCurrentHitPoints());
+    assertEquals(testUnitHP,archer.getCurrentHitPoints());
+    Cleric targetCleric = getTargetCleric();
+    double targetFighterHP2 = targetCleric.getCurrentHitPoints();
+    archer.combat(targetCleric);
+    assertEquals(targetFighterHP2, targetCleric.getCurrentHitPoints());
+    assertEquals(testUnitHP,archer.getCurrentHitPoints());
   }
 }

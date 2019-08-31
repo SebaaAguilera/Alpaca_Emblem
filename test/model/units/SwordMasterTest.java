@@ -17,7 +17,7 @@ public class SwordMasterTest extends AbstractTestUnit {
    */
   @Override
   public void setTestUnit() {
-    swordMaster = new SwordMaster(50, 2, field.getCell(0, 0));
+    swordMaster = new SwordMaster(100, 2, field.getCell(0, 0));
   }
 
   /**
@@ -38,5 +38,19 @@ public class SwordMasterTest extends AbstractTestUnit {
     swordMaster.saveItem(sword);
     swordMaster.equipItem(sword);
     assertEquals(sword, swordMaster.getEquippedItem());
+  }
+
+  @Test
+  @Override
+  public void testCombat() {
+    setCombatUnits();
+    double testUnitHP = swordMaster.getCurrentHitPoints();
+    swordMaster.saveItem(sword);
+    swordMaster.equipItem(sword);
+    Hero targetHero = getTargetHero();
+    double targetHeroHP = targetHero.getCurrentHitPoints();
+    swordMaster.combat(targetHero);
+    assertEquals(targetHeroHP-(swordMaster.getEquippedItem().getPower()-20),targetHero.getCurrentHitPoints());
+    assertEquals(testUnitHP-(targetHero.getEquippedItem().getPower()*1.5),swordMaster.getCurrentHitPoints());
   }
 }

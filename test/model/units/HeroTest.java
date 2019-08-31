@@ -17,7 +17,7 @@ public class HeroTest extends AbstractTestUnit {
    */
   @Override
   public void setTestUnit() {
-    hero = new Hero(50, 2, field.getCell(0, 0));
+    hero = new Hero(100, 2, field.getCell(0, 0));
   }
 
   /**
@@ -38,5 +38,19 @@ public class HeroTest extends AbstractTestUnit {
     hero.saveItem(spear);
     hero.equipItem(spear);
     assertEquals(spear, hero.getEquippedItem());
+  }
+
+  @Test
+  @Override
+  public void testCombat() {
+    setCombatUnits();
+    double testUnitHP = hero.getCurrentHitPoints();
+    hero.saveItem(spear);
+    hero.equipItem(spear);
+    Fighter targetFighter = getTargetFighter();
+    double targetFighterHP = targetFighter.getCurrentHitPoints();
+    hero.combat(targetFighter);
+    assertEquals(targetFighterHP-(hero.getEquippedItem().getPower()-20), targetFighter.getCurrentHitPoints());
+    assertEquals(testUnitHP-(hero.getEquippedItem().getPower()*1.5),hero.getCurrentHitPoints());
   }
 }

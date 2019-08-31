@@ -1,5 +1,6 @@
 package model.items;
 
+import model.map.Location;
 import model.units.*;
 
 /**
@@ -83,6 +84,17 @@ public abstract class AbstractItem implements IEquipableItem {
 
   @Override
   public double damagedBySpear(Spear spear) { return 0; }
+
+  @Override
+  public boolean inRange(IUnit enemy) {
+    Location enemyLocation = enemy.getLocation();
+    double distance = this.getOwner().getLocation().distanceTo(enemyLocation);
+    if (this.getMinRange() <= distance && distance <= this.getMaxRange()){
+      return true;
+    }
+    return false;
+
+  }
 
   @Override
   public IUnit getOwner() {

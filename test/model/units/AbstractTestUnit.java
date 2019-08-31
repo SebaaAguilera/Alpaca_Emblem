@@ -16,7 +16,13 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractTestUnit implements ITestUnit {
 
-  protected Alpaca targetAlpaca;
+  private Alpaca targetAlpaca;
+  private Archer targetArcher;
+  private Cleric targetCleric;
+  private Fighter targetFighter;
+  private Hero targetHero;
+  private SwordMaster targetSwordMaster;
+
   protected Bow bow;
   protected Field field;
   protected Axe axe;
@@ -81,7 +87,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   @Override
   @Test
   public void constructorTest() {
-    assertEquals(50, getTestUnit().getCurrentHitPoints());
+    assertEquals(100, getTestUnit().getCurrentHitPoints());
     assertEquals(2, getTestUnit().getMovement());
     assertEquals(new Location(0, 0), getTestUnit().getLocation());
     assertTrue(getTestUnit().getItems().isEmpty());
@@ -207,6 +213,30 @@ public abstract class AbstractTestUnit implements ITestUnit {
   }
 
   /**
+   * set every class of unit to test them
+   */
+  @Override
+  public void setCombatUnits(){
+    setWeapons();
+    targetAlpaca = new Alpaca(1001, 2, field.getCell(2, 0));
+    targetArcher = new Archer(1001, 2, field.getCell(1, 0));
+    targetArcher.saveItem(bow);
+    targetArcher.equipItem(bow);
+    targetCleric = new Cleric(1001, 2, field.getCell(1, 0));
+    targetCleric.saveItem(staff);
+    targetCleric.equipItem(staff);
+    targetFighter = new Fighter(1001, 2, field.getCell(1, 0));
+    targetFighter.saveItem(axe);
+    targetFighter.equipItem(axe);
+    targetHero = new Hero(1001, 2, field.getCell(1, 0));
+    targetHero.saveItem(spear);
+    targetHero.equipItem(spear);
+    targetSwordMaster = new SwordMaster(1001, 2, field.getCell(1, 0));
+    targetSwordMaster.saveItem(sword);
+    targetSwordMaster.equipItem(sword);
+  }
+
+  /**
    * @return the target Alpaca
    */
   @Override
@@ -214,9 +244,51 @@ public abstract class AbstractTestUnit implements ITestUnit {
     return targetAlpaca;
   }
 
+  /**
+   * @return the target Archer
+   */
+  @Override
+  public Archer getTargetArcher() {
+    return targetArcher;
+  }
+
+  /**
+   * @return the target Cleric
+   */
+  @Override
+  public Cleric getTargetCleric() {
+    return targetCleric;
+  }
+
+  /**
+   * @return the target Fighter
+   */
+  @Override
+  public Fighter getTargetFighter() {
+    return targetFighter;
+  }
+
+  /**
+   * @return the target Hero
+   */
+  @Override
+  public Hero getTargetHero() {
+    return targetHero;
+  }
+
+  /**
+   * @return the target SwordMaster
+   */
+  @Override
+  public SwordMaster getTargetSwordMaster() {
+    return targetSwordMaster;
+  }
+
+
   @Override
   @Test
-  public void setCombat() {
-    //tha combats have to be tested case by case
+  public void testCombat() {
+    //every unit have different test for combat
+
   }
 }

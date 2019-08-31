@@ -79,11 +79,6 @@ public interface IUnit {
   void moveTo(Location targetLocation);
 
   /**
-   * @return true if the enemy is in range
-   */
-  boolean inRange(IUnit enemy);
-
-  /**
    * attack an enemy unit
    */
   void attack(IUnit enemy);
