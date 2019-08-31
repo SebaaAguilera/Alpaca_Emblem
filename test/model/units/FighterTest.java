@@ -47,10 +47,26 @@ public class FighterTest extends AbstractTestUnit {
     double testUnitHP = fighter.getCurrentHitPoints();
     fighter.saveItem(axe);
     fighter.equipItem(axe);
+
     SwordMaster targetSwordMaster = getTargetSwordMaster();
     double targetSwordMasterHP = targetSwordMaster.getCurrentHitPoints();
     fighter.combat(targetSwordMaster);
     assertEquals(targetSwordMasterHP-(fighter.getEquippedItem().getPower()-20),targetSwordMaster.getCurrentHitPoints());
     assertEquals(testUnitHP-(targetSwordMaster.getEquippedItem().getPower()*1.5),fighter.getCurrentHitPoints());
+
+    testUnitHP = fighter.getCurrentHitPoints();
+    Archer targetArcher = getTargetArcher();
+    double targetArcherHP = targetArcher.getCurrentHitPoints();
+    fighter.combat(targetArcher);
+    assertEquals(targetArcherHP-fighter.getEquippedItem().getPower(),targetArcher.getCurrentHitPoints());
+    assertEquals(testUnitHP,fighter.getCurrentHitPoints());
+
+    testUnitHP = fighter.getCurrentHitPoints();
+    Fighter targetFighter = getTargetFighter();
+    double targetFighterHP = targetFighter.getCurrentHitPoints();
+    fighter.combat(targetFighter);
+    assertEquals(targetFighterHP-fighter.getEquippedItem().getPower(),targetFighter.getCurrentHitPoints());
+    assertEquals(testUnitHP-targetFighter.getEquippedItem().getPower(),fighter.getCurrentHitPoints());
+
   }
 }

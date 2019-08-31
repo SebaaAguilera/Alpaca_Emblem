@@ -22,6 +22,11 @@ public abstract class AbstractTestUnit implements ITestUnit {
   private Fighter targetFighter;
   private Hero targetHero;
   private SwordMaster targetSwordMaster;
+  protected Bow testBow;
+  protected Axe testAxe;
+  protected Sword testSword;
+  protected Staff testStaff;
+  protected Spear testSpear;
 
   protected Bow bow;
   protected Field field;
@@ -217,23 +222,35 @@ public abstract class AbstractTestUnit implements ITestUnit {
    */
   @Override
   public void setCombatUnits(){
-    setWeapons();
+    setCombatsWeapons();
     targetAlpaca = new Alpaca(1001, 2, field.getCell(2, 0));
     targetArcher = new Archer(1001, 2, field.getCell(1, 0));
-    targetArcher.saveItem(bow);
-    targetArcher.equipItem(bow);
+    targetArcher.saveItem(testBow);
+    targetArcher.equipItem(testBow);
     targetCleric = new Cleric(1001, 2, field.getCell(1, 0));
-    targetCleric.saveItem(staff);
-    targetCleric.equipItem(staff);
+    targetCleric.saveItem(testSpear);
+    targetCleric.equipItem(testStaff);
     targetFighter = new Fighter(1001, 2, field.getCell(1, 0));
-    targetFighter.saveItem(axe);
-    targetFighter.equipItem(axe);
+    targetFighter.saveItem(testAxe);
+    targetFighter.equipItem(testAxe);
     targetHero = new Hero(1001, 2, field.getCell(1, 0));
-    targetHero.saveItem(spear);
-    targetHero.equipItem(spear);
+    targetHero.saveItem(testSpear);
+    targetHero.equipItem(testSpear);
     targetSwordMaster = new SwordMaster(1001, 2, field.getCell(1, 0));
-    targetSwordMaster.saveItem(sword);
-    targetSwordMaster.equipItem(sword);
+    targetSwordMaster.saveItem(testSword);
+    targetSwordMaster.equipItem(testSword);
+  }
+
+  /**
+   * Creates a set of testing combat weapons
+   */
+  @Override
+  public void setCombatsWeapons(){
+    this.testAxe = new Axe("testAxe", 10, 1, 2);
+    this.testSword = new Sword("testSword", 10, 1, 2);
+    this.testSpear = new Spear("testSpear", 10, 1, 2);
+    this.testStaff = new Staff("testStaff", 10, 1, 2);
+    this.testBow = new Bow("testBow", 10, 2, 3);
   }
 
   /**
@@ -289,6 +306,5 @@ public abstract class AbstractTestUnit implements ITestUnit {
   @Test
   public void testCombat() {
     //every unit have different test for combat
-
   }
 }

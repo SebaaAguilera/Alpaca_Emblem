@@ -78,17 +78,33 @@ public interface IEquipableItem {
 
 
   /**
-   * @param IUnit
+   * @param unit
    * attacks an unit
    */
   void attackTo(IUnit unit);
 
+  /**
+   * says to a weapon that is being attacked by a sword
+   * @param sword that attacks
+   */
   void attackedWithSword(Sword sword);
 
+  /**
+   * says to a weapon that is being attacked by an axe
+   * @param axe that attacks
+   */
   void attackedWithAxe(Axe axe);
 
+  /**
+   * says to a weapon that is being attacked by a spear
+   * @param spear that attacks
+   */
   void attackedWithSpear(Spear spear);
 
-  boolean inRange(IUnit enemy);
-
+  /**
+   * verify if a weapon is in range to attack an unit
+   * @param unit that is being attacked
+   * @return true if is in range, false if not
+   */
+  boolean inRange(IUnit unit);
 }

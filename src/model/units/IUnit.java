@@ -1,8 +1,6 @@
 package model.units;
 
 import java.util.List;
-
-import model.items.*;
 import model.items.IEquipableItem;
 import model.map.Location;
 
@@ -79,12 +77,21 @@ public interface IUnit {
   void moveTo(Location targetLocation);
 
   /**
+   * @param unit
    * attack an enemy unit
    */
-  void attack(IUnit enemy);
+  void attack(IUnit unit);
 
-  void combat(IUnit enemy);
+  /**
+   * @param unit
+   * start a combat between a unit and another one
+   */
+  void combat(IUnit unit);
 
+  /**
+   * @param damage
+   * decreases the unit current points depending on the damage
+   */
   void attacked(double damage);
 
 }

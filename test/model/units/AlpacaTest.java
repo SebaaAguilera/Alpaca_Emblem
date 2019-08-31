@@ -25,5 +25,30 @@ public class AlpacaTest extends AbstractTestUnit {
     return alpaca;
   }
 
+  @Test
+  @Override
+  public void testCombat(){
+    setCombatUnits();
+    SwordMaster targetSwordMaster = getTargetSwordMaster();
+    Fighter targetFighter = getTargetFighter();
+    Hero targetHero = getTargetHero();
+    double targetSwordMasterHP = targetSwordMaster.getCurrentHitPoints();
+    double targetFighterHP = targetFighter.getCurrentHitPoints();
+    double targetHeroHP = targetHero.getCurrentHitPoints();
+    double alpacaHP = alpaca.getCurrentHitPoints();
+    targetSwordMaster.combat(alpaca);
+    assertEquals(alpacaHP-targetSwordMaster.getEquippedItem().getPower(),alpaca.getCurrentHitPoints());
+    assertEquals(targetSwordMasterHP,targetSwordMaster.getCurrentHitPoints());
+    alpacaHP = alpaca.getCurrentHitPoints();
+    targetFighter.combat(alpaca);
+    assertEquals(alpacaHP-targetFighter.getEquippedItem().getPower(),alpaca.getCurrentHitPoints());
+    assertEquals(targetFighterHP,targetFighter.getCurrentHitPoints());
+    alpacaHP = alpaca.getCurrentHitPoints();
+    targetHero.combat(alpaca);
+    assertEquals(alpacaHP-targetHero.getEquippedItem().getPower(),alpaca.getCurrentHitPoints());
+    assertEquals(targetHeroHP,targetHero.getCurrentHitPoints());
+
+  }
+
 
 }

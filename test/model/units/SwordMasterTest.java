@@ -52,5 +52,19 @@ public class SwordMasterTest extends AbstractTestUnit {
     swordMaster.combat(targetHero);
     assertEquals(targetHeroHP-(swordMaster.getEquippedItem().getPower()-20),targetHero.getCurrentHitPoints());
     assertEquals(testUnitHP-(targetHero.getEquippedItem().getPower()*1.5),swordMaster.getCurrentHitPoints());
+
+    testUnitHP = swordMaster.getCurrentHitPoints();
+    Archer targetArcher = getTargetArcher();
+    double targetArcherHP = targetArcher.getCurrentHitPoints();
+    swordMaster.combat(targetArcher);
+    assertEquals(targetArcherHP-swordMaster.getEquippedItem().getPower(),targetArcher.getCurrentHitPoints());
+    assertEquals(testUnitHP,swordMaster.getCurrentHitPoints());
+
+    testUnitHP = swordMaster.getCurrentHitPoints();
+    SwordMaster targetSwordMaster = getTargetSwordMaster();
+    double targetSwordMasterHP = targetSwordMaster.getCurrentHitPoints();
+    swordMaster.combat(targetSwordMaster);
+    assertEquals(targetArcherHP-swordMaster.getEquippedItem().getPower(),targetSwordMaster.getCurrentHitPoints());
+    assertEquals(testUnitHP-targetSwordMaster.getEquippedItem().getPower(),swordMaster.getCurrentHitPoints());
   }
 }

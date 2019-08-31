@@ -39,4 +39,18 @@ public class ClericTest extends AbstractTestUnit {
     cleric.equipItem(staff);
     assertEquals(staff, cleric.getEquippedItem());
   }
+
+  @Test
+  @Override
+  public void testCombat() {
+    setCombatUnits();
+    double testUnitHP = cleric.getCurrentHitPoints();
+    cleric.saveItem(staff);
+    cleric.equipItem(staff);
+    Archer targetArcher = getTargetArcher();
+    double targetArcherHP = targetArcher.getCurrentHitPoints();
+    cleric.combat(targetArcher);
+    assertEquals(targetArcherHP, targetArcher.getCurrentHitPoints());
+    assertEquals(testUnitHP, cleric.getCurrentHitPoints());
+  }
 }

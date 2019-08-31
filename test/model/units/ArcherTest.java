@@ -3,6 +3,7 @@ package model.units;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import model.items.Bow;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -50,15 +51,20 @@ public class ArcherTest extends AbstractTestUnit {
     double testUnitHP = archer.getCurrentHitPoints();
     archer.saveItem(bow);
     archer.equipItem(bow);
-    Alpaca targetAlpaca = getTargetAlpaca();
-    double targetFighterHP = targetAlpaca.getCurrentHitPoints();
-    archer.combat(targetAlpaca);
-    assertEquals(targetFighterHP-archer.getEquippedItem().getPower(), targetAlpaca.getCurrentHitPoints());
-    assertEquals(testUnitHP,archer.getCurrentHitPoints());
+
     Cleric targetCleric = getTargetCleric();
-    double targetFighterHP2 = targetCleric.getCurrentHitPoints();
+    double targetFighterHP = targetCleric.getCurrentHitPoints();
     archer.combat(targetCleric);
-    assertEquals(targetFighterHP2, targetCleric.getCurrentHitPoints());
+    assertEquals(targetFighterHP, targetCleric.getCurrentHitPoints());
+    assertEquals(testUnitHP,archer.getCurrentHitPoints());
+
+    Bow superBow = new Bow("Alpacaminator", 9999, 2, 3);
+    archer.saveItem(superBow);
+    archer.equipItem(superBow);
+    Alpaca targetAlpaca = getTargetAlpaca();
+    assertEquals(true,targetAlpaca.getCurrentHitPoints()>0);
+    archer.combat(targetAlpaca);
+    assertEquals(0, targetAlpaca.getCurrentHitPoints());
     assertEquals(testUnitHP,archer.getCurrentHitPoints());
   }
 }

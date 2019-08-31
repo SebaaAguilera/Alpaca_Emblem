@@ -52,5 +52,19 @@ public class HeroTest extends AbstractTestUnit {
     hero.combat(targetFighter);
     assertEquals(targetFighterHP-(hero.getEquippedItem().getPower()-20), targetFighter.getCurrentHitPoints());
     assertEquals(testUnitHP-(hero.getEquippedItem().getPower()*1.5),hero.getCurrentHitPoints());
+
+    testUnitHP = hero.getCurrentHitPoints();
+    Archer targetArcher = getTargetArcher();
+    double targetArcherHP = targetArcher.getCurrentHitPoints();
+    hero.combat(targetArcher);
+    assertEquals(targetArcherHP-hero.getEquippedItem().getPower(),targetArcher.getCurrentHitPoints());
+    assertEquals(testUnitHP,hero.getCurrentHitPoints());
+
+    testUnitHP = hero.getCurrentHitPoints();
+    Hero targetHero = getTargetHero();
+    double targetHeroHP = targetHero.getCurrentHitPoints();
+    hero.combat(targetHero);
+    assertEquals(targetHeroHP-hero.getEquippedItem().getPower(),targetHero.getCurrentHitPoints());
+    assertEquals(testUnitHP-targetHero.getEquippedItem().getPower(),hero.getCurrentHitPoints());
   }
 }

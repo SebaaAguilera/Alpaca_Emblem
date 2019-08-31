@@ -23,6 +23,9 @@ public interface ITestUnit {
    */
   void setTestUnit();
 
+  /**
+   * set a right-constructed Alpaca
+   */
   void setTargetAlpaca();
 
   /**
@@ -103,22 +106,49 @@ public interface ITestUnit {
    */
   Field getField();
 
+  /**
+   * set every class of unit to test them
+   */
   void setCombatUnits();
+
+  /**
+   * Creates a set of testing combat weapons
+   */
+  void setCombatsWeapons();
 
   /**
    * @return the target Alpaca
    */
   Alpaca getTargetAlpaca();
 
+  /**
+   * @return the target Archer
+   */
   Archer getTargetArcher();
 
+  /**
+   * @return the target Cleric
+   */
   Cleric getTargetCleric();
 
+  /**
+   * @return the target Fighter
+   */
   Fighter getTargetFighter();
 
+  /**
+   * @return the target Hero
+   */
   Hero getTargetHero();
 
+  /**
+   * @return the target SwordMaster
+   */
   SwordMaster getTargetSwordMaster();
 
+  /**
+   * test the combat behaviour, each unit test different combat elements
+   */
+  @Test
   void testCombat();
 }
