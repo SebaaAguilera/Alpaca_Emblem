@@ -17,7 +17,7 @@ public class HeroTest extends AbstractTestUnit {
    */
   @Override
   public void setTestUnit() {
-    hero = new Hero(100, 2, field.getCell(0, 0));
+    hero = new Hero(500, 2, field.getCell(0, 0));
   }
 
   /**
@@ -43,7 +43,7 @@ public class HeroTest extends AbstractTestUnit {
   @Test
   @Override
   public void testCombat() {
-    setCombatUnits();
+    setUnits();
     double testUnitHP = hero.getCurrentHitPoints();
     hero.saveItem(spear);
     hero.equipItem(spear);

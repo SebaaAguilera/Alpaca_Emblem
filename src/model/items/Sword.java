@@ -49,6 +49,7 @@ public class Sword extends AbstractItem {
 
   @Override
   public void attackedWithAxe(Axe axe){
+    if (axe.getPower()-20<=0) return;
     this.getOwner().attacked(axe.getPower()-20);
   }
 

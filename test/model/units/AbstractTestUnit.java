@@ -63,11 +63,6 @@ public abstract class AbstractTestUnit implements ITestUnit {
         new Location(2, 1), new Location(2, 2));
   }
 
-
-  // 20 21 22
-  // 10 11 12
-  // 00 01 02
-
   /**
    * Set up the main unit that's going to be tested in the test set
    */
@@ -79,11 +74,11 @@ public abstract class AbstractTestUnit implements ITestUnit {
    */
   @Override
   public void setWeapons() {
-    this.axe = new Axe("Axe", 10, 1, 2);
-    this.sword = new Sword("Sword", 10, 1, 2);
-    this.spear = new Spear("Spear", 10, 1, 2);
-    this.staff = new Staff("Staff", 10, 1, 2);
-    this.bow = new Bow("Bow", 10, 2, 3);
+    this.axe = new Axe("Axe", 25, 1, 2);
+    this.sword = new Sword("Sword", 25, 1, 2);
+    this.spear = new Spear("Spear", 25, 1, 2);
+    this.staff = new Staff("Staff", 25, 1, 2);
+    this.bow = new Bow("Bow", 15, 2, 3);
   }
 
   /**
@@ -92,7 +87,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   @Override
   @Test
   public void constructorTest() {
-    assertEquals(100, getTestUnit().getCurrentHitPoints());
+    assertEquals(500, getTestUnit().getCurrentHitPoints());
     assertEquals(2, getTestUnit().getMovement());
     assertEquals(new Location(0, 0), getTestUnit().getLocation());
     assertTrue(getTestUnit().getItems().isEmpty());
@@ -192,7 +187,23 @@ public abstract class AbstractTestUnit implements ITestUnit {
     return bow;
   }
 
-  /**
+  @Override
+  @Test
+  public void testTrading() {
+      setUnits();
+      Hero hero = getTargetHero();
+      IUnit unit = getTestUnit();
+
+      IEquipableItem item = hero.getEquippedItem();
+
+      hero.giveItem(unit, item);
+
+      assertNull(hero.getEquippedItem());
+      assertNull(item.getOwner());
+      assertEquals(true, getTestUnit().getItems().contains(item));
+  }
+
+    /**
    * Checks if the unit moves correctly
    */
   @Override
@@ -217,11 +228,8 @@ public abstract class AbstractTestUnit implements ITestUnit {
     return field;
   }
 
-  /**
-   * set every class of unit to test them
-   */
   @Override
-  public void setCombatUnits(){
+  public void setUnits(){
     setCombatsWeapons();
     targetAlpaca = new Alpaca(1001, 2, field.getCell(2, 0));
     targetArcher = new Archer(1001, 2, field.getCell(1, 0));
@@ -246,11 +254,11 @@ public abstract class AbstractTestUnit implements ITestUnit {
    */
   @Override
   public void setCombatsWeapons(){
-    this.testAxe = new Axe("testAxe", 10, 1, 2);
-    this.testSword = new Sword("testSword", 10, 1, 2);
-    this.testSpear = new Spear("testSpear", 10, 1, 2);
-    this.testStaff = new Staff("testStaff", 10, 1, 2);
-    this.testBow = new Bow("testBow", 10, 2, 3);
+    this.testAxe = new Axe("testAxe", 25, 1, 2);
+    this.testSword = new Sword("testSword", 25, 1, 2);
+    this.testSpear = new Spear("testSpear", 25, 1, 2);
+    this.testStaff = new Staff("testStaff", 25, 1, 2);
+    this.testBow = new Bow("testBow", 25, 2, 3);
   }
 
   /**

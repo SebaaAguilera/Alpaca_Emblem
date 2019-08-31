@@ -30,6 +30,7 @@ public interface IUnit {
 
   /**
    * updates the currentHitPoints
+   * @param currentHitPoints updates the currentHitpoints
    */
   void setCurrentHitPoints(double currentHitPoints);
 
@@ -50,9 +51,27 @@ public interface IUnit {
   void setEquippedItem(IEquipableItem item);
 
   /**
+   *
+   * @return an unit max items
+   */
+  int getMaxItems();
+
+  /**
    * @param item the item is going to be saved
    */
   void saveItem(IEquipableItem item);
+
+  /**
+   * Gives an item from a unit to another
+   * @param unit receiver unit
+   * @param item item
+   */
+  void giveItem(IUnit unit,IEquipableItem item);
+
+  /**
+   * unequip an unit item
+   */
+  void unEquipItem();
 
   /**
    * @return the current location of the unit
@@ -93,5 +112,6 @@ public interface IUnit {
    * decreases the unit current points depending on the damage
    */
   void attacked(double damage);
+
 
 }

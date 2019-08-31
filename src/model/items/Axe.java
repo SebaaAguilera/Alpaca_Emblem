@@ -48,6 +48,7 @@ public class Axe extends AbstractItem {
 
   @Override
   public void attackedWithSpear(Spear spear){
+    if (spear.getPower()-20<=0) return;
     this.getOwner().attacked(spear.getPower()-20);
   }
 

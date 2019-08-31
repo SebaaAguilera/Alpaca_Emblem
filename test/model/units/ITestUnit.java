@@ -96,6 +96,12 @@ public interface ITestUnit {
   Bow getBow();
 
   /**
+   * test the trading correct behaviour
+   */
+  @Test
+  void testTrading();
+
+  /**
    * Checks if the unit moves correctly
    */
   @Test
@@ -109,7 +115,7 @@ public interface ITestUnit {
   /**
    * set every class of unit to test them
    */
-  void setCombatUnits();
+  void setUnits();
 
   /**
    * Creates a set of testing combat weapons

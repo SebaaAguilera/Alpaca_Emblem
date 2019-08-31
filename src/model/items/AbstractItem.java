@@ -93,11 +93,12 @@ public abstract class AbstractItem implements IEquipableItem {
   public boolean inRange(IUnit enemy) {
     Location enemyLocation = enemy.getLocation();
     double distance = this.getOwner().getLocation().distanceTo(enemyLocation);
-    if (this.getMinRange() <= distance && distance <= this.getMaxRange()){
-      return true;
-    }
-    return false;
+    return this.getMinRange() <= distance && distance <= this.getMaxRange();
+  }
 
+  @Override
+  public void unEquipFrom() {
+    this.owner=null;
   }
 
   @Override

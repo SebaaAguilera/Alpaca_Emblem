@@ -17,7 +17,7 @@ public class SwordMasterTest extends AbstractTestUnit {
    */
   @Override
   public void setTestUnit() {
-    swordMaster = new SwordMaster(100, 2, field.getCell(0, 0));
+    swordMaster = new SwordMaster(500, 2, field.getCell(0, 0));
   }
 
   /**
@@ -43,7 +43,7 @@ public class SwordMasterTest extends AbstractTestUnit {
   @Test
   @Override
   public void testCombat() {
-    setCombatUnits();
+    setUnits();
     double testUnitHP = swordMaster.getCurrentHitPoints();
     swordMaster.saveItem(sword);
     swordMaster.equipItem(sword);

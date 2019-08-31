@@ -17,7 +17,7 @@ public class ClericTest extends AbstractTestUnit {
    */
   @Override
   public void setTestUnit() {
-    cleric = new Cleric(100, 2, field.getCell(0, 0));
+    cleric = new Cleric(500, 2, field.getCell(0, 0));
   }
 
   /**
@@ -43,7 +43,7 @@ public class ClericTest extends AbstractTestUnit {
   @Test
   @Override
   public void testCombat() {
-    setCombatUnits();
+    setUnits();
     double testUnitHP = cleric.getCurrentHitPoints();
     cleric.saveItem(staff);
     cleric.equipItem(staff);

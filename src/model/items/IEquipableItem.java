@@ -107,4 +107,9 @@ public interface IEquipableItem {
    * @return true if is in range, false if not
    */
   boolean inRange(IUnit unit);
+
+  /**
+   * unequip the item from the unit
+   */
+  void unEquipFrom();
 }

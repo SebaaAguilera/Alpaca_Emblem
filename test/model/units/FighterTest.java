@@ -17,7 +17,7 @@ public class FighterTest extends AbstractTestUnit {
    */
   @Override
   public void setTestUnit() {
-    fighter = new Fighter(100, 2, field.getCell(0, 0));
+    fighter = new Fighter(500, 2, field.getCell(0, 0));
   }
 
   /**
@@ -43,7 +43,7 @@ public class FighterTest extends AbstractTestUnit {
   @Test
   @Override
   public void testCombat() {
-    setCombatUnits();
+    setUnits();
     double testUnitHP = fighter.getCurrentHitPoints();
     fighter.saveItem(axe);
     fighter.equipItem(axe);
