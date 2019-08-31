@@ -37,23 +37,4 @@ public class Hero extends AbstractUnit {
     item.equipToHero(this);
   }
 
-  @Override
-  public void attackedWithAxe(Axe axe){
-    double damage = this.getEquippedItem().damagedByAxe(axe);
-    if (this.getCurrentHitPoints()-damage<=0){
-      setCurrentHitPoints(0);
-    } else {
-      setCurrentHitPoints(this.getCurrentHitPoints() - damage);
-    }
-  }
-
-  @Override
-  public void attackedWithSword(Sword sword){
-    double damage = this.getEquippedItem().damagedBySword(sword);
-    if (this.getCurrentHitPoints()-damage<=0){
-      setCurrentHitPoints(0);
-    } else {
-      setCurrentHitPoints(this.getCurrentHitPoints() - damage);
-    }
-  }
 }

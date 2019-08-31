@@ -28,24 +28,4 @@ public class Fighter extends AbstractUnit {
     item.equipToFighter(this);
   }
 
-
-  @Override
-  public void attackedWithSpear(Spear spear){
-    double damage = this.getEquippedItem().damagedBySpear(spear);
-    if (this.getCurrentHitPoints()-damage<=0){
-      setCurrentHitPoints(0);
-    } else {
-      setCurrentHitPoints(this.getCurrentHitPoints() - damage);
-    }
-  }
-
-  @Override
-  public void attackedWithSword(Sword sword){
-    double damage =  this.getEquippedItem().damagedBySword(sword);
-    if (this.getCurrentHitPoints()-damage<=0){
-      setCurrentHitPoints(0);
-    } else {
-      setCurrentHitPoints(this.getCurrentHitPoints() - damage);
-    }
-  }
 }

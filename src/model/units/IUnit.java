@@ -85,14 +85,6 @@ public interface IUnit {
 
   void combat(IUnit enemy);
 
-  void attacked(IEquipableItem item);
-
-  void attackedWithAxe(Axe axe);
-
-  void attackedWithBow(Bow bow);
-
-  void attackedWithSpear(Spear spear);
-
-  void attackedWithSword(Sword sword);
+  void attacked(double damage);
 
 }

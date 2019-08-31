@@ -117,33 +117,12 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
-  public void attacked(IEquipableItem item) {
-    if (this.getCurrentHitPoints()-item.getPower()<=0){
+  public void attacked(double damage) {
+    if (this.getCurrentHitPoints()-damage<=0){
       setCurrentHitPoints(0);
     } else {
-      setCurrentHitPoints(this.getCurrentHitPoints() - item.getPower());
+      setCurrentHitPoints(this.getCurrentHitPoints() - damage);
     }
   }
-
-  @Override
-  public void attackedWithSpear(Spear spear){
-    this.attacked(spear);
-  }
-
-  @Override
-  public void attackedWithAxe(Axe axe){
-    this.attacked(axe);
-  }
-
-  @Override
-  public void attackedWithSword(Sword sword){
-    this.attacked(sword);
-  }
-
-  @Override
-  public void attackedWithBow(Bow bow){
-    this.attacked(bow);
-  }
-
 
 }

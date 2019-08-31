@@ -33,10 +33,4 @@ public class Staff extends AbstractItem {
     super.equipTo(cleric);
   }
 
-  @Override
-  public void attackTo(IUnit enemy) {
-    // Method body intentionally left empty
-  }
-
-
 }

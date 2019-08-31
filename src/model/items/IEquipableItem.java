@@ -77,14 +77,18 @@ public interface IEquipableItem {
   void equipToSwordMaster(SwordMaster swordMaster);
 
 
-
+  /**
+   * @param IUnit
+   * attacks an unit
+   */
   void attackTo(IUnit unit);
 
-  double damagedBySword(Sword sword);
+  void attackedWithSword(Sword sword);
 
-  double damagedByAxe(Axe axe);
+  void attackedWithAxe(Axe axe);
 
-  double damagedBySpear(Spear spear);
+  void attackedWithSpear(Spear spear);
 
   boolean inRange(IUnit enemy);
+
 }

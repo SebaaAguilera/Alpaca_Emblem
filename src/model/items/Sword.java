@@ -33,16 +33,23 @@ public class Sword extends AbstractItem {
     super.equipTo(swordMaster);
   }
 
-
+  @Override
   public void attackTo(IUnit unit) {
-    unit.attackedWithSword(this);
+    if (unit.getEquippedItem()==null){
+      unit.attacked(this.getPower());
+    } else {
+      unit.getEquippedItem().attackedWithSword(this);
+    }
   }
 
-  public double damagedBySpear(Spear spear){
-    return 1.5*spear.getPower();
+  @Override
+  public void attackedWithSpear(Spear spear){
+    this.getOwner().attacked(1.5*spear.getPower());
   }
-  public double damagedByAxe(Axe axe){
-    return axe.getPower()-20;
+
+  @Override
+  public void attackedWithAxe(Axe axe){
+    this.getOwner().attacked(axe.getPower()-20);
   }
 
 }

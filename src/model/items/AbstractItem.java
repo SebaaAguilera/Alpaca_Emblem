@@ -71,19 +71,23 @@ public abstract class AbstractItem implements IEquipableItem {
 
   @Override
   public void attackTo(IUnit unit){
-    // Method body intentionally left empty
+    unit.attacked(this.getPower());
   }
 
   @Override
-  public double damagedBySword(Sword sword) {
-        return 0;
-    }
+  public void attackedWithSword(Sword sword) {
+    this.getOwner().attacked(this.getPower());
+  }
 
   @Override
-  public double damagedByAxe(Axe axe) { return 0; }
+  public void attackedWithAxe(Axe axe) {
+    this.getOwner().attacked(this.getPower());
+  }
 
   @Override
-  public double damagedBySpear(Spear spear) { return 0; }
+  public void attackedWithSpear(Spear spear) {
+    this.getOwner().attacked(this.getPower());
+  }
 
   @Override
   public boolean inRange(IUnit enemy) {

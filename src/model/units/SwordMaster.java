@@ -29,24 +29,4 @@ public class SwordMaster extends AbstractUnit {
     item.equipToSwordMaster(this);
   }
 
-  @Override
-  public void attackedWithSpear(Spear spear){
-    double damage = this.getEquippedItem().damagedBySpear(spear);
-    if (this.getCurrentHitPoints()-damage<=0){
-      setCurrentHitPoints(0);
-    } else {
-      setCurrentHitPoints(this.getCurrentHitPoints()-damage);
-    }
-  }
-
-  @Override
-  public void attackedWithAxe(Axe axe){
-    double damage = this.getEquippedItem().damagedByAxe(axe);
-    if (this.getCurrentHitPoints()-damage<=0){
-      setCurrentHitPoints(0);
-    } else {
-      setCurrentHitPoints(this.getCurrentHitPoints() - damage);
-    }
-  }
-
 }
