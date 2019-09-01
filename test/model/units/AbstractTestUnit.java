@@ -1,14 +1,14 @@
 package model.units;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import model.items.*;
 import model.map.Field;
 import model.map.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Ignacio Slater Muñoz
@@ -84,6 +84,18 @@ public abstract class AbstractTestUnit implements ITestUnit {
     this.bow = new Bow("Bow", 15, 2, 3);
 
     this.lightBook = new LightBook("LightBook", 25, 1, 2);
+  }
+
+  /**
+   * Creates a set of testing combat weapons
+   */
+  @Override
+  public void setCombatsWeapons() {
+    this.testAxe = new Axe("testAxe", 25, 1, 2);
+    this.testSword = new Sword("testSword", 25, 1, 2);
+    this.testSpear = new Spear("testSpear", 25, 1, 2);
+    this.testStaff = new Staff("testStaff", 25, 1, 2);
+    this.testBow = new Bow("testBow", 25, 2, 3);
   }
 
   /**
@@ -192,6 +204,23 @@ public abstract class AbstractTestUnit implements ITestUnit {
     return bow;
   }
 
+  @Test
+  @Override
+  public void testMaxSavingItems() {
+    ArrayList<IEquipableItem> Items = new ArrayList<IEquipableItem>();
+    assertEquals(Items, getTestUnit().getItems());
+    setWeapons();
+    getTestUnit().saveItem(getAxe());
+    Items.add(getAxe());
+    getTestUnit().saveItem(getBow());
+    Items.add(getBow());
+    getTestUnit().saveItem(getSword());
+    Items.add(getSword());
+    getTestUnit().saveItem(getStaff());
+    assertEquals(Items.size(), getTestUnit().getMaxItems());
+    assertEquals(Items, getTestUnit().getItems());
+  }
+
   @Override
   @Test
   public void testTrading() {
@@ -254,17 +283,6 @@ public abstract class AbstractTestUnit implements ITestUnit {
     targetSwordMaster.equipItem(testSword);
   }
 
-  /**
-   * Creates a set of testing combat weapons
-   */
-  @Override
-  public void setCombatsWeapons(){
-    this.testAxe = new Axe("testAxe", 25, 1, 2);
-    this.testSword = new Sword("testSword", 25, 1, 2);
-    this.testSpear = new Spear("testSpear", 25, 1, 2);
-    this.testStaff = new Staff("testStaff", 25, 1, 2);
-    this.testBow = new Bow("testBow", 25, 2, 3);
-  }
 
   /**
    * @return the target Alpaca

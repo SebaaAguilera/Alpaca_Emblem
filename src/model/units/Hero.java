@@ -1,6 +1,6 @@
 package model.units;
 
-import model.items.*;
+import model.items.IEquipableItem;
 import model.map.Location;
 
 /**
@@ -21,8 +21,8 @@ public class Hero extends AbstractUnit {
    * @param movement
    *     the number of panels a unit can move
    */
-  public Hero(double hitPoints, final int movement, final Location location,
-      IEquipableItem... items) {
+  public Hero(double hitPoints, final int movement, Location location,
+              IEquipableItem... items) {
     super(hitPoints, movement, location, 3, items);
   }
 
@@ -37,4 +37,13 @@ public class Hero extends AbstractUnit {
     item.equipToHero(this);
   }
 
+  @Override
+  public void attacked(double damage) {
+    if (this.getCurrentHitPoints() - damage <= 0) {
+      setCurrentHitPoints(0);
+      //And then You lose THE GAME
+    } else {
+      setCurrentHitPoints(this.getCurrentHitPoints() - damage);
+    }
+  }
 }

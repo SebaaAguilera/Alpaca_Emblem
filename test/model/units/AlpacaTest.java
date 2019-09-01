@@ -1,9 +1,11 @@
 package model.units;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
+import model.items.IEquipableItem;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test set for the alpaca unit
@@ -25,6 +27,23 @@ public class AlpacaTest extends AbstractTestUnit {
     return alpaca;
   }
 
+  @Test
+  @Override
+  public void testMaxSavingItems() {
+    ArrayList<IEquipableItem> Items = new ArrayList<IEquipableItem>();
+    assertEquals(Items, alpaca.getItems());
+    setWeapons();
+    alpaca.saveItem(getAxe());
+    Items.add(getAxe());
+    alpaca.saveItem(getBow());
+    Items.add(getBow());
+    alpaca.saveItem(getSword());
+    Items.add(getSword());
+    alpaca.saveItem(getStaff());
+    Items.add(getStaff());
+    assertEquals(true, Items.size() < alpaca.getMaxItems());
+    assertEquals(Items, alpaca.getItems());
+  }
   @Test
   @Override
   public void testCombat(){

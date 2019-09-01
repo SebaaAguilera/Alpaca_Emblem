@@ -96,6 +96,12 @@ public interface ITestUnit {
   Bow getBow();
 
   /**
+   * test that the units can´t save more that 3 items
+   */
+  @Test
+  void testMaxSavingItems();
+
+  /**
    * test the trading correct behaviour
    */
   @Test
