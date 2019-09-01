@@ -146,6 +146,8 @@ public abstract class AbstractUnit implements IUnit {
     }
   }
 
-
-
+  @Override
+  public void healed(double healHP) {
+    this.setCurrentHitPoints(this.getCurrentHitPoints()+healHP);
+  }
 }

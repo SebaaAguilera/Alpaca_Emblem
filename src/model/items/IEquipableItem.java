@@ -83,7 +83,12 @@ public interface IEquipableItem {
    */
   int getMaxRange();
 
-
+  /**
+   * verify if a weapon is in range to attack an unit
+   * @param unit that is being attacked
+   * @return true if is in range, false if not
+   */
+  boolean inRange(IUnit unit);
 
   /**
    * @param unit
@@ -110,13 +115,26 @@ public interface IEquipableItem {
   void attackedWithSpear(Spear spear);
 
   /**
-   * verify if a weapon is in range to attack an unit
-   * @param unit that is being attacked
-   * @return true if is in range, false if not
+   * says to a weapon that is being attacked by a sword
+   * @param light that attacks
    */
-  boolean inRange(IUnit unit);
+  void attackedWithLight(LightBook light);
 
+  /**
+   * says to a weapon that is being attacked by an axe
+   * @param darkness that attacks
+   */
+  void attackedWithDarkness(DarknessBook darkness);
 
+  /**
+   * says to a weapon that is being attacked by a spear
+   * @param anima that attacks
+   */
+  void attackedWithAnima(AnimaBook anima);
 
-
+  /**
+   * heals an unit
+   * @param unit
+   */
+  void healUnit(IUnit unit);
 }

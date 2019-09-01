@@ -3,10 +3,12 @@ package model.items;
 import model.units.*;
 
 /**
+ * This class represents a Bow
+ * Bows are strong against magical items
  * @author Ignacio Slater Muñoz
  * @since
  */
-public class Bow extends AbstractItem {
+public class Bow extends AbstractNonMagicItem {
 
   /**
    * Creates a new bow.

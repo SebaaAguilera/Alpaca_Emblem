@@ -13,7 +13,7 @@ import model.map.Location;
 public class Cleric extends AbstractUnit {
 
   /**
-   * Creates a new Unit.
+   * Creates a new Cleric
    *
    * @param hitPoints
    *     the maximum amount of damage a unit can sustain
@@ -36,8 +36,17 @@ public class Cleric extends AbstractUnit {
     item.equipToCleric(this);
   }
 
+  public void heal(IUnit unit){
+    getEquippedItem().healUnit(unit);
+  }
+
+  @Override
+  public void attack(IUnit unit){
+    // Method body intentionally left empty
+  }
   @Override
   public void combat(IUnit enemy) {
     // Method body intentionally left empty
   }
+
 }

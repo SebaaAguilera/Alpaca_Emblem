@@ -5,12 +5,12 @@ import model.units.*;
 /**
  * This class represents a <i>spear</i>.
  * <p>
- * Spears are strong against swords and weak against axes
+ * Spears are strong against swords and magical items but weak against axes
  *
  * @author Ignacio Slater Muñoz
  * @since 1.0
  */
-public class Spear extends AbstractItem {
+public class Spear extends AbstractNonMagicItem {
 
   /**
    * Creates a new Axe item

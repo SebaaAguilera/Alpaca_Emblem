@@ -30,7 +30,8 @@ public interface IUnit {
 
   /**
    * updates the currentHitPoints
-   * @param currentHitPoints updates the currentHitpoints
+   * @param currentHitPoints
+   *    updates the currentHitpoints
    */
   void setCurrentHitPoints(double currentHitPoints);
 
@@ -46,7 +47,7 @@ public interface IUnit {
 
   /**
    * @param item
-   *     the item to be equipped
+   *    the item to be equipped
    */
   void setEquippedItem(IEquipableItem item);
 
@@ -113,5 +114,10 @@ public interface IUnit {
    */
   void attacked(double damage);
 
+  /**
+   * heals an unit
+   * @param healHP
+   */
+  void healed(double healHP);
 
 }
