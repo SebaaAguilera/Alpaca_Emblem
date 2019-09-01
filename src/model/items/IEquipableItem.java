@@ -22,29 +22,9 @@ public interface IEquipableItem {
   void equipTo(IUnit unit);
 
   /**
-   * @return the unit that has currently equipped this item
+   * unequip the item from the unit
    */
-  IUnit getOwner();
-
-  /**
-   * @return the name of the item
-   */
-  String getName();
-
-  /**
-   * @return the power of the item
-   */
-  int getPower();
-
-  /**
-   * @return the minimum range of the item
-   */
-  int getMinRange();
-
-  /**
-   * @return the maximum range of the item
-   */
-  int getMaxRange();
+  void unEquipFrom();
 
   /**
    * @param archer
@@ -75,6 +55,34 @@ public interface IEquipableItem {
    * equips item to an unit if it's possible
    */
   void equipToSwordMaster(SwordMaster swordMaster);
+
+  void equipToSorcerer(Sorcerer sorcerer);
+
+  /**
+   * @return the unit that has currently equipped this item
+   */
+  IUnit getOwner();
+
+  /**
+   * @return the name of the item
+   */
+  String getName();
+
+  /**
+   * @return the power of the item
+   */
+  int getPower();
+
+  /**
+   * @return the minimum range of the item
+   */
+  int getMinRange();
+
+  /**
+   * @return the maximum range of the item
+   */
+  int getMaxRange();
+
 
 
   /**
@@ -108,8 +116,7 @@ public interface IEquipableItem {
    */
   boolean inRange(IUnit unit);
 
-  /**
-   * unequip the item from the unit
-   */
-  void unEquipFrom();
+
+
+
 }
