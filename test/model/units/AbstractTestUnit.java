@@ -22,11 +22,13 @@ public abstract class AbstractTestUnit implements ITestUnit {
   private Fighter targetFighter;
   private Hero targetHero;
   private SwordMaster targetSwordMaster;
+
   protected Bow testBow;
   protected Axe testAxe;
   protected Sword testSword;
   protected Staff testStaff;
   protected Spear testSpear;
+  protected LightBook targetLightBook;
 
   protected Bow bow;
   protected Field field;
@@ -34,6 +36,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   protected Sword sword;
   protected Staff staff;
   protected Spear spear;
+  protected LightBook lightBook;
 
 
   @Override
@@ -79,6 +82,8 @@ public abstract class AbstractTestUnit implements ITestUnit {
     this.spear = new Spear("Spear", 25, 1, 2);
     this.staff = new Staff("Staff", 25, 1, 2);
     this.bow = new Bow("Bow", 15, 2, 3);
+
+    this.lightBook = new LightBook("LightBook", 25, 1, 2);
   }
 
   /**
