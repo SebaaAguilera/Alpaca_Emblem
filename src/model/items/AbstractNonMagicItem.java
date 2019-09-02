@@ -47,3 +47,4 @@ public abstract class AbstractNonMagicItem extends AbstractItem{
         this.getOwner().attacked(1.5*this.getPower());
     }
 }
+

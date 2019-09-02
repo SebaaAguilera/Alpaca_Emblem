@@ -1,9 +1,9 @@
 package model.units;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
-import org.junit.jupiter.api.Test;
 
 /**
  * @author Ignacio Slater Muñoz
@@ -52,5 +52,19 @@ public class ClericTest extends AbstractTestUnit {
     cleric.combat(targetArcher);
     assertEquals(targetArcherHP, targetArcher.getCurrentHitPoints());
     assertEquals(testUnitHP, cleric.getCurrentHitPoints());
+  }
+
+  @Test
+  public void testHealing() {
+    setUnits();
+    cleric.saveItem(staff);
+    cleric.equipItem(staff);
+    double testUnitHP = cleric.getCurrentHitPoints();
+    Alpaca targetAlpaca = getTargetAlpaca();
+    double targetAlpacaHP = targetAlpaca.getCurrentHitPoints();
+    cleric.heal(targetAlpaca);
+    assertEquals(targetAlpacaHP + cleric.getEquippedItem().getPower(), targetAlpaca.getCurrentHitPoints());
+    assertEquals(testUnitHP, cleric.getCurrentHitPoints());
+
   }
 }

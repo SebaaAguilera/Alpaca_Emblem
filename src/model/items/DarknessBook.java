@@ -1,5 +1,7 @@
 package model.items;
 
+import model.units.IUnit;
+
 /**
  * This class represents a DarknessBook
  * <p>
@@ -19,5 +21,25 @@ public class DarknessBook extends AbstractMagicItem {
      */
     public DarknessBook(String name, int power, int minRange, int maxRange) {
         super(name, power, minRange, maxRange);
+    }
+
+    @Override
+    public void attackTo(IUnit unit) {
+        if (unit.getEquippedItem() == null) {
+            unit.attacked(this.getPower());
+        } else {
+            unit.getEquippedItem().attackedWithDarkness(this);
+        }
+    }
+
+    @Override
+    public void attackedWithLight(LightBook light) {
+        this.getOwner().attacked(1.5 * this.getPower());
+    }
+
+    @Override
+    public void attackedWithAnima(AnimaBook anima) {
+        if (anima.getPower() - 20 <= 0) return;
+        this.getOwner().attacked(this.getPower() - 20);
     }
 }

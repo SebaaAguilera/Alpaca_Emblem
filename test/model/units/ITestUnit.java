@@ -33,6 +33,11 @@ public interface ITestUnit {
    */
   void setWeapons();
 
+    /**
+     * Creates a set of combat testing weapons
+     */
+    void setCombatWeapons();
+
   /**
    * Checks that the constructor works properly.
    */
@@ -124,11 +129,6 @@ public interface ITestUnit {
   void setUnits();
 
   /**
-   * Creates a set of testing combat weapons
-   */
-  void setCombatsWeapons();
-
-  /**
    * @return the target Alpaca
    */
   Alpaca getTargetAlpaca();
@@ -157,6 +157,21 @@ public interface ITestUnit {
    * @return the target SwordMaster
    */
   SwordMaster getTargetSwordMaster();
+
+    /**
+     * @return the target Sorcerer with a Light book equipped
+     */
+    Sorcerer getTargetLightSorcerer();
+
+    /**
+     * @return the target Sorcerer with a Darkness book equipped
+     */
+    Sorcerer getTargetDarkSorcerer();
+
+    /**
+     * @return the target Sorcerer with an Anima book equipped
+     */
+    Sorcerer getTargetAnimaSorcerer();
 
   /**
    * test the combat behaviour, each unit test different combat elements

@@ -23,12 +23,18 @@ public abstract class AbstractTestUnit implements ITestUnit {
   private Hero targetHero;
   private SwordMaster targetSwordMaster;
 
+    private Sorcerer targetLightSorcerer;
+    private Sorcerer targetDarkSorcerer;
+    private Sorcerer targetAnimaSorcerer;
+
   protected Bow testBow;
   protected Axe testAxe;
   protected Sword testSword;
   protected Staff testStaff;
   protected Spear testSpear;
-  protected LightBook targetLightBook;
+    protected LightBook testLightBook;
+    protected DarknessBook testDarknessBook;
+    protected AnimaBook testAnimaBook;
 
   protected Bow bow;
   protected Field field;
@@ -37,6 +43,8 @@ public abstract class AbstractTestUnit implements ITestUnit {
   protected Staff staff;
   protected Spear spear;
   protected LightBook lightBook;
+    protected DarknessBook darknessBook;
+    protected AnimaBook animaBook;
 
 
   @Override
@@ -82,21 +90,55 @@ public abstract class AbstractTestUnit implements ITestUnit {
     this.spear = new Spear("Spear", 25, 1, 2);
     this.staff = new Staff("Staff", 25, 1, 2);
     this.bow = new Bow("Bow", 15, 2, 3);
-
-    this.lightBook = new LightBook("LightBook", 25, 1, 2);
+      this.lightBook = new LightBook("LightBook", 25, 1, 3);
+      this.darknessBook = new DarknessBook("DarknessBook", 25, 1, 3);
+      this.animaBook = new AnimaBook("AnimaBook", 25, 1, 3);
   }
 
   /**
    * Creates a set of testing combat weapons
    */
   @Override
-  public void setCombatsWeapons() {
-    this.testAxe = new Axe("testAxe", 25, 1, 2);
-    this.testSword = new Sword("testSword", 25, 1, 2);
-    this.testSpear = new Spear("testSpear", 25, 1, 2);
-    this.testStaff = new Staff("testStaff", 25, 1, 2);
-    this.testBow = new Bow("testBow", 25, 2, 3);
+  public void setCombatWeapons() {
+      this.testAxe = new Axe("testAxe", 25, 1, 2);
+      this.testSword = new Sword("testSword", 25, 1, 2);
+      this.testSpear = new Spear("testSpear", 25, 1, 2);
+      this.testStaff = new Staff("testStaff", 25, 1, 2);
+      this.testBow = new Bow("testBow", 25, 2, 3);
+      this.testLightBook = new LightBook("testLightBook", 25, 1, 3);
+      this.testDarknessBook = new DarknessBook("testDarknessBook", 25, 1, 3);
+      this.testAnimaBook = new AnimaBook("testAnimaBook", 25, 1, 3);
   }
+
+    @Override
+    public void setUnits() {
+        setCombatWeapons();
+        targetAlpaca = new Alpaca(1000, 2, field.getCell(2, 0));
+        targetArcher = new Archer(1000, 2, field.getCell(1, 0));
+        targetArcher.saveItem(testBow);
+        targetArcher.equipItem(testBow);
+        targetCleric = new Cleric(1000, 2, field.getCell(1, 0));
+        targetCleric.saveItem(testSpear);
+        targetCleric.equipItem(testStaff);
+        targetFighter = new Fighter(1000, 2, field.getCell(1, 0));
+        targetFighter.saveItem(testAxe);
+        targetFighter.equipItem(testAxe);
+        targetHero = new Hero(1000, 2, field.getCell(1, 0));
+        targetHero.saveItem(testSpear);
+        targetHero.equipItem(testSpear);
+        targetSwordMaster = new SwordMaster(1000, 2, field.getCell(1, 0));
+        targetSwordMaster.saveItem(testSword);
+        targetSwordMaster.equipItem(testSword);
+        targetLightSorcerer = new Sorcerer(1000, 2, field.getCell(1, 0));
+        targetLightSorcerer.saveItem(testLightBook);
+        targetLightSorcerer.equipItem(testLightBook);
+        targetDarkSorcerer = new Sorcerer(1000, 2, field.getCell(1, 0));
+        targetDarkSorcerer.saveItem(testDarknessBook);
+        targetDarkSorcerer.equipItem(testDarknessBook);
+        targetAnimaSorcerer = new Sorcerer(1000, 2, field.getCell(1, 0));
+        targetAnimaSorcerer.saveItem(testAnimaBook);
+        targetAnimaSorcerer.equipItem(testAnimaBook);
+    }
 
   /**
    * Checks that the constructor works properly.
@@ -262,28 +304,6 @@ public abstract class AbstractTestUnit implements ITestUnit {
     return field;
   }
 
-  @Override
-  public void setUnits(){
-    setCombatsWeapons();
-    targetAlpaca = new Alpaca(1001, 2, field.getCell(2, 0));
-    targetArcher = new Archer(1001, 2, field.getCell(1, 0));
-    targetArcher.saveItem(testBow);
-    targetArcher.equipItem(testBow);
-    targetCleric = new Cleric(1001, 2, field.getCell(1, 0));
-    targetCleric.saveItem(testSpear);
-    targetCleric.equipItem(testStaff);
-    targetFighter = new Fighter(1001, 2, field.getCell(1, 0));
-    targetFighter.saveItem(testAxe);
-    targetFighter.equipItem(testAxe);
-    targetHero = new Hero(1001, 2, field.getCell(1, 0));
-    targetHero.saveItem(testSpear);
-    targetHero.equipItem(testSpear);
-    targetSwordMaster = new SwordMaster(1001, 2, field.getCell(1, 0));
-    targetSwordMaster.saveItem(testSword);
-    targetSwordMaster.equipItem(testSword);
-  }
-
-
   /**
    * @return the target Alpaca
    */
@@ -331,6 +351,21 @@ public abstract class AbstractTestUnit implements ITestUnit {
   public SwordMaster getTargetSwordMaster() {
     return targetSwordMaster;
   }
+
+    @Override
+    public Sorcerer getTargetLightSorcerer() {
+        return targetLightSorcerer;
+    }
+
+    @Override
+    public Sorcerer getTargetDarkSorcerer() {
+        return targetDarkSorcerer;
+    }
+
+    @Override
+    public Sorcerer getTargetAnimaSorcerer() {
+        return targetAnimaSorcerer;
+    }
 
 
   @Override

@@ -1,6 +1,7 @@
 package model.items;
 
-import model.units.*;
+import model.units.Cleric;
+import model.units.IUnit;
 
 /**
  * This class represents a <i>Staff</i> type item.
@@ -33,7 +34,6 @@ public class Staff extends AbstractNonMagicItem {
     super.equipTo(cleric);
   }
 
-  @Override
   public void healUnit(IUnit unit){
     unit.healed(this.getPower());
   }

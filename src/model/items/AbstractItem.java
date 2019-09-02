@@ -79,39 +79,10 @@ public abstract class AbstractItem implements IEquipableItem {
     unit.attacked(this.getPower());
   }
 
-  @Override
-  public void attackedWithSword(Sword sword) {
-    this.getOwner().attacked(this.getPower());
-  }
-
-  @Override
-  public void attackedWithAxe(Axe axe) {
-    this.getOwner().attacked(this.getPower());
-  }
-
-  @Override
-  public void attackedWithSpear(Spear spear) {
-    this.getOwner().attacked(this.getPower());
-  }
-
-  @Override
-  public void attackedWithLight(LightBook light) {
-    this.getOwner().attacked(this.getPower());
-  }
-
-  @Override
-  public void attackedWithDarkness(DarknessBook darkness) {
-    this.getOwner().attacked(this.getPower());
-  }
-
-  @Override
-  public void attackedWithAnima(AnimaBook anima) {
-    this.getOwner().attacked(this.getPower());
-  }
-
   public void healUnit(IUnit unit){
     // Method body intentionally left empty
   }
+
   @Override
   public boolean inRange(IUnit enemy) {
     Location enemyLocation = enemy.getLocation();

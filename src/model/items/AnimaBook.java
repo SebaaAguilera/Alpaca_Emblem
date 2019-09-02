@@ -1,5 +1,7 @@
 package model.items;
 
+import model.units.IUnit;
+
 /**
  * This class represents a AnimaBook
  * <p>
@@ -20,4 +22,26 @@ public class AnimaBook extends AbstractMagicItem  {
     public AnimaBook(String name, int power, int minRange, int maxRange) {
         super(name, power, minRange, maxRange);
     }
+
+    @Override
+    public void attackTo(IUnit unit) {
+        if (unit.getEquippedItem() == null) {
+            unit.attacked(this.getPower());
+        } else {
+            unit.getEquippedItem().attackedWithAnima(this);
+        }
+    }
+
+    @Override
+    public void attackedWithDarkness(DarknessBook darkness) {
+        this.getOwner().attacked(1.5 * this.getPower());
+    }
+
+    @Override
+    public void attackedWithLight(LightBook light) {
+        if (light.getPower() - 20 <= 0) return;
+        this.getOwner().attacked(this.getPower() - 20);
+    }
+
+
 }
