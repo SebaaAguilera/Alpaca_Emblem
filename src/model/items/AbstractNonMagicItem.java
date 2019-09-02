@@ -20,31 +20,38 @@ public abstract class AbstractNonMagicItem extends AbstractItem{
     }
 
     @Override
+    public void attackedWithBow(Bow bow) {
+        this.getOwner().attacked(bow.getPower());
+    }
+
+    @Override
     public void attackedWithSword(Sword sword) {
-        this.getOwner().attacked(this.getPower());
+        this.getOwner().attacked(sword.getPower());
     }
 
     @Override
     public void attackedWithAxe(Axe axe) {
-        this.getOwner().attacked(this.getPower());
+        this.getOwner().attacked(axe.getPower());
     }
 
     @Override
     public void attackedWithSpear(Spear spear) {
-        this.getOwner().attacked(this.getPower());
+        this.getOwner().attacked(spear.getPower());
     }
 
     @Override
-    public void attackedWithLight(LightBook light) { this.getOwner().attacked(1.5*this.getPower()); }
+    public void attackedWithLight(LightBook light) {
+        this.getOwner().attacked(1.5 * light.getPower());
+    }
 
     @Override
     public void attackedWithDarkness(DarknessBook darkness) {
-        this.getOwner().attacked(1.5*this.getPower());
+        this.getOwner().attacked(1.5 * darkness.getPower());
     }
 
     @Override
     public void attackedWithAnima(AnimaBook anima) {
-        this.getOwner().attacked(1.5*this.getPower());
+        this.getOwner().attacked(1.5 * anima.getPower());
     }
 }
 

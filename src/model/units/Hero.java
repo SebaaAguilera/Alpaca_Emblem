@@ -37,13 +37,5 @@ public class Hero extends AbstractUnit {
     item.equipToHero(this);
   }
 
-  @Override
-  public void attacked(double damage) {
-    if (this.getCurrentHitPoints() - damage <= 0) {
-      setCurrentHitPoints(0);
-      //And then You lose THE GAME
-    } else {
-      setCurrentHitPoints(this.getCurrentHitPoints() - damage);
-    }
-  }
+
 }

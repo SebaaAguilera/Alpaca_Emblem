@@ -1,6 +1,7 @@
 package model.items;
 
-import model.units.*;
+import model.units.Archer;
+import model.units.IUnit;
 
 /**
  * This class represents a Bow
@@ -35,6 +36,15 @@ public class Bow extends AbstractNonMagicItem {
   public void equipToArcher(Archer archer) {
     super.equipTo(archer);
   }
+
+    @Override
+    public void attackTo(IUnit unit) {
+        if (unit.getEquippedItem() == null) {
+            unit.attacked(this.getPower());
+        } else {
+            unit.getEquippedItem().attackedWithBow(this);
+        }
+    }
 
 
 

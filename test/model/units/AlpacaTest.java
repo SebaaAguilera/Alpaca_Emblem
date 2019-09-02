@@ -67,6 +67,24 @@ public class AlpacaTest extends AbstractTestUnit {
     assertEquals(alpacaHP-targetHero.getEquippedItem().getPower(),alpaca.getCurrentHitPoints());
     assertEquals(targetHeroHP,targetHero.getCurrentHitPoints());
 
+      Sorcerer targetLightSorcerer = getTargetLightSorcerer();
+      Sorcerer targetDarkSorcerer = getTargetDarkSorcerer();
+      Sorcerer targetAnimaSorcerer = getTargetAnimaSorcerer();
+      double targetLightSorcererHP = targetLightSorcerer.getCurrentHitPoints();
+      double targetDarkSorcererHP = targetDarkSorcerer.getCurrentHitPoints();
+      double targetAnimaSorcererHP = targetAnimaSorcerer.getCurrentHitPoints();
+      alpacaHP = alpaca.getCurrentHitPoints();
+      targetLightSorcerer.combat(alpaca);
+      assertEquals(alpacaHP - targetLightSorcerer.getEquippedItem().getPower(), alpaca.getCurrentHitPoints());
+      assertEquals(targetLightSorcererHP, targetLightSorcerer.getCurrentHitPoints());
+      alpacaHP = alpaca.getCurrentHitPoints();
+      targetDarkSorcerer.combat(alpaca);
+      assertEquals(alpacaHP - targetDarkSorcerer.getEquippedItem().getPower(), alpaca.getCurrentHitPoints());
+      assertEquals(targetDarkSorcererHP, targetDarkSorcerer.getCurrentHitPoints());
+      alpacaHP = alpaca.getCurrentHitPoints();
+      targetAnimaSorcerer.combat(alpaca);
+      assertEquals(alpacaHP - targetAnimaSorcerer.getEquippedItem().getPower(), alpaca.getCurrentHitPoints());
+      assertEquals(targetAnimaSorcererHP, targetAnimaSorcerer.getCurrentHitPoints());
   }
 
 

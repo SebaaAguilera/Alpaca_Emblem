@@ -25,30 +25,37 @@ public abstract class AbstractMagicItem extends AbstractItem{
     public void equipToSorcerer(Sorcerer sorcerer){ super.equipTo(sorcerer); }
 
     @Override
-    public void attackedWithSword(Sword sword) { this.getOwner().attacked(1.5*this.getPower()); }
+    public void attackedWithBow(Bow bow) {
+        this.getOwner().attacked(1.5 * bow.getPower());
+    }
+
+    @Override
+    public void attackedWithSword(Sword sword) {
+        this.getOwner().attacked(1.5 * sword.getPower());
+    }
 
     @Override
     public void attackedWithAxe(Axe axe) {
-        this.getOwner().attacked(1.5*this.getPower());
+        this.getOwner().attacked(1.5 * axe.getPower());
     }
 
     @Override
     public void attackedWithSpear(Spear spear) {
-        this.getOwner().attacked(1.5*this.getPower());
+        this.getOwner().attacked(1.5 * spear.getPower());
     }
 
     @Override
     public void attackedWithLight(LightBook light) {
-        this.getOwner().attacked(this.getPower());
+        this.getOwner().attacked(light.getPower());
     }
 
     @Override
     public void attackedWithDarkness(DarknessBook darkness) {
-        this.getOwner().attacked(this.getPower());
+        this.getOwner().attacked(darkness.getPower());
     }
 
     @Override
     public void attackedWithAnima(AnimaBook anima) {
-        this.getOwner().attacked(this.getPower());
+        this.getOwner().attacked(anima.getPower());
     }
 }

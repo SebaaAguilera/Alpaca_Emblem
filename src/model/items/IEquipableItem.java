@@ -96,6 +96,13 @@ public interface IEquipableItem {
    */
   void attackTo(IUnit unit);
 
+    /**
+     * says to a weapon that is being attacked by a bow
+     *
+     * @param bow that attacks
+     */
+    void attackedWithBow(Bow bow);
+
   /**
    * says to a weapon that is being attacked by a sword
    * @param sword that attacks
@@ -137,4 +144,6 @@ public interface IEquipableItem {
    * @param unit
    */
   void healUnit(IUnit unit);
+
+
 }

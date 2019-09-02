@@ -1,13 +1,13 @@
 package model.units;
 
-import static java.lang.Math.min;
+import model.items.IEquipableItem;
+import model.map.Location;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import model.items.*;
-import model.map.Location;
+import static java.lang.Math.min;
 
 /**
  * This class represents an abstract unit.
@@ -85,7 +85,8 @@ public abstract class AbstractUnit implements IUnit {
 
   @Override
   public void giveItem(IUnit unit, IEquipableItem item) {
-    if(this.getItems().contains(item) && unit.getItems().size()<unit.getMaxItems()){
+      if (this.getItems().contains(item) && unit.getItems().size() < unit.getMaxItems() &&
+              this.getLocation().distanceTo(unit.getLocation()) <= 1) {
       if (this.getEquippedItem()==item) {
         this.unEquipItem();
       }

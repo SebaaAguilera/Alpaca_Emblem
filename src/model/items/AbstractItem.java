@@ -75,12 +75,7 @@ public abstract class AbstractItem implements IEquipableItem {
   }
 
   @Override
-  public void attackTo(IUnit unit){
-    unit.attacked(this.getPower());
-  }
-
-  public void healUnit(IUnit unit){
-    // Method body intentionally left empty
+  public void healUnit(IUnit unit) { // Method body intentionally left empty
   }
 
   @Override
