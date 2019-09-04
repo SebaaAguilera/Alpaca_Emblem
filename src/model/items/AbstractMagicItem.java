@@ -4,9 +4,9 @@ import model.units.Sorcerer;
 
 /**
  * Abstract class that defines some common information and behaviour between Magic items.
- *
+ * Magic items are strong against nonMagic items and nonMagic items are strong against Magic items.
  * @author Sebastián Aguilera Valenzuela
- * @since 1.0
+ * @since 1.1
  */
 public abstract class AbstractMagicItem extends AbstractItem{
     /**

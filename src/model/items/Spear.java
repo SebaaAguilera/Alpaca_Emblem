@@ -1,6 +1,7 @@
 package model.items;
 
-import model.units.*;
+import model.units.Hero;
+import model.units.IUnit;
 
 /**
  * This class represents a <i>spear</i>.
@@ -35,6 +36,7 @@ public class Spear extends AbstractNonMagicItem {
 
   @Override
   public void attackTo(IUnit unit) {
+      if (!this.inRange(unit)) return;
     if (unit.getEquippedItem()==null){
       unit.attacked(this.getPower());
     } else {

@@ -6,7 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
+ * Test set of a Cleric Unit
+ *
  * @author Ignacio Slater Muñoz
+ * @since 1.0
  */
 public class ClericTest extends AbstractTestUnit {
 

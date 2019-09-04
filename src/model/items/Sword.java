@@ -1,6 +1,7 @@
 package model.items;
 
-import model.units.*;
+import model.units.IUnit;
+import model.units.SwordMaster;
 
 /**
  * This class represents a sword type item.
@@ -35,6 +36,7 @@ public class Sword extends AbstractNonMagicItem {
 
   @Override
   public void attackTo(IUnit unit) {
+      if (!this.inRange(unit)) return;
     if (unit.getEquippedItem()==null){
       unit.attacked(this.getPower());
     } else {

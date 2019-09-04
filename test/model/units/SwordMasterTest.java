@@ -1,12 +1,15 @@
 package model.units;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.jupiter.api.Test;
-
 /**
+ * Set test of SwordMaster unit
+ *
  * @author Ignacio Slater Muñoz
+ * @since 1.1
  */
 public class SwordMasterTest extends AbstractTestUnit {
 

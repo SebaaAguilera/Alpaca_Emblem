@@ -5,6 +5,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+/**
+ * Test set of a Sorcerer Unit
+ *
+ * @author Sebastián Aguilera Valenzuela
+ * @since 1.1
+ */
 public class SorcererTest extends AbstractTestUnit{
     private Sorcerer sorcerer;
 
@@ -30,7 +36,7 @@ public class SorcererTest extends AbstractTestUnit{
      */
     @Test
     @Override
-    public void equipBowTest() {
+    public void equipBookTest() {
         assertNull(sorcerer.getEquippedItem());
         sorcerer.saveItem(lightBook);
         sorcerer.equipItem(lightBook);

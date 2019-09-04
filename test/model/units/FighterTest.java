@@ -1,12 +1,15 @@
 package model.units;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.jupiter.api.Test;
-
 /**
+ * Test set of a Fighter Unit
+ *
  * @author Ignacio Slater Muñoz
+ * @since 1.0
  */
 public class FighterTest extends AbstractTestUnit {
 

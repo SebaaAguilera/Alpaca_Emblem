@@ -4,12 +4,12 @@ import model.items.IEquipableItem;
 import model.map.Location;
 
 /**
- * This class represents an <i>Sorcerer</i> type unit.
+ * This class represents a <i>Sorcerer</i> type unit.
  * <p>
  * This kind of unit <b>can only use Magic Items(books)</b>.
  *
  * @author Sebastián Aguilera Valenzuela
- * @since 1.0
+ * @since 1.1
  */
 public class Sorcerer extends AbstractUnit{
 

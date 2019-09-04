@@ -8,7 +8,7 @@ import model.units.IUnit;
  * AnimaBooks are strong against Light and nonMagical items but weak against DarknessBooks.
  *
  * @author Sebastián Aguilera Valenzuela
- * @since 1.0
+ * @since 1.1
  */
 public class AnimaBook extends AbstractMagicItem  {
     /**
@@ -25,6 +25,7 @@ public class AnimaBook extends AbstractMagicItem  {
 
     @Override
     public void attackTo(IUnit unit) {
+        if (!this.inRange(unit)) return;
         if (unit.getEquippedItem() == null) {
             unit.attacked(this.getPower());
         } else {

@@ -132,7 +132,7 @@ public abstract class AbstractUnit implements IUnit {
 
   @Override
   public void combat(IUnit enemy) {
-    if (this.getCurrentHitPoints()==0 || this.getEquippedItem()==null || !this.getEquippedItem().inRange(enemy)) return;
+      if (this.getCurrentHitPoints() == 0 || this.getEquippedItem() == null) return;
     this.attack(enemy);
     if (enemy.getCurrentHitPoints()==0 || enemy.getEquippedItem()==null ||!enemy.getEquippedItem().inRange(this)) return;
     enemy.attack(this);

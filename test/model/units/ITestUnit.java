@@ -95,6 +95,14 @@ public interface ITestUnit {
   @Test
   void equipBowTest();
 
+  @Test
+  void equipBookTest();
+
+  /**
+   * @return the test book
+   */
+  LightBook getBook();
+
   /**
    * @return the test bow
    */

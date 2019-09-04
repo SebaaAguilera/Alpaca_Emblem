@@ -2,9 +2,9 @@ package model.items;
 
 /**
  * Abstract class that defines some common information and behaviour between nonMagic items.
- *
+ * nonMagic items are strong against Magic items and Magic items are strong against nonMagic items.
  * @author Sebastián Aguilera Valenzuela
- * @since 1.0
+ * @since 1.1
  */
 public abstract class AbstractNonMagicItem extends AbstractItem{
     /**

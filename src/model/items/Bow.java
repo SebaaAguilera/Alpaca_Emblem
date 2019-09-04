@@ -7,7 +7,7 @@ import model.units.IUnit;
  * This class represents a Bow
  * Bows are strong against magical items
  * @author Ignacio Slater Muñoz
- * @since
+ * @since 1.0
  */
 public class Bow extends AbstractNonMagicItem {
 
@@ -39,6 +39,7 @@ public class Bow extends AbstractNonMagicItem {
 
     @Override
     public void attackTo(IUnit unit) {
+        if (!this.inRange(unit)) return;
         if (unit.getEquippedItem() == null) {
             unit.attacked(this.getPower());
         } else {

@@ -27,36 +27,51 @@ public interface IEquipableItem {
   void unEquipFrom();
 
   /**
+   * Equips item to an Archer if it's possible
+   *
    * @param archer
-   * equips item to an unit if it's possible
+   *    the Archer that is supposed to equip the item
    */
   void equipToArcher(Archer archer);
 
   /**
+   * Equips item to a Cleric if it's possible
+   *
    * @param cleric
-   * equips item to an unit if it's possible
+   *    the Cleric that is supposed to equip the item
    */
   void equipToCleric(Cleric cleric);
 
   /**
+   * Equips item to a Fighter if it's possible
+   *
    * @param fighter
-   * equips item to an unit if it's possible
+   *    the Fighter that is supposed to equip the item
    */
   void equipToFighter(Fighter fighter);
 
   /**
+   * Equips item to a Hero if it's possible
+   *
    * @param hero
-   * equips item to an unit if it's possible
+   *    the Hero that is supposed to equip the item
    */
   void equipToHero(Hero hero);
 
   /**
+   *  Equips item to a Sword Master if it's possible
+   *
    * @param swordMaster
-   * equips item to an unit if it's possible
+   *    the Sword Master that is supposed to equip the item
    */
   void equipToSwordMaster(SwordMaster swordMaster);
 
-  void equipToSorcerer(Sorcerer sorcerer);
+    /**
+     * Equips item to a Sorcerer if it's possible
+     *
+     * @param sorcerer the Sorcerer that is supposed to equip the item
+     */
+    void equipToSorcerer(Sorcerer sorcerer);
 
   /**
    * @return the unit that has currently equipped this item
@@ -84,64 +99,71 @@ public interface IEquipableItem {
   int getMaxRange();
 
   /**
-   * verify if a weapon is in range to attack an unit
+   * Verify if a weapon is in range to attack an unit
    * @param unit that is being attacked
    * @return true if is in range, false if not
    */
   boolean inRange(IUnit unit);
 
-  /**
-   * @param unit
-   * attacks an unit
-   */
+    /**Attacks an unit
+     * @param unit
+     *  the unit is going to be attacked
+     */
   void attackTo(IUnit unit);
 
     /**
-     * says to a weapon that is being attacked by a bow
+     * Says to a weapon that is being attacked by a bow
      *
-     * @param bow that attacks
+     * @param bow the bow that attacks
      */
     void attackedWithBow(Bow bow);
 
-  /**
-   * says to a weapon that is being attacked by a sword
-   * @param sword that attacks
-   */
+    /**
+   * Aays to a weapon that is being attacked by a sword
+     * @param sword
+     *    the sword that attacks
+     */
   void attackedWithSword(Sword sword);
 
   /**
-   * says to a weapon that is being attacked by an axe
-   * @param axe that attacks
+   * Says to a weapon that is being attacked by an axe
+   * @param axe
+   *    the axe that attacks
    */
   void attackedWithAxe(Axe axe);
 
   /**
-   * says to a weapon that is being attacked by a spear
-   * @param spear that attacks
+   * Says to a weapon that is being attacked by a spear
+   * @param spear
+   *    the spear that attacks
    */
   void attackedWithSpear(Spear spear);
 
   /**
-   * says to a weapon that is being attacked by a sword
-   * @param light that attacks
+   * Says to a weapon that is being attacked by a light book
+   * @param light
+   *    the light book that attacks
    */
   void attackedWithLight(LightBook light);
 
   /**
-   * says to a weapon that is being attacked by an axe
-   * @param darkness that attacks
+   * Says to a weapon that is being attacked by a darkness book
+   * @param darkness
+   *    the darkness nook that attacks
    */
   void attackedWithDarkness(DarknessBook darkness);
 
   /**
-   * says to a weapon that is being attacked by a spear
-   * @param anima that attacks
+   * Says to a weapon that is being attacked by an anima book
+   * @param anima
+   *    the anima book that attacks
    */
   void attackedWithAnima(AnimaBook anima);
 
   /**
-   * heals an unit
+   * Heals an unit
    * @param unit
+   *    the unit is going to be healed
    */
   void healUnit(IUnit unit);
 

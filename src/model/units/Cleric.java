@@ -40,15 +40,4 @@ public class Cleric extends AbstractUnit {
     getEquippedItem().healUnit(unit);
   }
 
-  /*
-  @Override
-  public void attack(IUnit unit){
-    // Method body intentionally left empty
-  }*/
-
-  @Override
-  public void combat(IUnit enemy) {
-    // Method body intentionally left empty
-  }
-
 }

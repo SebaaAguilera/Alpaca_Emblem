@@ -238,6 +238,20 @@ public abstract class AbstractTestUnit implements ITestUnit {
     checkEquippedItem(getBow());
   }
 
+  @Test
+  @Override
+  public void equipBookTest() {
+    checkEquippedItem(getBook());
+  }
+
+  /**
+   * @return the test book
+   */
+  @Override
+  public LightBook getBook() {
+    return lightBook;
+  }
+
   /**
    * @return the test bow
    */
