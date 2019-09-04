@@ -15,7 +15,7 @@ public abstract class AbstractNonMagicItem extends AbstractItem{
      * @param minRange the minimum range of the item
      * @param maxRange the maximum range of the item
      */
-    public AbstractNonMagicItem(String name, int power, int minRange, int maxRange) {
+    protected AbstractNonMagicItem(String name, int power, int minRange, int maxRange) {
         super(name, power, minRange, maxRange);
     }
 

@@ -21,11 +21,11 @@ import static java.lang.Math.min;
  */
 public abstract class AbstractUnit implements IUnit {
 
-  protected List<IEquipableItem> items = new ArrayList<>();
-  protected double currentHitPoints;
+  private List<IEquipableItem> items = new ArrayList<>();
+  private double currentHitPoints;
   private final int movement;
-  protected IEquipableItem equippedItem;
-  protected final int maxItems;
+  private IEquipableItem equippedItem;
+  private final int maxItems;
   private Location location;
 
   /**
