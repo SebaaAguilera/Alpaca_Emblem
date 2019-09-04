@@ -30,6 +30,13 @@ public class Sorcerer extends AbstractUnit{
         super(hitPoints, movement, position, 3, items);
     }
 
+    /**
+     * Sets the currently equipped item of this unit.
+     * <p>
+     * The <i>Sorcerer</i> can <b>only equip Books</b>.
+     *
+     * @param item the item to equip
+     */
     @Override
     public void equipItem(IEquipableItem item) {
         item.equipToSorcerer(this);
