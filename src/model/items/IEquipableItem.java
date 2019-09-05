@@ -111,18 +111,18 @@ public interface IEquipableItem {
      */
   void attackTo(IUnit unit);
 
-    /**
-     * Says to a weapon that is being attacked by a bow
-     *
-     * @param bow the bow that attacks
-     */
-    void attackedWithBow(Bow bow);
+  /**
+   * Says to a weapon that is being attacked by a bow
+   *
+   * @param bow the bow that attacks
+   */
+  void attackedWithBow(Bow bow);
 
-    /**
+  /**
    * Aays to a weapon that is being attacked by a sword
-     * @param sword
-     *    the sword that attacks
-     */
+   * @param sword
+   *    the sword that attacks
+   */
   void attackedWithSword(Sword sword);
 
   /**

@@ -35,7 +35,6 @@ public class Axe extends AbstractNonMagicItem {
 
   @Override
   public void attackTo(IUnit unit) {
-      if (!this.inRange(unit)) return;
     if (unit.getEquippedItem()==null){
       unit.attacked(this.getPower());
     } else {

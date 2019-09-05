@@ -35,6 +35,7 @@ public class Staff extends AbstractNonMagicItem {
   }
 
   public void healUnit(IUnit unit){
+    if (this.inRange(unit))
     unit.healed(this.getPower());
   }
 
