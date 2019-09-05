@@ -14,9 +14,6 @@ la locación actual de un personaje.
   4. **Items:** los items son objetos de la "clase" _IEquipableItem_ (se explicará mas tarde) _maxItems_ es un _final int_ que representa la cantidad maxima de items que una unidad puede portar, _items_ es una _ArrayList_ de los items que la unidad porta y _equipedItem_ es el item que la unidad tiene equipado.
 
 - El juego cuenta con 7 Unidades:
-
-A excepción de la _Alpaca_ cada unidad pude portar como máximo 3 items y de estos 
-y de estos 3 items solo puede equiparse 1.
   1. ***Archer:*** Solo puede equiparse _Bow_'s.
   2. ***Fighter:*** Solo puede equiparse _Axe_'s.
   3. ***Sword Master:*** Solo puede equiparse _Sword_'s.
@@ -25,6 +22,9 @@ y de estos 3 items solo puede equiparse 1.
   6. ***Hero:*** Solo puede equiparse _Spear_'s.
   7. ***Sorcerer:*** Solo puede equiparse _LightBooks_'s, _DarknessBooks_'s 
   y _AnimaBooks_'s.
+  
+A excepción de la _Alpaca_ cada unidad pude portar como máximo 3 items y de estos 
+y de estos 3 items solo puede equiparse 1.
   
 ## Items: 
 
@@ -39,19 +39,18 @@ Los items son objetos de una clase que (dependiendo de si es un item magico o no
   1. **Rango mínimo:** _minRange_ es un _int_ que representa la cantidad mínima de celdas que tiene que estar un adversario para ser atacado por la unidad que equipa el item. Por defecto es 1, en casos especiales como el _Bow_ este es 2.
   2. **Rango máximo:** _maxRange_ es un _int_ que representa la cantidad máxima de celdas que tiene que estar un adversario para ser atacado por la unidad que equipa el item. tiene que ser estrictamente mayor a _minRange_.
   
-  - Existen dos clases de items, mágicos y no mágicos y su comportamiento se diferencia principalmente al momento de un combate, esto se explicará en la sección ***Fortalezas y Debilidades***. 
+- Existen dos clases de items, mágicos y no mágicos y su comportamiento se diferencia principalmente al momento de un combate, esto se explicará en la sección ***Fortalezas y Debilidades***. 
+  - Items Mágicos: Son principalmente los libros
+   1. **Libros de Luz:** _LightBook_
+   2. **Libros de Oscuridad:** _DarknessBook_
+   3. **Libros de Ánimas:** _AnimaBook_
   
- - Items Mágicos: Son principalmente los libros
-    1. **Libros de Luz:** _LightBook_
-    2. **Libros de Oscuridad:** _DarknessBook_
-    3. **Libros de Ánimas:** _AnimaBook_
-    
   - Items no Mágicos:
-    1. **Hacha:** _Axe_
-    2. **Arco:** _Bow_
-    3. **Lanza:** _Spear_
-    4. **Bastón:** _Staff_
-    5. **Espada:** _Sword_
+   1. **Hacha:** _Axe_
+   2. **Arco:** _Bow_
+   3. **Lanza:** _Spear_
+   4. **Bastón:** _Staff_
+   5. **Espada:** _Sword_
     
 ## Fortalezas y Debilidades
 
