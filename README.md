@@ -39,12 +39,14 @@ Los items son objetos de una clase que (dependiendo de si es un item magico o no
   1. **Rango mínimo:** _minRange_ es un _int_ que representa la cantidad mínima de celdas que tiene que estar un adversario para ser atacado por la unidad que equipa el item. Por defecto es 1, en casos especiales como el _Bow_ este es 2.
   2. **Rango máximo:** _maxRange_ es un _int_ que representa la cantidad máxima de celdas que tiene que estar un adversario para ser atacado por la unidad que equipa el item. tiene que ser estrictamente mayor a _minRange_.
   
- - Existen dos clases de items, mágicos y no mágicos y su comportamiento se diferencia principalmente al momento de un combate, esto se explicará en la sección ***Fortalezas y Debilidades***. 
-  -**Items Mágicos:** Son principalmente los libros.
+  - Existen dos clases de items, mágicos y no mágicos y su comportamiento se diferencia principalmente al momento de un combate, esto se explicará en la sección ***Fortalezas y Debilidades***. 
+  
+ - Items Mágicos: Son principalmente los libros
     1. **Libros de Luz:** _LightBook_
     2. **Libros de Oscuridad:** _DarknessBook_
     3. **Libros de Ánimas:** _AnimaBook_
-  -Items no Mágicos:
+    
+  - Items no Mágicos:
     1. **Hacha:** _Axe_
     2. **Arco:** _Bow_
     3. **Lanza:** _Spear_
@@ -88,10 +90,10 @@ Ahora ¿Cómo se combate? tenems dos unidades, _unit1_ y _unit2_, después de ve
 Solución propuesta: una vez se le dice a _item2_ que fue atacado por un item de la clase _item1_ este sabrá su tipo y el del item atacante y sabrá cuanto daño hará el ataque y si cumple con las condiciones y está en el rango mandará un mensaje a _unit1_ con el daño que recibirá, así mismo para _unit2_. Ahorrandose hacer _overriding_. ¿Porqué no se implementó esto? Porque dado que al ser solo un tipo de unidad "conflictiva" no afecta tanto el diseño.
 
 ## Items que sanan
-_Cleric_ cuenta con un método _heal( )_ este le enviará un mensaje a su _Staff_ y este le enviará un mensaje a la unidad que se quiere sanar llamando a _healed(healHP)_ aumentandole los _currentPoints_
+_Cleric_ cuenta con un método _heal( )_ este le enviará un mensaje a su _Staff_ y este le enviará un mensaje a la unidad que se quiere sanar llamando a _healed(healHP)_ aumentandole los _currentPoints_.
 
 
-### Quizás no habpia que ser tan explicito con todo, perdón por el _wall of text_ :worried:
+### Quizás no había que ser tan explicito con todo, perdón por el _wall of text_ :worried:
 
 
 
