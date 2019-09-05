@@ -37,5 +37,4 @@ public class Hero extends AbstractUnit {
     item.equipToHero(this);
   }
 
-
 }

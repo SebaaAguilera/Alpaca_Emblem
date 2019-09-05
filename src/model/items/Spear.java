@@ -36,7 +36,7 @@ public class Spear extends AbstractNonMagicItem {
 
   @Override
   public void attackTo(IUnit unit) {
-      if (!this.inRange(unit)) return;
+    if (!this.inRange(unit)) return;
     if (unit.getEquippedItem()==null){
       unit.attacked(this.getPower());
     } else {

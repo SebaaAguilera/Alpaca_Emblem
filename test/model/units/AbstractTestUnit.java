@@ -23,18 +23,18 @@ public abstract class AbstractTestUnit implements ITestUnit {
   private Hero targetHero;
   private SwordMaster targetSwordMaster;
 
-    private Sorcerer targetLightSorcerer;
-    private Sorcerer targetDarkSorcerer;
-    private Sorcerer targetAnimaSorcerer;
+  private Sorcerer targetLightSorcerer;
+  private Sorcerer targetDarkSorcerer;
+  private Sorcerer targetAnimaSorcerer;
 
-  protected Bow testBow;
-  protected Axe testAxe;
-  protected Sword testSword;
-  protected Staff testStaff;
-  protected Spear testSpear;
-    protected LightBook testLightBook;
-    protected DarknessBook testDarknessBook;
-    protected AnimaBook testAnimaBook;
+  private Bow testBow;
+  private Axe testAxe;
+  private Sword testSword;
+  private Staff testStaff;
+  private Spear testSpear;
+  private LightBook testLightBook;
+  private DarknessBook testDarknessBook;
+  private AnimaBook testAnimaBook;
 
   protected Bow bow;
   protected Field field;
@@ -43,8 +43,8 @@ public abstract class AbstractTestUnit implements ITestUnit {
   protected Staff staff;
   protected Spear spear;
   protected LightBook lightBook;
-    protected DarknessBook darknessBook;
-    protected AnimaBook animaBook;
+  protected DarknessBook darknessBook;
+  protected AnimaBook animaBook;
 
 
   @Override
@@ -263,7 +263,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
   @Test
   @Override
   public void testMaxSavingItems() {
-    ArrayList<IEquipableItem> Items = new ArrayList<IEquipableItem>();
+    ArrayList<IEquipableItem> Items = new ArrayList<>();
     assertEquals(Items, getTestUnit().getItems());
     setWeapons();
     getTestUnit().saveItem(getAxe());
@@ -290,7 +290,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
 
       assertNull(hero.getEquippedItem());
       assertNull(item.getOwner());
-      assertEquals(true, getTestUnit().getItems().contains(item));
+      assertTrue(getTestUnit().getItems().contains(item));
   }
 
     /**

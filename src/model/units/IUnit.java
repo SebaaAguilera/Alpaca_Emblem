@@ -98,12 +98,6 @@ public interface IUnit {
 
   /**
    * @param unit
-   * attack an enemy unit
-   */
-  void attack(IUnit unit);
-
-  /**
-   * @param unit
    * start a combat between a unit and another one
    */
   void combat(IUnit unit);
@@ -117,6 +111,8 @@ public interface IUnit {
   /**
    * heals an unit
    * @param healHP
+   *    the points are going to be added to the unit currentHitpoints
+   *    the new currentHitpoins can be greater than the initial CurrentHitPoints
    */
   void healed(double healHP);
 

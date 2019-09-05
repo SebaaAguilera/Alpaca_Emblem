@@ -38,8 +38,8 @@ public class Staff extends AbstractNonMagicItem {
     unit.healed(this.getPower());
   }
 
-    @Override
-    public void attackTo(IUnit unit) {
-        // Method body intentionally left empty
-    }
+  @Override
+  public void attackTo(IUnit unit) {
+     // Method body intentionally left empty
+  }
 }

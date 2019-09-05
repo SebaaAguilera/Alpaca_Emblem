@@ -86,7 +86,7 @@ public abstract class AbstractUnit implements IUnit {
   @Override
   public void giveItem(IUnit unit, IEquipableItem item) {
       if (this.getItems().contains(item) && unit.getItems().size() < unit.getMaxItems() &&
-              this.getLocation().distanceTo(unit.getLocation()) <= 1) {
+              this.getLocation().distanceTo(unit.getLocation()) == 1) {
       if (this.getEquippedItem()==item) {
         this.unEquipItem();
       }
@@ -125,17 +125,13 @@ public abstract class AbstractUnit implements IUnit {
     }
   }
 
-  @Override
-  public void attack(IUnit enemy) {
-    getEquippedItem().attackTo(enemy);
-  }
 
   @Override
   public void combat(IUnit enemy) {
-      if (this.getCurrentHitPoints() == 0 || this.getEquippedItem() == null) return;
-    this.attack(enemy);
-    if (enemy.getCurrentHitPoints()==0 || enemy.getEquippedItem()==null ||!enemy.getEquippedItem().inRange(this)) return;
-    enemy.attack(this);
+    if (this.getCurrentHitPoints() == 0 || this.getEquippedItem() == null) return;
+    this.getEquippedItem().attackTo(enemy);
+    if (enemy.getCurrentHitPoints()==0 || enemy.getEquippedItem() == null) return;
+    enemy.getEquippedItem().attackTo(this);
   }
 
   @Override

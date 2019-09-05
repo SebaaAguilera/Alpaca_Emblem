@@ -36,6 +36,16 @@ public class Cleric extends AbstractUnit {
     item.equipToCleric(this);
   }
 
+  @Override
+  public void combat(IUnit enemy) {
+    // Method body intentionally left empty
+  }
+
+  /**
+   * Heals an Unit
+   * @param unit
+   *    the unit that is going o be healed
+   */
   public void heal(IUnit unit){
     getEquippedItem().healUnit(unit);
   }
