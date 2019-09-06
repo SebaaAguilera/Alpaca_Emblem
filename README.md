@@ -92,7 +92,14 @@ Solución propuesta: una vez se le dice a _item2_ que fue atacado por un item de
 _Cleric_ cuenta con un método _heal( )_ este le enviará un mensaje a su _Staff_ y este le enviará un mensaje a la unidad que se quiere sanar si esta unidad está en rango de _Staff_ se aumentarán los _currentPoints_.
 
 
+## Ejecución
+Como el programa sigue en una versión "primitiva" la ejecución se basa en los test qu se encuentran en la capeta test:
 
+Para el testeo de las unidades se setearon un set de unidades "_target_" y dos sets de items, uno para equiparlos a las unidades que se querian testear y el otro para equipar a las "_target_". Entre los test se incluyen el correcto funconamiento de los constructores, la correcta equipación de los items, el funcionamiento del intercambio, la cantidad maxima de items, el movimiento de las unidades, el combate y el correcto funconamiento a la hora de sanar una unidad (_testCleric_ verifica los resultados al sanar a otras unidades).
+
+El testeo del combate es el más "complicado" dado que cada unidad evalua ambitos distintos del comportamiento entre las unidades. _testSorcerer_ evalua como se comportan las unidades al combatir libros con libros o libros contra items no mágicos, _testHero_, _testSwordMaster_ y _testFighter_ evaluan los resultados al combatir entre ellos. _testArcher_ verifica los resultados de combatir con items magicos o no magicos de corto alcance (_spear_,_axe_, _sword_) y que pasa si el poder del arma es mayor que la vida de la unidad atacada o si la unidad atacada está fuera del rango de su arma, _testAlpaca_ ve que pasa cuando la unidad atacada no tiene item equipado (en este caso la unidad atacada es la ALpaca).
+
+Entre los testeos de los items se encontraba el correcto funcionamiento del constructor, el equipamiento a unidades y tambien como para las unidades el correcto funcionamiento de la curación y los ataques a unidades.
 
 
 
