@@ -114,6 +114,7 @@ public abstract class AbstractTestItem {
   }
 
   /**
+   *
    * @return a unit that can equip the item being tested
    */
   public abstract IUnit getTestUnit();
