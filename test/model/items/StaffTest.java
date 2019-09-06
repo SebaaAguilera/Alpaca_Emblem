@@ -3,6 +3,9 @@ package model.items;
 import model.map.Location;
 import model.units.Cleric;
 import model.units.IUnit;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test set for staffs
@@ -41,7 +44,7 @@ public class StaffTest extends AbstractTestItem {
    */
   @Override
   public void setTestUnit() {
-    cleric = new Cleric(10, 5, new Location(0, 0));
+    cleric = new Cleric(100, 5, new Location(0, 0));
   }
 
   @Override
@@ -63,5 +66,21 @@ public class StaffTest extends AbstractTestItem {
   @Override
   public IUnit getTestUnit() {
     return cleric;
+  }
+
+  @Test
+  @Override
+  public void healTest(){
+    getTestItem().healUnit(getTestUnit());
+    double hp = getTestUnit().getCurrentHitPoints();
+    assertEquals(105, getTestUnit().getCurrentHitPoints());
+  }
+
+  @Test
+  @Override
+  public void testAttackTo(){
+    getTestItem().attackTo(getTestUnit());
+    double hp = getTestUnit().getCurrentHitPoints();
+    assertEquals(hp,getTestUnit().getCurrentHitPoints());
   }
 }

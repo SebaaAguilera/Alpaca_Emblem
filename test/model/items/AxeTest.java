@@ -38,7 +38,7 @@ class AxeTest extends AbstractTestItem {
    */
   @Override
   public void setTestUnit() {
-    fighter = new Fighter(10, 5, new Location(0, 0));
+    fighter = new Fighter(100, 5, new Location(0, 0));
   }
 
   @Override

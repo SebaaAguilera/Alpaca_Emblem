@@ -34,10 +34,7 @@ public class Staff extends AbstractNonMagicItem {
     super.equipTo(cleric);
   }
 
-  public void healUnit(IUnit unit){
-    if (this.inRange(unit))
-    unit.healed(this.getPower());
-  }
+  public void healUnit(IUnit unit){ unit.healed(this.getPower()); }
 
   @Override
   public void attackTo(IUnit unit) {

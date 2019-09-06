@@ -25,7 +25,7 @@ public class BowTest extends AbstractTestItem {
   @Override
   public void setTestItem() {
     expectedName = "Common bow";
-    expectedPower = 8;
+    expectedPower = 10;
     expectedMinRange = 2;
     expectedMaxRange = 4;
     bow = new Bow(expectedName, expectedPower, expectedMinRange, expectedMaxRange);
@@ -44,7 +44,7 @@ public class BowTest extends AbstractTestItem {
    */
   @Override
   public void setTestUnit() {
-    archer = new Archer(10, 5, new Location(0, 0));
+    archer = new Archer(100, 5, new Location(0, 0));
   }
 
   /**

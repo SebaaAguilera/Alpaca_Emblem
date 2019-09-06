@@ -46,6 +46,7 @@ public class Cleric extends AbstractUnit {
    * @param unit
    *    the unit that is going o be healed
    */
-  public void heal(IUnit unit){ getEquippedItem().healUnit(unit); }
+  public void heal(IUnit unit){
+    if (this.getEquippedItem().inRange(unit)) getEquippedItem().healUnit(unit); }
 
 }

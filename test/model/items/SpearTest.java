@@ -41,7 +41,7 @@ public class SpearTest extends AbstractTestItem {
    */
   @Override
   public void setTestUnit() {
-    hero = new Hero(10, 5, new Location(0, 0));
+    hero = new Hero(100, 5, new Location(0, 0));
   }
 
   @Override

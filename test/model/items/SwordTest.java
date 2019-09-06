@@ -41,7 +41,7 @@ public class SwordTest extends AbstractTestItem {
    */
   @Override
   public void setTestUnit() {
-    swordMaster = new SwordMaster(10, 5, new Location(0, 0));
+    swordMaster = new SwordMaster(100, 5, new Location(0, 0));
   }
 
   @Override

@@ -3,8 +3,7 @@ package model.units;
 import model.items.Bow;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test set for the Archer unit.
@@ -52,35 +51,35 @@ public class ArcherTest extends AbstractTestUnit {
     archer.saveItem(bow);
     archer.equipItem(bow);
 
-      Sorcerer targetSorcerer = getTargetLightSorcerer();
-      targetSorcerer.moveTo(field.getCell(2, 0));
-      double targetSorcererHP = targetSorcerer.getCurrentHitPoints();
-      archer.combat(targetSorcerer);
-      assertEquals(targetSorcererHP - 1.5 * archer.getEquippedItem().getPower(), targetSorcerer.getCurrentHitPoints());
-      assertEquals(testUnitHP - 1.5 * targetSorcerer.getEquippedItem().getPower(), archer.getCurrentHitPoints());
-      targetSorcerer.moveTo(field.getCell(0, 2));
+    Sorcerer targetSorcerer = getTargetLightSorcerer();
+    targetSorcerer.moveTo(field.getCell(2, 0));
+    double targetSorcererHP = targetSorcerer.getCurrentHitPoints();
+    archer.combat(targetSorcerer);
+    assertEquals(targetSorcererHP - 1.5 * archer.getEquippedItem().getPower(), targetSorcerer.getCurrentHitPoints());
+    assertEquals(testUnitHP - 1.5 * targetSorcerer.getEquippedItem().getPower(), archer.getCurrentHitPoints());
+    targetSorcerer.moveTo(field.getCell(0, 2));
 
-      testUnitHP = archer.getCurrentHitPoints();
-      Hero targetHero = getTargetHero();
-      targetHero.moveTo(field.getCell(2, 0));
-      double targetHeroHP = targetHero.getCurrentHitPoints();
-      archer.combat(targetHero);
-      assertEquals(targetHeroHP - archer.getEquippedItem().getPower(), targetHero.getCurrentHitPoints());
-      assertEquals(testUnitHP - targetHero.getEquippedItem().getPower(), archer.getCurrentHitPoints());
+    testUnitHP = archer.getCurrentHitPoints();
+    Hero targetHero = getTargetHero();
+    targetHero.moveTo(field.getCell(2, 0));
+    double targetHeroHP = targetHero.getCurrentHitPoints();
+    archer.combat(targetHero);
+    assertEquals(targetHeroHP - archer.getEquippedItem().getPower(), targetHero.getCurrentHitPoints());
+    assertEquals(testUnitHP - targetHero.getEquippedItem().getPower(), archer.getCurrentHitPoints());
 
-      testUnitHP = archer.getCurrentHitPoints();
+    testUnitHP = archer.getCurrentHitPoints();
     Cleric targetCleric = getTargetCleric();
-      double targetClericHP = targetCleric.getCurrentHitPoints();
+    double targetClericHP = targetCleric.getCurrentHitPoints();
     archer.combat(targetCleric);
-      assertEquals(targetClericHP, targetCleric.getCurrentHitPoints());
+    assertEquals(targetClericHP, targetCleric.getCurrentHitPoints());
     assertEquals(testUnitHP,archer.getCurrentHitPoints());
 
-      testUnitHP = archer.getCurrentHitPoints();
+    testUnitHP = archer.getCurrentHitPoints();
     Bow superBow = new Bow("Alpacaminator", 9999, 2, 3);
     archer.saveItem(superBow);
     archer.equipItem(superBow);
     Alpaca targetAlpaca = getTargetAlpaca();
-    assertEquals(true,targetAlpaca.getCurrentHitPoints()>0);
+    assertTrue(targetAlpaca.getCurrentHitPoints() > 0);
     archer.combat(targetAlpaca);
     assertEquals(0, targetAlpaca.getCurrentHitPoints());
     assertEquals(testUnitHP,archer.getCurrentHitPoints());

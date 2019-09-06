@@ -118,5 +118,24 @@ public abstract class AbstractTestItem {
    */
   public abstract IUnit getTestUnit();
 
+  /**
+   * test the items and unit correct behaviour when the item  heals an unit
+   */
+  @Test
+  public void healTest(){
+    getTestItem().healUnit(getTestUnit());
+    double hp = getTestUnit().getCurrentHitPoints();
+    assertEquals(hp,getTestUnit().getCurrentHitPoints());
+  }
+
+  /**
+   * test the items and units correct behaviour when the item attacks an unit
+   */
+  @Test
+  public void testAttackTo(){
+    getTestItem().attackTo(getTestUnit());
+    assertEquals(90,getTestUnit().getCurrentHitPoints());
+  }
+
 
 }
