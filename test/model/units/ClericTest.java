@@ -65,12 +65,12 @@ public class ClericTest extends AbstractTestUnit {
     double testUnitHP = cleric.getCurrentHitPoints();
     Alpaca targetAlpaca = getTargetAlpaca();
     double targetAlpacaHP = targetAlpaca.getCurrentHitPoints();
-    cleric.heal(targetAlpaca);
+    cleric.combat(targetAlpaca);
     assertEquals(targetAlpacaHP, targetAlpaca.getCurrentHitPoints());
     assertEquals(testUnitHP, cleric.getCurrentHitPoints());
 
     targetAlpaca.setCurrentHitPoints(500);
-    cleric.heal(targetAlpaca);
+    cleric.combat(targetAlpaca);
     assertEquals(500 + cleric.getEquippedItem().getPower(), targetAlpaca.getCurrentHitPoints());
     assertEquals(testUnitHP, cleric.getCurrentHitPoints());
   }

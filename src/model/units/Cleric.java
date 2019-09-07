@@ -37,16 +37,10 @@ public class Cleric extends AbstractUnit {
   }
 
   @Override
-  public void combat(IUnit enemy) {
-    // Method body intentionally left empty
+  public void combat(IUnit unit) {
+    if(unit.getCurrentHitPoints()>0 && this.getEquippedItem()!=null && this.getEquippedItem().inRange(unit)){
+      getEquippedItem().healUnit(unit);
+    }
   }
-
-  /**
-   * Heals an Unit
-   * @param unit
-   *    the unit that is going o be healed
-   */
-  public void heal(IUnit unit){
-    if (this.getEquippedItem().inRange(unit)) getEquippedItem().healUnit(unit); }
 
 }
