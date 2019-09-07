@@ -7,7 +7,7 @@ En las secciones **Unidades** e **Items** se explicán algunas implementaciones,
 ## Unidades: 
 Las unidades son objetos de una clase que extiende a la clase abstracta _AbstractUnit_ que a su vez implementa a la interfaz _IUnit_.
 - Cada unidad tiene los siguientes atributos privados en la clase abstracta:
-  1. **Hitpoints:** _currentHitPoints_ es un _double_ y representa la vida actual de una unidad.
+  1. **Hitpoints:** _currentHitPoints_ es un _double_ y representa la vida actual de una unidad y _maxHitpoints_ es un _final int_ y representa la cantidad máxima de vida de una unidad.
   2. **Movement:** _movement_ es un _ final int_ que represena la cantidad maxima de celdas que una unidad se puede mover.
   3. **Location:** _location_ es un objeto de la clase _Location_ y representa
 la locación actual de un personaje.
@@ -89,7 +89,7 @@ Ahora ¿Cómo se combate? Después de verificar que las condiciones previamente 
 Solución propuesta: una vez se le dice a _item2_ que fue atacado por un item de la clase _item1_, _item2_ sabrá su tipo y el del item atacante y sabrá cuanto daño hará el contrataque y si se cumplen las condiciones de combate _item2_ mandará un mensaje a _unit1_ con el daño que recibirá, así mismo para _unit2_. Ahorrandose hacer _overriding_ y solo dejando el método que ataca de _Staff_ vacío. ¿Porqué no se cambió todo para usar esta implementación? Porque dado que solo hay un tipo de unidad "conflictiva" no afecta tanto el diseño y  también el _coverage_ de _testeo_ disminuiría considerablemente.
 
 ## Items que sanan
-_Cleric_ cuenta con un método _heal( )_ este le enviará un mensaje a su _Staff_ y este le enviará un mensaje a la unidad que se quiere sanar si esta unidad está en rango de _Staff_ se aumentarán los _currentPoints_.
+_Cleric_ cuenta con un método _heal( )_ este le enviará un mensaje a su _Staff_ y este le enviará un mensaje a la unidad que se quiere sanar si esta unidad está en rango de _Staff_ se aumentarán los _currentPoints_, si los nuevos _currentsHitpoints_ superan a _maxHitpoints_ se asignará como _currentHitpoints_ _maxHitpoints_ para evitar el overHealing.
 
 
 ## Ejecución
