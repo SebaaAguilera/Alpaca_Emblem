@@ -22,6 +22,7 @@ import static java.lang.Math.min;
 public abstract class AbstractUnit implements IUnit {
 
   private List<IEquipableItem> items = new ArrayList<>();
+  private final double maxHitPoints;
   private double currentHitPoints;
   private final int movement;
   private IEquipableItem equippedItem;
@@ -41,12 +42,16 @@ public abstract class AbstractUnit implements IUnit {
    */
   protected AbstractUnit(double hitPoints, final int movement,
                          Location location, final int maxItems, IEquipableItem... items) {
+    this.maxHitPoints = hitPoints;
     this.currentHitPoints = hitPoints;
     this.movement = movement;
     this.location = location;
     this.maxItems = maxItems;
     this.items.addAll(Arrays.asList(items).subList(0, min(maxItems, items.length)));
   }
+
+  @Override
+  public double getMaxHitPoints(){ return maxHitPoints; }
 
   @Override
   public double getCurrentHitPoints() { return currentHitPoints; }
@@ -145,6 +150,10 @@ public abstract class AbstractUnit implements IUnit {
 
   @Override
   public void healed(double healHP) {
-    this.setCurrentHitPoints(this.getCurrentHitPoints()+healHP);
+    if (healHP + this.getCurrentHitPoints()>this.getMaxHitPoints()){
+      this.setCurrentHitPoints(this.getMaxHitPoints());
+    } else {
+      this.setCurrentHitPoints(this.getCurrentHitPoints()+healHP);
+    }
   }
 }

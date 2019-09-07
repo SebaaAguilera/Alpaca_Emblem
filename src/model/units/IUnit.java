@@ -24,6 +24,11 @@ public interface IUnit {
   void equipItem(IEquipableItem item);
 
   /**
+   * @return maximum amount of hit points of the unit
+   */
+  double getMaxHitPoints();
+
+  /**
    * @return hit points of the unit
    */
   double getCurrentHitPoints();

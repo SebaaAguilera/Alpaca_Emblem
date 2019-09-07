@@ -108,7 +108,7 @@ public abstract class AbstractTestItem {
   public void equippedToTest() {
     assertNull(getTestItem().getOwner());
     IUnit unit = getTestUnit();
-    unit.saveItem(getTestItem()); //
+    unit.saveItem(getTestItem());
     getTestItem().equipTo(unit);
     assertEquals(unit, getTestItem().getOwner());
   }
@@ -124,8 +124,8 @@ public abstract class AbstractTestItem {
    */
   @Test
   public void healTest(){
-    getTestItem().healUnit(getTestUnit());
     double hp = getTestUnit().getCurrentHitPoints();
+    getTestItem().healUnit(getTestUnit());
     assertEquals(hp,getTestUnit().getCurrentHitPoints());
   }
 

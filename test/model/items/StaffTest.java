@@ -71,9 +71,9 @@ public class StaffTest extends AbstractTestItem {
   @Test
   @Override
   public void healTest(){
+    getTestUnit().setCurrentHitPoints(90);
     getTestItem().healUnit(getTestUnit());
-    double hp = getTestUnit().getCurrentHitPoints();
-    assertEquals(105, getTestUnit().getCurrentHitPoints());
+    assertEquals(95, getTestUnit().getCurrentHitPoints());
   }
 
   @Test
