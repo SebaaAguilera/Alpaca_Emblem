@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import model.Tactician;
 import model.items.IEquipableItem;
@@ -16,6 +17,8 @@ import model.units.IUnit;
  */
 public class GameController {
 
+  private List<Tactician> tacticians = new ArrayList<>();;
+  private Field map;
   /**
    * Creates the controller for a new game.
    *
@@ -25,22 +28,21 @@ public class GameController {
    *     the dimensions of the map, for simplicity, all maps are squares
    */
   public GameController(int numberOfPlayers, int mapSize) {
+    for (int i=0; i<numberOfPlayers;i++){
+      tacticians.add(new Tactician("Player" + i));
+    }
 
   }
 
   /**
    * @return the list of all the tacticians participating in the game.
    */
-  public List<Tactician> getTacticians() {
-    return null;
-  }
+  public List<Tactician> getTacticians() { return tacticians; }
 
   /**
    * @return the map of the current game
    */
-  public Field getGameMap() {
-    return null;
-  }
+  public Field getGameMap() { return map; }
 
   /**
    * @return the tactician that's currently playing

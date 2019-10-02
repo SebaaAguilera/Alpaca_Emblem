@@ -22,14 +22,14 @@ class GameControllerTest {
 
   private GameController controller;
   private long randomSeed;
-  private List<String> testTacticians;
+  private List<Tactician> testTacticians;
 
   @BeforeEach
   void setUp() {
     // Se define la semilla como un número aleatorio para generar variedad en los tests
     randomSeed = new Random().nextLong();
     controller = new GameController(4, 7);
-    testTacticians = List.of("Player 0", "Player 1", "Player 2", "Player 3");
+    testTacticians = List.of(new Tactician("Player 0"), new Tactician("Player 1"), new Tactician("Player 2"), new Tactician("Player 3"));
   }
 
   @Test
