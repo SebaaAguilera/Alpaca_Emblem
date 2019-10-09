@@ -19,6 +19,8 @@ public class GameController {
 
   private List<Tactician> tacticians = new ArrayList<>();;
   private Field map;
+  private Tactician turnOwner;
+  private int roundNumber;
   /**
    * Creates the controller for a new game.
    *
@@ -31,7 +33,8 @@ public class GameController {
     for (int i=0; i<numberOfPlayers;i++){
       tacticians.add(new Tactician("Player" + i));
     }
-
+    map = new Field();
+    roundNumber = 0;
   }
 
   /**
@@ -47,16 +50,12 @@ public class GameController {
   /**
    * @return the tactician that's currently playing
    */
-  public Tactician getTurnOwner() {
-    return null;
-  }
+  public Tactician getTurnOwner() { return turnOwner; }
 
   /**
    * @return the number of rounds since the start of the game.
    */
-  public int getRoundNumber() {
-    return 0;
-  }
+  public int getRoundNumber() { return roundNumber; }
 
   /**
    * @return the maximum number of rounds a match can last
