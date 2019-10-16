@@ -39,6 +39,30 @@ public class Field {
   }
 
   /**
+   *
+   * @param mapSize the size of the map
+   * @return an array with the locations of the map
+   */
+  public Location[] arrayCells(int mapSize){
+    Location[] cells = new Location[mapSize*mapSize];
+    for(int i = 0; i<mapSize; i++){
+      for(int j = 0; j<mapSize; j++) {
+        cells[j+i*mapSize] = new Location(i,j);
+      }
+    }
+    return cells;
+  }
+
+  /**
+   * @param seed, sets a new seed and restarts the field.
+   */
+  public void setSeedToRebuild(Random seed){
+    map = new HashMap<>();
+    random = seed;
+    builder = new StringBuilder();
+  }
+
+  /**
    * Adds a cell to the map
    *
    * @param cell
@@ -140,4 +164,10 @@ public class Field {
   public boolean checkConnection(final Location cell1, final Location cell2) {
     return cell1.isNeighbour(cell2);
   }
+
+    /**
+     *
+     * @return the maap size
+     */
+  public int getSize() { return (int) Math.sqrt(map.size());   }
 }

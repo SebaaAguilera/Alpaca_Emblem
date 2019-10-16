@@ -5,6 +5,7 @@ import java.util.List;
 import model.Tactician;
 import model.items.IEquipableItem;
 import model.map.Field;
+import model.map.Location;
 import model.units.IUnit;
 
 /**
@@ -20,7 +21,10 @@ public class GameController {
   private List<Tactician> tacticians = new ArrayList<>();;
   private Field map;
   private Tactician turnOwner;
+  private IUnit selectedUnitIn;
   private int roundNumber;
+  private int maxRounds = -1;
+
   /**
    * Creates the controller for a new game.
    *
@@ -30,11 +34,16 @@ public class GameController {
    *     the dimensions of the map, for simplicity, all maps are squares
    */
   public GameController(int numberOfPlayers, int mapSize) {
+
     for (int i=0; i<numberOfPlayers;i++){
       tacticians.add(new Tactician("Player" + i));
+      tacticians.get(i).setController(this);
     }
+
     map = new Field();
-    roundNumber = 0;
+    map.addCells(false, map.arrayCells(mapSize));
+
+    roundNumber=1;
   }
 
   /**
@@ -53,6 +62,12 @@ public class GameController {
   public Tactician getTurnOwner() { return turnOwner; }
 
   /**
+   * @param i is the round number
+   *          sets the round number
+   */
+  private void setRoundNumber(int i) { roundNumber=i; }
+
+  /**
    * @return the number of rounds since the start of the game.
    */
   public int getRoundNumber() { return roundNumber; }
@@ -68,7 +83,7 @@ public class GameController {
    * Finishes the current player's turn.
    */
   public void endTurn() {
-
+    setRoundNumber(getRoundNumber()+1);
   }
 
   /**
@@ -78,7 +93,11 @@ public class GameController {
    *     the player to be removed
    */
   public void removeTactician(String tactician) {
-
+    for (int i=0; i<tacticians.size();i++){
+      if(tactician.equals(tacticians.get(i).getName())){
+        tacticians.remove(i);
+      }
+    }
   }
 
   /**
@@ -87,14 +106,13 @@ public class GameController {
    *  the maximum number of turns the game can last
    */
   public void initGame(final int maxTurns) {
-
   }
+
 
   /**
    * Starts a game without a limit of turns.
    */
   public void initEndlessGame() {
-
   }
 
   /**
@@ -108,7 +126,7 @@ public class GameController {
    * @return the current player's selected unit
    */
   public IUnit getSelectedUnit() {
-    return null;
+    return turnOwner.getSelectedUnit();
   }
 
   /**
@@ -120,7 +138,8 @@ public class GameController {
    *     vertical position of the unit
    */
   public void selectUnitIn(int x, int y) {
-
+    Location loc = map.getCell(x,y);
+    selectedUnitIn = loc.getUnit();
   }
 
   /**
