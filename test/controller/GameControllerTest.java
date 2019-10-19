@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 import model.Tactician;
+import model.units.*;
+import model.UnitFactory;
 import model.map.Field;
+import model.map.Location;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +26,7 @@ class GameControllerTest {
   private GameController controller;
   private long randomSeed;
   private List<String> testTacticians;
+  private UnitFactory uFactory;
 
   @BeforeEach
   void setUp() {
@@ -30,6 +34,7 @@ class GameControllerTest {
     randomSeed = new Random().nextLong();
     controller = new GameController(4, 7);
     testTacticians = List.of("Player 0", "Player 1", "Player 2","Player 3");
+    uFactory = new UnitFactory();
   }
 
   @Test
@@ -44,19 +49,26 @@ class GameControllerTest {
   @Test
   void getGameMap() {
     Field gameMap = controller.getGameMap();
-    assertEquals(7, gameMap.getSize()); // getSize deben definirlo
+    assertEquals(7, gameMap.getSize());
     assertTrue(controller.getGameMap().isConnected());
-    Random testRandom = new Random(randomSeed);
-    gameMap.setSeedToRebuild(testRandom);
-    // Para testear funcionalidades que dependen de valores aleatorios se hacen 2 cosas:
-    //  - Comprobar las invariantes de las estructuras que se crean (en este caso que el mapa tenga
-    //    las dimensiones definidas y que sea conexo.
-    //  - Setear una semilla para el generador de números aleatorios. Hacer esto hace que la
-    //    secuencia de números generada sea siempre la misma, así pueden predecir los
-    //    resultados que van a obtener.
-    //    Hay 2 formas de hacer esto en Java, le pueden pasar el seed al constructor de Random, o
-    //    usar el método setSeed de Random.
-    //  ESTO ÚLTIMO NO ESTÁ IMPLEMENTADO EN EL MAPA, ASÍ QUE DEBEN AGREGARLO (!)
+
+    Random seed = controller.getSeed();
+
+    Field testMap = new Field();
+    testMap.setSeed(seed);
+    testMap.addCells(false, testMap.arrayCells(7));
+    assertTrue(testMap.isConnected());
+
+    for (int i = 0; i < 7; i++){
+      for (int j = 0; j < 7; j++){
+        Location gm = gameMap.getCell(i,j);
+        Location tm = testMap.getCell(i,j);
+        assertEquals(gm.getNeighbours().size(),tm.getNeighbours().size());
+        for (int k = 0; k < tm.getNeighbours().size(); k++){
+          // Hay que saber como haer esto
+        }
+      }
+    }
   }
 
   @Test
@@ -147,14 +159,25 @@ class GameControllerTest {
   // Desde aquí en adelante, los tests deben definirlos completamente ustedes
   @Test
   void getSelectedUnit() {
+    Alpaca alp = uFactory.createAlpaca(controller.getGameMap().getCell(0,0));
+    controller.setTurnOwner(controller.getTacticians().get(0));
+    controller.addUnit(alp); // aplicar observer para que esto funcione
+    controller.selectUnitIn(0,0);
+    assertEquals(alp,controller.getSelectedUnit());
   }
 
-  @Test
+  @Test // esta deberia ser diferente
   void selectUnitIn() {
+    Alpaca alp = uFactory.createAlpaca(controller.getGameMap().getCell(0,0));
+    controller.setTurnOwner(controller.getTacticians().get(0));
+    controller.addUnit(alp); // aplicar observer para que esto funcione
+    controller.selectUnitIn(0,0);
+    assertEquals(alp,controller.getSelectedUnit());
   }
 
   @Test
   void getItems() {
+
   }
 
   @Test

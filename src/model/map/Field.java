@@ -56,11 +56,7 @@ public class Field {
   /**
    * @param seed, sets a new seed and restarts the field.
    */
-  public void setSeedToRebuild(Random seed){
-    map = new HashMap<>();
-    random = seed;
-    builder = new StringBuilder();
-  }
+  public void setSeed(Random seed){ random = seed; }
 
   /**
    * Adds a cell to the map
@@ -79,7 +75,7 @@ public class Field {
    *     the location of the current cell
    * @return an array of the adjacent cells
    */
-  private Location[] getAdjacentCells(final Location cell) {
+  public Location[] getAdjacentCells(final Location cell) {
     int row = cell.getRow(),
         col = cell.getColumn();
     return new Location[]{getCell(row - 1, col), getCell(row + 1, col), getCell(row, col - 1),

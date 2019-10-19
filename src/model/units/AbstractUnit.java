@@ -46,6 +46,7 @@ public abstract class AbstractUnit implements IUnit {
     this.currentHitPoints = hitPoints;
     this.movement = movement;
     this.location = location;
+    location.setUnit(this);
     this.maxItems = maxItems;
     this.items.addAll(Arrays.asList(items).subList(0, min(maxItems, items.length)));
   }

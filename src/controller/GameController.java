@@ -1,7 +1,10 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+
 import model.Tactician;
 import model.items.IEquipableItem;
 import model.map.Field;
@@ -20,9 +23,9 @@ public class GameController {
 
   private List<Tactician> tacticians = new ArrayList<>();;
   private Field map;
+  private Random random = new Random();
   private Tactician turnOwner;
-  private IUnit selectedUnitIn;
-  private int roundNumber;
+  private int roundNumber = 1;
   private int maxRounds = -1;
 
   /**
@@ -34,16 +37,15 @@ public class GameController {
    *     the dimensions of the map, for simplicity, all maps are squares
    */
   public GameController(int numberOfPlayers, int mapSize) {
+    map = new Field();
+    map.setSeed(random);
+    map.addCells(false, map.arrayCells(mapSize));
 
     for (int i=0; i<numberOfPlayers;i++){
-      tacticians.add(new Tactician("Player" + i));
+      tacticians.add(new Tactician("Player " + i));
       tacticians.get(i).setController(this);
     }
 
-    map = new Field();
-    map.addCells(false, map.arrayCells(mapSize));
-
-    roundNumber=1;
   }
 
   /**
@@ -51,11 +53,36 @@ public class GameController {
    */
   public List<Tactician> getTacticians() { return tacticians; }
 
+
+  public int[] roundSequence(){
+    int[] roundSequence = new int[tacticians.size()];
+    int index = random.nextInt(tacticians.size());
+    while(turnOwner!=null && index==tacticians.indexOf(turnOwner)){
+      index = random.nextInt(tacticians.size());
+    }
+    roundSequence[0] = index;
+
+    for (int i = 1; i < tacticians.size(); i++){
+      index = random.nextInt(tacticians.size());
+      while(Arrays.asList(roundSequence).contains(index)){
+        index = random.nextInt(tacticians.size());
+      }
+      roundSequence[i] = index;
+    }
+    return roundSequence;
+  }
+
   /**
    * @return the map of the current game
    */
   public Field getGameMap() { return map; }
 
+  public Random getSeed(){ return random;}
+
+  /**
+   * @param tactician will be the turn owner
+   */
+  public void setTurnOwner(Tactician tactician){ turnOwner = tactician; }
   /**
    * @return the tactician that's currently playing
    */
@@ -83,7 +110,7 @@ public class GameController {
    * Finishes the current player's turn.
    */
   public void endTurn() {
-    setRoundNumber(getRoundNumber()+1);
+    setRoundNumber(roundNumber+1);
   }
 
   /**
@@ -138,8 +165,16 @@ public class GameController {
    *     vertical position of the unit
    */
   public void selectUnitIn(int x, int y) {
-    Location loc = map.getCell(x,y);
-    selectedUnitIn = loc.getUnit();
+    turnOwner.selectUnitIn(x,y);
+  }
+
+  /**
+   * @param unit, the turn owner will add this unit
+   */
+  public void addUnit(IUnit unit) {
+
+    turnOwner.addUnit(unit);
+
   }
 
   /**
@@ -155,9 +190,7 @@ public class GameController {
    * @param index
    *     the location of the item in the inventory.
    */
-  public void equipItem(int index) {
-
-  }
+  public void equipItem(int index) { turnOwner.equipItem(index); }
 
   /**
    * Uses the equipped item on a target

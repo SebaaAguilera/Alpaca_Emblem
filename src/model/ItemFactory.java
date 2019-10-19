@@ -4,9 +4,7 @@ import model.items.*;
 
 public class ItemFactory {
 
-    public AnimaBook createAnimaBook(){
-        return new AnimaBook("Anima",40,1,4);
-    }
+    public AnimaBook createAnimaBook(){ return new AnimaBook("Anima",40,1,4); }
 
     public DarknessBook createDarknessBook(){
         return new DarknessBook("Darkness",40,1,4);
