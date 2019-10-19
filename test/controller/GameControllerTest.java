@@ -5,10 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
+
+import model.items.*;
+import model.items.IEquipableItem;
 import model.Tactician;
+import model.itemFactory.*;
 import model.units.*;
 import model.UnitFactory;
 import model.map.Field;
@@ -26,7 +31,18 @@ class GameControllerTest {
   private GameController controller;
   private long randomSeed;
   private List<String> testTacticians;
+
   private UnitFactory uFactory;
+
+  private AnimaFactory anima;
+  private AxeFactory axe;
+  private BowFactory bow;
+  private DarknessFactory dark;
+  private LightFactory light;
+  private SpearFactory spear;
+  private StaffFactory staff;
+  private SwordFactory sword;
+
 
   @BeforeEach
   void setUp() {
@@ -34,7 +50,17 @@ class GameControllerTest {
     randomSeed = new Random().nextLong();
     controller = new GameController(4, 7);
     testTacticians = List.of("Player 0", "Player 1", "Player 2","Player 3");
+
     uFactory = new UnitFactory();
+
+    anima = new AnimaFactory();
+    axe = new AxeFactory();
+    bow = new BowFactory();
+    dark = new DarknessFactory();
+    light = new LightFactory();
+    spear = new SpearFactory();
+    staff = new StaffFactory();
+    sword = new SwordFactory();
   }
 
   @Test
@@ -65,7 +91,7 @@ class GameControllerTest {
         Location tm = testMap.getCell(i,j);
         assertEquals(gm.getNeighbours().size(),tm.getNeighbours().size());
         for (int k = 0; k < tm.getNeighbours().size(); k++){
-          // Hay que saber como haer esto
+          assertTrue(gm.getNeighbours().equals(tm.getNeighbours()));
         }
       }
     }
@@ -177,15 +203,59 @@ class GameControllerTest {
 
   @Test
   void getItems() {
-
+    Archer arc = uFactory.createArcher(controller.getGameMap().getCell(0,0));
+    controller.setTurnOwner(controller.getTacticians().get(0));
+    controller.addUnit(arc); // aplicar observer para que esto funcione
+    List<IEquipableItem> items = new ArrayList<>();
+    IEquipableItem ab = anima.create();
+    IEquipableItem b = bow.create();
+    items.add(ab);
+    items.add(b);
+    arc.saveItem(ab);
+    arc.saveItem(b);
+    controller.selectUnitIn(0,0);
+    assertEquals(items,controller.getItems());
   }
 
   @Test
   void equipItem() {
+    Archer arc = uFactory.createArcher(controller.getGameMap().getCell(0,0));
+    controller.setTurnOwner(controller.getTacticians().get(0));
+    List<IEquipableItem> items = new ArrayList<>();
+    IEquipableItem ab = anima.create();
+    IEquipableItem b = bow.create();
+    items.add(ab);
+    items.add(b);
+    arc.saveItem(ab);
+    arc.saveItem(b);
+    controller.selectUnitIn(0,0);
+    controller.equipItem(1);
+    assertEquals(b,controller.getTurnOwner().getSelectedUnit().getEquippedItem());
   }
 
   @Test
   void useItemOn() {
+    Fighter fi = uFactory.createFighter(controller.getGameMap().getCell(0,0));
+    Hero he = uFactory.createHero(controller.getGameMap().getCell(1,0));
+    Cleric cl = uFactory.createCleric(controller.getGameMap().getCell(2,0));
+    controller.setTurnOwner(controller.getTacticians().get(0));
+    controller.addUnit(fi);
+    fi.saveItem(axe.create());
+    controller.selectUnitIn(0,0);
+    controller.equipItem(0);
+    controller.setTurnOwner(controller.getTacticians().get(1));
+    he.saveItem(axe.create());
+    cl.saveItem(staff.create());
+    controller.addUnit(he);
+    controller.addUnit(cl);
+    controller.selectUnitIn(1,0);
+    controller.equipItem(0);
+    controller.selectUnitIn(2,0);
+    controller.equipItem(1);
+
+
+    controller.useItemOn(1,0);
+    //assertEquals();
   }
 
   @Test

@@ -180,9 +180,7 @@ public class GameController {
   /**
    * @return the inventory of the currently selected unit.
    */
-  public List<IEquipableItem> getItems() {
-    return null;
-  }
+  public List<IEquipableItem> getItems() { return turnOwner.getItems(); }
 
   /**
    * Equips an item from the inventory to the currently selected unit.

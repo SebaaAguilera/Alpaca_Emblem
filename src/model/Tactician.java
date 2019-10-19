@@ -50,21 +50,24 @@ public class Tactician {
         return "uwu";
     }
 
-    private List<IEquipableItem> getSelectedUnitItems(){
-        return null;
-    }
-
     private double getSelectedUnitItemPower(){
         return 0;
     }
 
 
+    public List<IEquipableItem> getItems() {
+        if(units.contains(selectedUnit)){
+            return selectedUnit.getItems();
+        } else return null;
+    }
+
     /**
      *
      * @param index of the item the unit will equip
      */
-    public void equipItem(int index) { selectedUnit.equipItem(selectedUnit.getItems().get(index)); }
-
-
-
+    public void equipItem(int index) {
+        if (units.contains(selectedUnit)) {
+            selectedUnit.equipItem(selectedUnit.getItems().get(index));
+        }
+    }
 }

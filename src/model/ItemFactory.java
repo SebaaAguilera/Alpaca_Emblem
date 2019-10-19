@@ -30,5 +30,5 @@ public class ItemFactory {
         return new Sword("Sword", 40,1,2);
     }
 
-
+    public IEquipableItem createStaff() { return new Sword("Staff", 40,1,2);  }
 }
