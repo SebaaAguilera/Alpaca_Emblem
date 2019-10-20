@@ -8,16 +8,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
 
-import model.items.*;
-import model.items.IEquipableItem;
 import model.Tactician;
+import model.unitFactory.*;
 import model.itemFactory.*;
-import model.units.*;
-import model.UnitFactory;
+import model.items.IEquipableItem;
 import model.map.Field;
 import model.map.Location;
+import model.units.IUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,15 @@ class GameControllerTest {
   private long randomSeed;
   private List<String> testTacticians;
 
-  private UnitFactory uFactory;
+  private AlpacaFactory alpaca;
+  private ArcherFactory archer;
+  private ClericFactory cleric;
+  private FighterFactory fighter;
+  private HeroFactory hero;
+  private SwordMasterFactory swordMaster;
+  private SorcererFactory sorcerer;
+
+
 
   private AnimaFactory anima;
   private AxeFactory axe;
@@ -51,7 +59,13 @@ class GameControllerTest {
     controller = new GameController(4, 7);
     testTacticians = List.of("Player 0", "Player 1", "Player 2","Player 3");
 
-    uFactory = new UnitFactory();
+    alpaca = new AlpacaFactory();
+    archer = new ArcherFactory();
+    cleric = new ClericFactory();
+    fighter = new FighterFactory();
+    hero   = new HeroFactory();
+    swordMaster = new SwordMasterFactory() ;
+    sorcerer = new SorcererFactory();
 
     anima = new AnimaFactory();
     axe = new AxeFactory();
@@ -185,7 +199,7 @@ class GameControllerTest {
   // Desde aquí en adelante, los tests deben definirlos completamente ustedes
   @Test
   void getSelectedUnit() {
-    Alpaca alp = uFactory.createAlpaca(controller.getGameMap().getCell(0,0));
+    IUnit alp = alpaca.create(controller.getGameMap().getCell(0,0));
     controller.setTurnOwner(controller.getTacticians().get(0));
     controller.addUnit(alp); // aplicar observer para que esto funcione
     controller.selectUnitIn(0,0);
@@ -194,7 +208,7 @@ class GameControllerTest {
 
   @Test // esta deberia ser diferente
   void selectUnitIn() {
-    Alpaca alp = uFactory.createAlpaca(controller.getGameMap().getCell(0,0));
+    IUnit alp = alpaca.create(controller.getGameMap().getCell(0,0));
     controller.setTurnOwner(controller.getTacticians().get(0));
     controller.addUnit(alp); // aplicar observer para que esto funcione
     controller.selectUnitIn(0,0);
@@ -203,7 +217,7 @@ class GameControllerTest {
 
   @Test
   void getItems() {
-    Archer arc = uFactory.createArcher(controller.getGameMap().getCell(0,0));
+    IUnit arc = archer.create(controller.getGameMap().getCell(0,0));
     controller.setTurnOwner(controller.getTacticians().get(0));
     controller.addUnit(arc); // aplicar observer para que esto funcione
     List<IEquipableItem> items = new ArrayList<>();
@@ -211,51 +225,81 @@ class GameControllerTest {
     IEquipableItem b = bow.create();
     items.add(ab);
     items.add(b);
-    arc.saveItem(ab);
-    arc.saveItem(b);
     controller.selectUnitIn(0,0);
+    controller.saveItem(ab);
+    controller.saveItem(b);
     assertEquals(items,controller.getItems());
   }
 
   @Test
   void equipItem() {
-    Archer arc = uFactory.createArcher(controller.getGameMap().getCell(0,0));
+    IUnit arc = archer.create(controller.getGameMap().getCell(0,0));
     controller.setTurnOwner(controller.getTacticians().get(0));
-    List<IEquipableItem> items = new ArrayList<>();
+    controller.addUnit(arc);
     IEquipableItem ab = anima.create();
     IEquipableItem b = bow.create();
-    items.add(ab);
-    items.add(b);
-    arc.saveItem(ab);
-    arc.saveItem(b);
     controller.selectUnitIn(0,0);
+    controller.saveItem(ab);
+    controller.saveItem(b);
+    controller.equipItem(0);
+    assertNull(controller.getTurnOwner().getSelectedUnit().getEquippedItem());
     controller.equipItem(1);
     assertEquals(b,controller.getTurnOwner().getSelectedUnit().getEquippedItem());
   }
 
   @Test
   void useItemOn() {
-    Fighter fi = uFactory.createFighter(controller.getGameMap().getCell(0,0));
-    Hero he = uFactory.createHero(controller.getGameMap().getCell(1,0));
-    Cleric cl = uFactory.createCleric(controller.getGameMap().getCell(2,0));
+    // Setea un evento a emular
+    IUnit fi = fighter.create(controller.getGameMap().getCell(0,0));
+    IUnit he = hero.create(controller.getGameMap().getCell(1,0));
+    IUnit cl = cleric.create(controller.getGameMap().getCell(2,0));
+
     controller.setTurnOwner(controller.getTacticians().get(0));
-    controller.addUnit(fi);
-    fi.saveItem(axe.create());
-    controller.selectUnitIn(0,0);
-    controller.equipItem(0);
-    controller.setTurnOwner(controller.getTacticians().get(1));
-    he.saveItem(axe.create());
-    cl.saveItem(staff.create());
     controller.addUnit(he);
     controller.addUnit(cl);
     controller.selectUnitIn(1,0);
+    controller.saveItem(spear.create());
     controller.equipItem(0);
     controller.selectUnitIn(2,0);
-    controller.equipItem(1);
+    controller.saveItem(staff.create());
+    controller.equipItem(0);
 
+    controller.setTurnOwner(controller.getTacticians().get(1));
+    controller.addUnit(fi);
+    controller.selectUnitIn(0,0);
+    controller.saveItem(axe.create());
+    controller.equipItem(0);
 
+    // Hero combat fighter
+    double heroHP = he.getCurrentHitPoints();
+    double fighterHP = controller.getSelectedUnit().getCurrentHitPoints();
     controller.useItemOn(1,0);
-    //assertEquals();
+    assertEquals(fighterHP-(he.getEquippedItem().getPower()-20), fi.getCurrentHitPoints());
+    assertEquals(heroHP-(he.getEquippedItem().getPower()*1.5),he.getCurrentHitPoints());
+
+    controller.setTurnOwner(controller.getTacticians().get(0));
+
+    // Hero try to combat Cleric
+    heroHP = he.getCurrentHitPoints();
+    double clericHP = controller.getSelectedUnit().getCurrentHitPoints();
+    controller.useItemOn(0,0);
+    assertEquals(heroHP, he.getCurrentHitPoints());
+    assertEquals(clericHP,controller.getSelectedUnit().getCurrentHitPoints());
+
+    // Cleric heal Hero
+    controller.selectUnitIn(2,0);
+    heroHP = he.getCurrentHitPoints();
+    clericHP = controller.getSelectedUnit().getCurrentHitPoints();
+    controller.useItemOn(1,0);
+    assertEquals(heroHP+cl.getEquippedItem().getPower(), he.getCurrentHitPoints());
+    assertEquals(clericHP,controller.getSelectedUnit().getCurrentHitPoints());
+
+    // Cleric try to heal Fighter
+    fighterHP = fi.getCurrentHitPoints();
+    clericHP = controller.getSelectedUnit().getCurrentHitPoints();
+    controller.useItemOn(0,0);
+    assertEquals(fighterHP, fi.getCurrentHitPoints());
+    assertEquals(clericHP,controller.getSelectedUnit().getCurrentHitPoints());
   }
 
   @Test

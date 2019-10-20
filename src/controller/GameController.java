@@ -77,6 +77,10 @@ public class GameController {
    */
   public Field getGameMap() { return map; }
 
+  /**
+   *
+   * @return the Game seed
+   */
   public Random getSeed(){ return random;}
 
   /**
@@ -103,7 +107,7 @@ public class GameController {
    * @return the maximum number of rounds a match can last
    */
   public int getMaxRounds() {
-    return 0;
+    return maxRounds;
   }
 
   /**
@@ -171,16 +175,18 @@ public class GameController {
   /**
    * @param unit, the turn owner will add this unit
    */
-  public void addUnit(IUnit unit) {
-
-    turnOwner.addUnit(unit);
-
-  }
+  public void addUnit(IUnit unit) { turnOwner.addUnit(unit); }
 
   /**
    * @return the inventory of the currently selected unit.
    */
   public List<IEquipableItem> getItems() { return turnOwner.getItems(); }
+
+  /**
+   *
+   * @param item the item to be saved  in the tactician selected unit
+   */
+  public void saveItem(IEquipableItem item) { turnOwner.saveItem(item); }
 
   /**
    * Equips an item from the inventory to the currently selected unit.
@@ -208,9 +214,7 @@ public class GameController {
    * @param index
    *     the location of the item in the inventory.
    */
-  public void selectItem(int index) {
-
-  }
+  public void selectItem(int index) { turnOwner.selectItem(index); }
 
   /**
    * Gives the selected item to a target unit.
@@ -220,7 +224,25 @@ public class GameController {
    * @param y
    *     vertical position of the target
    */
-  public void giveItemTo(int x, int y) {
+  public void giveItemTo(int x, int y) { turnOwner.getItemTo(x,y); }
 
-  }
+  /**
+   *
+   * @return the turnOwner selected unit HP
+   */
+  public double getSelectedUnitHP(){ return turnOwner.getSelectedUnitHP(); }
+
+  /**
+   *
+   * @return the turnOwner selected unit max HP
+   */
+  public double getSelectedUnitMaxHP(){ return turnOwner.getSelectedUnitMaxHP(); }
+
+  /**
+   *
+   * @return the turnOwner selected item power
+   */
+  public double getSelectedUnitItemPower(){ return turnOwner.getSelectedUnitItemPower(); }
 }
+
+

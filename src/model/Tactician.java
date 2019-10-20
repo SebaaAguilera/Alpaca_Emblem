@@ -21,45 +21,72 @@ public class Tactician {
     private String name;
     private List<IUnit> units =  new ArrayList<>();
     private IUnit selectedUnit;
+    private IEquipableItem selectedItem;
     private int maxUnits = 4;
     private GameController controller;
 
+    /**
+     * Creates a Tactician, a Game Player
+     * @param name the name of the Tactician
+     */
     public Tactician(String name){ this.name=name; }
 
+    /**
+     * set the Tactician controller
+     * @param controller
+     */
     public void setController(GameController controller) { this.controller = controller; }
 
+    /**
+     *  @return the Tactician Name
+     */
     public String getName(){ return name; }
 
-    public void addUnit(IUnit unit) { units.add(unit); }
+    /**
+     * @param unit a unit the tactician is going to play with
+     */
+    public void addUnit(IUnit unit) { if (units.size()<=maxUnits) {units.add(unit); }}
 
+    /**
+     * @return the tactician units
+     */
     public List<IUnit> getUnits(){ return units; }
 
+    /**
+     * Select n unit in the map
+     * @param x the x axis
+     * @param y the y axis
+     */
     public void selectUnitIn(int x, int y){ selectedUnit = controller.getGameMap().getCell(x,y).getUnit(); }
 
+    /**
+     * @return the selected unit
+     */
     public IUnit getSelectedUnit() { return selectedUnit; }
 
-    private double getSelectedUnitHP(){
-        return 0;
-    }
+    /**
+     * @return the selected unit current HP
+     */
+    public double getSelectedUnitHP(){ return selectedUnit.getCurrentHitPoints(); }
 
-    private double getSelectedUnitMaxHP(){
-        return 0;
-    }
+    /**
+     * @return the selected unit max HP
+     */
+    public double getSelectedUnitMaxHP(){ return selectedUnit.getMaxHitPoints(); }
 
-    private String getSelectedUnitName(){
-        return "uwu";
-    }
-
-    private double getSelectedUnitItemPower(){
-        return 0;
-    }
-
+    /**
+     * @return the tactician selected item power
+     */
+    public double getSelectedUnitItemPower(){ return selectedItem.getPower(); }
 
     public List<IEquipableItem> getItems() {
         if(units.contains(selectedUnit)){
             return selectedUnit.getItems();
         } else return null;
     }
+
+
+    public void saveItem(IEquipableItem item) { selectedUnit.saveItem(item);}
 
     /**
      *
@@ -68,6 +95,26 @@ public class Tactician {
     public void equipItem(int index) {
         if (units.contains(selectedUnit)) {
             selectedUnit.equipItem(selectedUnit.getItems().get(index));
+        }
+    }
+
+    /**
+     * @param index select a unit item
+     */
+    public void selectItem(int index) {
+        if (units.contains(selectedUnit)){
+            selectedItem = selectedUnit.getItems().get(index);
+        }
+    }
+
+    /**
+     * Give the selected item to the unit in the coordinate
+     * @param x the x axis
+     * @param y the y axis
+     */
+    public void getItemTo(int x, int y) {
+        if (units.contains(controller.getGameMap().getCell(x,y).getUnit())){
+            selectedUnit.giveItem(controller.getGameMap().getCell(x,y).getUnit(),selectedItem);
         }
     }
 }
