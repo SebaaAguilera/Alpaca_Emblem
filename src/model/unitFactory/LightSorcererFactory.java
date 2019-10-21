@@ -1,21 +1,21 @@
 package model.unitFactory;
 
-import model.itemFactory.AxeFactory;
+import model.itemFactory.LightFactory;
 import model.items.IEquipableItem;
 import model.map.Location;
-import model.units.Fighter;
 import model.units.IUnit;
 
 /**
- * Fighter factory
+ * Sorcerer factory
+ * createArmed gives a Light Sorcerer
  * @author Sebastián Aguilera Valenzuela
  * @since 2.5
  */
-public class FighterFactory implements UnitFactory {
-    private AxeFactory iFactory = new AxeFactory();
+public class LightSorcererFactory implements UnitFactory {
+    private LightFactory iFactory = new LightFactory();
 
     @Override
-    public IUnit create(Location location) { return new Fighter(300,5,location); }
+    public IUnit create(Location location) {return new model.units.Sorcerer(250, 3, location); }
 
     @Override
     public IUnit createArmed(Location location) {

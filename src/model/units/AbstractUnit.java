@@ -107,7 +107,6 @@ public abstract class AbstractUnit implements IUnit {
     this.setEquippedItem(null);
   }
 
-
   @Override
   public Location getLocation() {
     return location;
@@ -130,7 +129,6 @@ public abstract class AbstractUnit implements IUnit {
       setLocation(targetLocation);
     }
   }
-
 
   @Override
   public void combat(IUnit unit) {

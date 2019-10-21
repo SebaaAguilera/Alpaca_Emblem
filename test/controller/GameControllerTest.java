@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
 
 import model.Tactician;
@@ -38,7 +37,7 @@ class GameControllerTest {
   private FighterFactory fighter;
   private HeroFactory hero;
   private SwordMasterFactory swordMaster;
-  private SorcererFactory sorcerer;
+  private AnimaSorcererFactory sorcerer;
 
 
 
@@ -65,7 +64,7 @@ class GameControllerTest {
     fighter = new FighterFactory();
     hero   = new HeroFactory();
     swordMaster = new SwordMasterFactory() ;
-    sorcerer = new SorcererFactory();
+    sorcerer = new AnimaSorcererFactory();
 
     anima = new AnimaFactory();
     axe = new AxeFactory();
@@ -250,25 +249,17 @@ class GameControllerTest {
   @Test
   void useItemOn() {
     // Setea un evento a emular
-    IUnit fi = fighter.create(controller.getGameMap().getCell(0,0));
-    IUnit he = hero.create(controller.getGameMap().getCell(1,0));
-    IUnit cl = cleric.create(controller.getGameMap().getCell(2,0));
+    IUnit fi = fighter.createArmed(controller.getGameMap().getCell(0,0));
+    IUnit he = hero.createArmed(controller.getGameMap().getCell(1,0));
+    IUnit cl = cleric.createArmed(controller.getGameMap().getCell(2,0));
 
     controller.setTurnOwner(controller.getTacticians().get(0));
     controller.addUnit(he);
     controller.addUnit(cl);
-    controller.selectUnitIn(1,0);
-    controller.saveItem(spear.create());
-    controller.equipItem(0);
-    controller.selectUnitIn(2,0);
-    controller.saveItem(staff.create());
-    controller.equipItem(0);
 
     controller.setTurnOwner(controller.getTacticians().get(1));
     controller.addUnit(fi);
     controller.selectUnitIn(0,0);
-    controller.saveItem(axe.create());
-    controller.equipItem(0);
 
     // Hero combat fighter
     double heroHP = he.getCurrentHitPoints();
