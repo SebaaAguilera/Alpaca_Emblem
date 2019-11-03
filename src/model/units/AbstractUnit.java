@@ -1,5 +1,6 @@
 package model.units;
 
+import model.Tactician;
 import model.items.IEquipableItem;
 import model.map.Location;
 
@@ -28,6 +29,7 @@ public abstract class AbstractUnit implements IUnit {
   private IEquipableItem equippedItem;
   private final int maxItems;
   private Location location;
+  private Tactician tactician;
 
   /**
    * Creates a new Unit.
@@ -50,6 +52,12 @@ public abstract class AbstractUnit implements IUnit {
     this.maxItems = maxItems;
     this.items.addAll(Arrays.asList(items).subList(0, min(maxItems, items.length)));
   }
+
+  @Override
+  public Tactician getTactician() {return tactician; }
+
+  @Override
+  public void setTactician(Tactician tactician){ this.tactician = tactician; }
 
   @Override
   public double getMaxHitPoints(){ return maxHitPoints; }
@@ -93,11 +101,11 @@ public abstract class AbstractUnit implements IUnit {
   public void giveItem(IUnit unit, IEquipableItem item) {
       if (this.getItems().contains(item) && unit.getItems().size() < unit.getMaxItems() &&
               this.getLocation().distanceTo(unit.getLocation()) == 1) {
-      if (this.getEquippedItem()==item) {
-        this.unEquipItem();
-      }
-      this.items.remove(item);
-      unit.saveItem(item);
+        if (this.getEquippedItem()==item) {
+          this.unEquipItem();
+        }
+        this.items.remove(item);
+        unit.saveItem(item);
     }
   }
 
@@ -115,6 +123,7 @@ public abstract class AbstractUnit implements IUnit {
   @Override
   public void setLocation(Location location) { //location had a final
     this.location = location;
+    location.setUnit(this);
   }
 
   @Override
@@ -126,8 +135,15 @@ public abstract class AbstractUnit implements IUnit {
   public void moveTo(final Location targetLocation) {
     if (getLocation().distanceTo(targetLocation) <= getMovement()
         && targetLocation.getUnit() == null) {
+      getLocation().setUnit(null);
       setLocation(targetLocation);
     }
+  }
+
+  @Override
+  public void useItemOn(IUnit unit){
+    if (getTactician().getUnits().contains(unit)) return;
+    this.combat(unit);
   }
 
   @Override
@@ -142,6 +158,7 @@ public abstract class AbstractUnit implements IUnit {
   public void attacked(double damage) {
     if (this.getCurrentHitPoints()-damage<=0){
       setCurrentHitPoints(0);
+      this.deadUnit();
     } else {
       setCurrentHitPoints(this.getCurrentHitPoints() - damage);
     }
@@ -154,5 +171,11 @@ public abstract class AbstractUnit implements IUnit {
     } else {
       this.setCurrentHitPoints(this.getCurrentHitPoints()+healHP);
     }
+  }
+
+  @Override
+  public void deadUnit() {
+    getTactician().removeUnit(this); //esto debiese hacerse con un handler
+    getLocation().setUnit(null);
   }
 }

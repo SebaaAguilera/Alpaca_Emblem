@@ -2,8 +2,7 @@ package model;
 
 import controller.GameController;
 import model.items.IEquipableItem;
-import model.map.Field;
-import model.units.Archer;
+import model.map.Location;
 import model.units.IUnit;
 
 import java.util.ArrayList;
@@ -20,9 +19,9 @@ public class Tactician {
 
     private String name;
     private List<IUnit> units =  new ArrayList<>();
+    private List<IUnit> movedUnits =  new ArrayList<>();
     private IUnit selectedUnit;
     private IEquipableItem selectedItem;
-    private int maxUnits = 4;
     private GameController controller;
 
     /**
@@ -45,7 +44,12 @@ public class Tactician {
     /**
      * @param unit a unit the tactician is going to play with
      */
-    public void addUnit(IUnit unit) { if (units.size()<=maxUnits) {units.add(unit); }}
+    public void addUnit(IUnit unit) {
+        if (units.size()<=controller.getMaxUnits()) {
+            unit.setTactician(this);
+            units.add(unit);
+        }
+    }
 
     /**
      * @return the tactician units
@@ -53,11 +57,14 @@ public class Tactician {
     public List<IUnit> getUnits(){ return units; }
 
     /**
-     * Select n unit in the map
-     * @param x the x axis
-     * @param y the y axis
+     * Select an unit in the map
+     * @param unit
      */
-    public void selectUnitIn(int x, int y){ selectedUnit = controller.getGameMap().getCell(x,y).getUnit(); }
+    public void selectUnitIn(IUnit unit){
+        if (units.contains(unit)){
+            selectedUnit = unit;
+        }
+    }
 
     /**
      * @return the selected unit
@@ -79,42 +86,75 @@ public class Tactician {
      */
     public double getSelectedUnitItemPower(){ return selectedItem.getPower(); }
 
-    public List<IEquipableItem> getItems() {
-        if(units.contains(selectedUnit)){
-            return selectedUnit.getItems();
-        } else return null;
+    /**
+     * @return the selected unit items
+     */
+    public List<IEquipableItem> getItems() { return selectedUnit.getItems(); }
+
+    /**
+     * Moves the tactician selected unit
+     * @param location
+     */
+    public void moveUnitTo(Location location){
+        if (movedUnits.contains(selectedUnit)) return;
+        movedUnits.add(selectedUnit);
+        selectedUnit.moveTo(location);
     }
 
+    /**
+     * clear the moved units when the turn has finished
+     */
+    public void clearMovedUnits() { movedUnits.clear(); }
 
+    /**
+     * @param item to be saved in the unit inventory
+     */
     public void saveItem(IEquipableItem item) { selectedUnit.saveItem(item);}
 
     /**
      *
      * @param index of the item the unit will equip
      */
-    public void equipItem(int index) {
-        if (units.contains(selectedUnit)) {
-            selectedUnit.equipItem(selectedUnit.getItems().get(index));
-        }
-    }
+    public void equipItem(int index) { selectedUnit.equipItem(selectedUnit.getItems().get(index)); }
+
 
     /**
      * @param index select a unit item
      */
-    public void selectItem(int index) {
-        if (units.contains(selectedUnit)){
-            selectedItem = selectedUnit.getItems().get(index);
+    public void selectItem(int index) { selectedItem = selectedUnit.getItems().get(index); }
+
+    /**
+     * Give the selected item to the unit
+     * @param unit
+     */
+    public void giveItemTo(IUnit unit) {
+        if (units.contains(unit)){
+            selectedUnit.giveItem(unit,selectedItem);
         }
     }
 
     /**
-     * Give the selected item to the unit in the coordinate
-     * @param x the x axis
-     * @param y the y axis
+     * the selected unit will use it equipped item on the unit
+     * @param unit this unit
      */
-    public void getItemTo(int x, int y) {
-        if (units.contains(controller.getGameMap().getCell(x,y).getUnit())){
-            selectedUnit.giveItem(controller.getGameMap().getCell(x,y).getUnit(),selectedItem);
+    public void useItemOn(IUnit unit) { selectedUnit.useItemOn(unit); }
+
+    /**
+     * removes the tactician and its units from THE GAME
+     */
+    public void gameOver() {
+        for (IUnit unit : getUnits()){
+            unit.getLocation().setUnit(null);
         }
+        controller.removeTactician(getName());
+    }
+
+    /**
+     * @param unit to be removed from the units list if it die
+     *             if no unit is left the tactician will lose
+     */
+    public void removeUnit(IUnit unit){
+        units.remove(unit);
+        if (units.size()==0) this.gameOver(); //esto debiese cambiarse
     }
 }

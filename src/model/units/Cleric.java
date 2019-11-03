@@ -37,6 +37,12 @@ public class Cleric extends AbstractUnit {
   }
 
   @Override
+  public void useItemOn(IUnit unit){
+    if (!getTactician().getUnits().contains(unit)) return;
+    this.combat(unit);
+  }
+
+  @Override
   public void combat(IUnit unit) {
     if(unit.getCurrentHitPoints()>0 && this.getEquippedItem()!=null && this.getEquippedItem().inRange(unit)){
       getEquippedItem().healUnit(unit);

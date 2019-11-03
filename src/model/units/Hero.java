@@ -37,4 +37,9 @@ public class Hero extends AbstractUnit {
     item.equipToHero(this);
   }
 
+  @Override
+  public void deadUnit() {
+    getTactician().gameOver(); //esto debiese hacerse con un handler
+    getLocation().setUnit(null);
+  }
 }

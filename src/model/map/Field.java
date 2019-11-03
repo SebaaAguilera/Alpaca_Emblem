@@ -20,7 +20,6 @@ public class Field {
 
   /**
    * Add cells to the map.
-   *
    * @param connectAll
    *     a flag that indicates if all the cells should be connected to it's neighbours
    * @param cells
@@ -56,7 +55,7 @@ public class Field {
   /**
    * @param seed, sets a new seed and restarts the field.
    */
-  public void setSeed(Random seed){ random = seed; }
+  public void setSeed(long seed){ random = new Random(seed); }
 
   /**
    * Adds a cell to the map

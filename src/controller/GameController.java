@@ -1,14 +1,12 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import model.Tactician;
 import model.items.IEquipableItem;
 import model.map.Field;
-import model.map.Location;
 import model.units.IUnit;
 
 /**
@@ -21,12 +19,16 @@ import model.units.IUnit;
  */
 public class GameController {
 
-  private List<Tactician> tacticians = new ArrayList<>();;
+  private List<Tactician> tacticians = new ArrayList<>();
+  private List<Tactician> roundSequence = new ArrayList();
   private Field map;
-  private Random random = new Random();
+  private long seed = new Random().nextLong();
+  private Random random = new Random(seed);
   private Tactician turnOwner;
-  private int roundNumber = 1;
-  private int maxRounds = -1;
+  private int roundNumber;
+  private int maxRounds;
+  private int maxTacticians;
+  private int maxUnits=4;
 
   /**
    * Creates the controller for a new game.
@@ -37,15 +39,16 @@ public class GameController {
    *     the dimensions of the map, for simplicity, all maps are squares
    */
   public GameController(int numberOfPlayers, int mapSize) {
+    maxTacticians= (int) mapSize^2/numberOfPlayers;
+
     map = new Field();
-    map.setSeed(random);
+    map.setSeed(seed);
     map.addCells(false, map.arrayCells(mapSize));
 
-    for (int i=0; i<numberOfPlayers;i++){
+    for (int i=0; i<Math.min(numberOfPlayers,maxTacticians);i++){
       tacticians.add(new Tactician("Player " + i));
       tacticians.get(i).setController(this);
     }
-
   }
 
   /**
@@ -53,23 +56,31 @@ public class GameController {
    */
   public List<Tactician> getTacticians() { return tacticians; }
 
+  /**
+   * @return the list of the tacticians in the round sequence
+   */
+  public List<Tactician> getRoundSequence() { return roundSequence; }
 
-  public int[] roundSequence(){
-    int[] roundSequence = new int[tacticians.size()];
+  /**
+   * Sets a new round tactician sequence and round number
+   */
+  public void newRoundSequence(){
+    roundSequence.clear();
+    roundNumber+=1;
+
     int index = random.nextInt(tacticians.size());
     while(turnOwner!=null && index==tacticians.indexOf(turnOwner)){
       index = random.nextInt(tacticians.size());
     }
-    roundSequence[0] = index;
+    roundSequence.add(tacticians.get(index));
 
     for (int i = 1; i < tacticians.size(); i++){
       index = random.nextInt(tacticians.size());
-      while(Arrays.asList(roundSequence).contains(index)){
+      while(roundSequence.contains(tacticians.get(index))){
         index = random.nextInt(tacticians.size());
       }
-      roundSequence[i] = index;
+      roundSequence.add(tacticians.get(index));
     }
-    return roundSequence;
   }
 
   /**
@@ -78,10 +89,9 @@ public class GameController {
   public Field getGameMap() { return map; }
 
   /**
-   *
    * @return the Game seed
    */
-  public Random getSeed(){ return random;}
+  public long getSeed(){ return seed;}
 
   /**
    * @param tactician will be the turn owner
@@ -93,12 +103,6 @@ public class GameController {
   public Tactician getTurnOwner() { return turnOwner; }
 
   /**
-   * @param i is the round number
-   *          sets the round number
-   */
-  private void setRoundNumber(int i) { roundNumber=i; }
-
-  /**
    * @return the number of rounds since the start of the game.
    */
   public int getRoundNumber() { return roundNumber; }
@@ -106,15 +110,19 @@ public class GameController {
   /**
    * @return the maximum number of rounds a match can last
    */
-  public int getMaxRounds() {
-    return maxRounds;
-  }
+  public int getMaxRounds() { return maxRounds; }
 
   /**
-   * Finishes the current player's turn.
+   * Finish the current player's turn.
    */
   public void endTurn() {
-    setRoundNumber(roundNumber+1);
+    turnOwner.clearMovedUnits();
+    if (roundSequence.indexOf(turnOwner)<tacticians.size()-1){
+      turnOwner = roundSequence.get(roundSequence.indexOf(turnOwner)+1);
+    } else {
+      newRoundSequence();
+      turnOwner = roundSequence.get(0);
+    }
   }
 
   /**
@@ -133,10 +141,14 @@ public class GameController {
 
   /**
    * Starts the game.
-   * @param maxTurns
+   * @param maxRounds
    *  the maximum number of turns the game can last
    */
-  public void initGame(final int maxTurns) {
+  public void initGame(final int maxRounds) {
+    this.maxRounds = maxRounds;
+    roundNumber = 0;
+    newRoundSequence();
+    turnOwner = roundSequence.get(0);
   }
 
 
@@ -144,6 +156,10 @@ public class GameController {
    * Starts a game without a limit of turns.
    */
   public void initEndlessGame() {
+    this.maxRounds = -1;
+    roundNumber = 0;
+    newRoundSequence();
+    turnOwner = roundSequence.get(0);
   }
 
   /**
@@ -156,9 +172,7 @@ public class GameController {
   /**
    * @return the current player's selected unit
    */
-  public IUnit getSelectedUnit() {
-    return turnOwner.getSelectedUnit();
-  }
+  public IUnit getSelectedUnit() { return turnOwner.getSelectedUnit(); }
 
   /**
    * Selects a unit in the game map
@@ -168,14 +182,24 @@ public class GameController {
    * @param y
    *     vertical position of the unit
    */
-  public void selectUnitIn(int x, int y) {
-    turnOwner.selectUnitIn(x,y);
-  }
+  public void selectUnitIn(int x, int y) { turnOwner.selectUnitIn(map.getCell(x,y).getUnit()); }
+
+  /**
+   * @return the max amount of units per tactician
+   */
+  public int getMaxUnits() { return maxUnits; }
 
   /**
    * @param unit, the turn owner will add this unit
    */
   public void addUnit(IUnit unit) { turnOwner.addUnit(unit); }
+
+  /**
+   * Moves the turn owner selected unit
+   * @param x the x axis
+   * @param y the y axis
+   */
+  public void moveUnitTo(int x, int y){ turnOwner.moveUnitTo(map.getCell(x,y)); }
 
   /**
    * @return the inventory of the currently selected unit.
@@ -204,9 +228,7 @@ public class GameController {
    * @param y
    *     vertical position of the target
    */
-  public void useItemOn(int x, int y) {
-
-  }
+  public void useItemOn(int x, int y) { turnOwner.useItemOn(map.getCell(x,y).getUnit()); }
 
   /**
    * Selects an item from the selected unit's inventory.
@@ -218,31 +240,29 @@ public class GameController {
 
   /**
    * Gives the selected item to a target unit.
-   *
    * @param x
    *     horizontal position of the target
    * @param y
    *     vertical position of the target
    */
-  public void giveItemTo(int x, int y) { turnOwner.getItemTo(x,y); }
+  public void giveItemTo(int x, int y) { turnOwner.giveItemTo(map.getCell(x,y).getUnit()); }
 
   /**
-   *
    * @return the turnOwner selected unit HP
    */
   public double getSelectedUnitHP(){ return turnOwner.getSelectedUnitHP(); }
 
   /**
-   *
    * @return the turnOwner selected unit max HP
    */
   public double getSelectedUnitMaxHP(){ return turnOwner.getSelectedUnitMaxHP(); }
 
   /**
-   *
    * @return the turnOwner selected item power
    */
   public double getSelectedUnitItemPower(){ return turnOwner.getSelectedUnitItemPower(); }
+
+
 }
 
 

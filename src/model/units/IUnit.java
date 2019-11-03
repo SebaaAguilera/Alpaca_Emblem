@@ -1,6 +1,8 @@
 package model.units;
 
 import java.util.List;
+
+import model.Tactician;
 import model.items.IEquipableItem;
 import model.map.Location;
 
@@ -24,6 +26,17 @@ public interface IUnit {
   void equipItem(IEquipableItem item);
 
   /**
+   * @return the unit tactician
+   */
+  Tactician getTactician();
+
+    /**
+   * set the unit tactician
+   * @param tactician
+   */
+  void setTactician(Tactician tactician);
+
+    /**
    * @return maximum amount of hit points of the unit
    */
   double getMaxHitPoints();
@@ -102,6 +115,13 @@ public interface IUnit {
   void moveTo(Location targetLocation);
 
   /**
+   * this method will initialize a combat with the unit
+   * depending if the unit belongs to the tactician or not
+   * @param unit
+   */
+  void useItemOn(IUnit unit);
+
+  /**
    * @param unit
    * start a combat between a unit and another one
    */
@@ -121,4 +141,8 @@ public interface IUnit {
    */
   void healed(double healHP);
 
+  /**
+   * When a unit dies it will be removed from the field and the tactician will be noticed
+   */
+  void deadUnit();
 }

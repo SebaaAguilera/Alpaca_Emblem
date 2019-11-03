@@ -52,6 +52,7 @@ public class ArcherTest extends AbstractTestUnit {
     archer.equipItem(bow);
 
     Sorcerer targetSorcerer = getTargetLightSorcerer();
+    field.getCell(2,0).setUnit(null);
     targetSorcerer.moveTo(field.getCell(2, 0));
     double targetSorcererHP = targetSorcerer.getCurrentHitPoints();
     archer.combat(targetSorcerer);
@@ -61,6 +62,8 @@ public class ArcherTest extends AbstractTestUnit {
 
     testUnitHP = archer.getCurrentHitPoints();
     Hero targetHero = getTargetHero();
+
+    field.getCell(2, 0).setUnit(null);
     targetHero.moveTo(field.getCell(2, 0));
     double targetHeroHP = targetHero.getCurrentHitPoints();
     archer.combat(targetHero);
