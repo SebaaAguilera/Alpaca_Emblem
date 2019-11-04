@@ -1,8 +1,55 @@
-# Alpaca_Emblem
+# Alpaca_Emblem 2.5
+---
 
-El proyecto se encuentra en su versión 1.1 acorde a los requisitos de la entrega n°1.
+El proyecto se encuentra en su versión 2.5 acorde a los requisitos de la entrega n°2.
 
-En las secciones **Unidades** e **Items** se explicán algunas implementaciones, extensiones que se le hicieron al código dado, la visibilidad de parametros, etc. En **Equipamiento e intercambio de items** y **Combate** se explica en especifico los requerimientos puros y duros de la entrega. Cuando noté lo extenso que fue para redactar esto ya era demasiado tarde, perdón :sweat:. 
+En esta entrega se diseñaron las clases **GameController** y **Tactician**, junto con otras clases creadas para los patrones de diseño, como factories y handlers/listeners. Se repetirán secciones de la entrega anterior para mostrar las updates de cada clase.
+
+## Tactician
+
+Representa aun jugador, guardando los datos de este y siendo el intermediario entre el **Game Controller** y el resto del modelo (**model**). El Tactician tiene los siguientes atributos privados:
+
+- **Nombre**: _name_ es un _final String_ que corresponde al nombre del Tactician del jugador.
+- **Unidades**: _units_ es un _ArrayList_ que guarda las unidades del Tactican del jugador.
+- **Unidades desplazadas**: _movedUnits_ es un _ArrayList_ que guarda las unidades del Tactican desplazadas en ese turno por el jugador.
+- **Unidad seleccionada**: _selectedUnit_ es un _IUnit_ con la Unidad seleccionada del Tactician del jugador
+- **Item seleccionado**:_selectedItem_ es un _IEquipableItem_ con el item seleccionado del Tactician del jugador
+- **Controller**: **NO DEBERÍA ESTAR**
+
+El tactician puede realizar lo siguiente: agregarse unidades, seleccionar unidades y guardarles o equiparles items, puede ver sus unidades, sus atributos y los de sus items, tambien intercambiar objetos entre ellas así como usar el item equipado en otras unidades. Puede mover sus unidades una vez por turno, por lo que se aplicó como estrategía que cada vez que el Tactician mueve una unidad, este lo guarda en _movedUnits_
+
+## Game Controller
+
+Maneja todo los inputs dados por el jugador. Y tiene los siguientes atributos:
+
+- **Tacticians**: es un _ArrayList_ con los _tacticians_ en el juego.
+- **Secuencia**:  es un _ArrayList_ con los _tacticians_ en el juego, pero reordenados según la seed y otras condiciones.
+- **Mapa**: es un _Field_, el mapa donde se desenvolverá el juego (random según la seed).
+- **Seed**: es un _long_ random, que se usará com semilla para la creación del Mapa y la Secuencia.
+- **Ronda**: es un _int_ que corresponde al número de la ronda actual.
+- **Rondas máximas**: es un _int_ que corresponde al número máximo de rondas en el juego actual, una vez la ronda llegue a este número el juego acaba.
+- **Unidades máximas**: Restricción ideada de forma personal, depende de la cantidad de jugadores y el tamaño del mapa.
+
+El game controller puede inicializar un juego (con limite o sin limite), inicializar un juego generará una **Secuencia**, setea el _roundNumber_ en 0 y asigna como _turnOwner_ al primero en la **Secuencia**, al terminar un turno el siguiente _turnOwner_ será el siguiente en la **Secuencia** y de haberse acabado esta se generará otra y se sumará 1 a _roundNumber_.
+
+Como se dijo antes, el GameController recibe todos los inputs, por lo que tiene muchos métodos que adaptan el input para que sean entendibles para el **Tactician** (como los que tienen que ver con el mapa, el GameController recibe las coordenadas y le da al Tactician el _Location_) y otros métodos que simplemente deliveran la tarea al Tactician.
+
+## Unidades:
+Esta entrega generó un problema respecto al combate, el GameController y el Tactician tienen un metodo que permite usar el item seleccionado en otra unidad, pero estos no tienen restricciones ya que permiten atacar a una unidad propia o curar a una unidad enemiga. por lo que, para arreglar esto, el Tactician no hará uso del metodo de combate directamente, ahora las unidades tienen un método useItemOn que desambiguará si la unidad es enemiga o no y veráa si activa el combate dependiendo de eso.
+
+Además ahora si una unidad muere en combate, está le enviará un mensaje al tactician para ser borrada de entre sus unidades y tambien se borrará del mapa. Existe el caso especial del _Hero_ si un Hero Muere será un Game Over inmediato para el tactician. 
+
+## Mapa
+
+Como el mapa se crea desde el GameController y depende de la seed de este se definieron sus constructores: el que no recibe parametros y el que si, este recibe el tamaño del mapa y una seed y crea un mapa uadrado a partir de esta.
+
+
+# Alpaca_Emblem 1.5
+---
+
+El proyecto se encuentra en su versión 1.5 acorde a los requisitos de la entrega n°1.
+
+En las secciones **Unidades** e **Items** se explicán algunas implementaciones, extensiones que se le hicieron al código dado, la visibilidad de parametros, etc. En **Equipamiento e intercambio de items** y **Combate** se explica en especifico los requerimientos puros y duros de la entrega.
 
 ## Unidades: 
 Las unidades son objetos de una clase que extiende a la clase abstracta _AbstractUnit_ que a su vez implementa a la interfaz _IUnit_.
@@ -36,7 +83,7 @@ Los items son objetos de una clase que (dependiendo de si es un item magico o no
   3. **Dueño:** _owner_ es efectivamente la unidad que tiene equipado el item.
 
 - Cada item tiene los siguientes atributos protegidos:
-  1. **Rango mínimo:** _minRange_ es un _int_ que representa la cantidad mínima de celdas que tiene que estar un adversario para ser atacado por la unidad que equipa el item. Por defecto es 1, en casos especiales como el _Bow_ este es 2.
+  1. **Rango mínimo:** _minRange_ es un _int_ que representa la cantidad mínima de celdas que tiene que estar un adversario para ser atacado por la unidad que equipa el item. Por defecto es 1, en casos especiales como el _Bow_ este es 2.-  
   2. **Rango máximo:** _maxRange_ es un _int_ que representa la cantidad máxima de celdas que tiene que estar un adversario para ser atacado por la unidad que equipa el item. tiene que ser estrictamente mayor a _minRange_.
   
 - Existen dos clases de items, mágicos y no mágicos y su comportamiento se diferencia principalmente al momento de un combate, esto se explicará en la sección ***Fortalezas y Debilidades***. 
