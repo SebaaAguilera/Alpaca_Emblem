@@ -19,6 +19,21 @@ public class Field {
   private StringBuilder builder = new StringBuilder();
 
   /**
+   * Field constructor, it only instanciate the Field
+   */
+  public Field(){}
+
+  /**
+   * Field constructor, it build a square shape map using the seed
+   * @param mapSize the map edge length
+   * @param seed the seed is going to be used
+   */
+  public Field(int mapSize, long seed){
+    random = new Random(seed);
+    addCells(false, arrayCells(mapSize));
+  }
+
+  /**
    * Add cells to the map.
    * @param connectAll
    *     a flag that indicates if all the cells should be connected to it's neighbours
@@ -51,11 +66,6 @@ public class Field {
     }
     return cells;
   }
-
-  /**
-   * @param seed, sets a new seed and restarts the field.
-   */
-  public void setSeed(long seed){ random = new Random(seed); }
 
   /**
    * Adds a cell to the map

@@ -92,9 +92,7 @@ class GameControllerTest {
 
     long seed = controller.getSeed();
 
-    Field testMap = new Field();
-    testMap.setSeed(seed);
-    testMap.addCells(false, testMap.arrayCells(7));
+    Field testMap = new Field(7,seed);
     assertTrue(testMap.isConnected());
 
     for (int i = 0; i < 7; i++){
@@ -369,6 +367,8 @@ class GameControllerTest {
     IUnit an = sorcerer.create(controller.getGameMap().getCell(2,0));
     AnimaBook deadlyBook = new AnimaBook("Deadly dead anima book",1000,1,4);
 
+    IUnit sw = swordMaster.createArmed(controller.getGameMap().getCell(2,1));
+
     Tactician FirstPlayer = controller.getTacticians().get(0);
     controller.setTurnOwner(FirstPlayer);
     controller.addUnit(he);
@@ -383,6 +383,7 @@ class GameControllerTest {
     controller.selectUnitIn(2,0);
     controller.saveItem(deadlyBook);
     controller.equipItem(0);
+    Tactician FourthPlayer = controller.getTacticians().get(3);
 
     controller.useItemOn(0,0);
     assertFalse(controller.getTacticians().contains(FirstPlayer));
@@ -390,5 +391,11 @@ class GameControllerTest {
     assertTrue(controller.getTacticians().contains(SecondPlayer));
     controller.useItemOn(1,1);
     assertFalse(controller.getTacticians().contains(SecondPlayer));
+
+    controller.setTurnOwner(FourthPlayer);
+    controller.addUnit(sw);
+    controller.useItemOn(2,0);
+    assertFalse(controller.getTacticians().contains(FourthPlayer));
+    assertEquals(ThirdPlayer,controller.getTurnOwner());
   }
 }

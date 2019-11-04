@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class Tactician {
 
-    private String name;
+    private final String name;
     private List<IUnit> units =  new ArrayList<>();
     private List<IUnit> movedUnits =  new ArrayList<>();
     private IUnit selectedUnit;
@@ -44,12 +44,7 @@ public class Tactician {
     /**
      * @param unit a unit the tactician is going to play with
      */
-    public void addUnit(IUnit unit) {
-        if (units.size()<=controller.getMaxUnits()) {
-            unit.setTactician(this);
-            units.add(unit);
-        }
-    }
+    public void addUnit(IUnit unit) { units.add(unit); }
 
     /**
      * @return the tactician units
@@ -145,6 +140,7 @@ public class Tactician {
     public void gameOver() {
         for (IUnit unit : getUnits()){
             unit.getLocation().setUnit(null);
+            units.remove(unit);
         }
         controller.removeTactician(getName());
     }

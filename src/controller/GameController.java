@@ -27,8 +27,7 @@ public class GameController {
   private Tactician turnOwner;
   private int roundNumber;
   private int maxRounds;
-  private int maxTacticians;
-  private int maxUnits=4;
+  private int maxUnits;
 
   /**
    * Creates the controller for a new game.
@@ -39,13 +38,10 @@ public class GameController {
    *     the dimensions of the map, for simplicity, all maps are squares
    */
   public GameController(int numberOfPlayers, int mapSize) {
-    maxTacticians= (int) mapSize^2/numberOfPlayers;
+    maxUnits= (int) mapSize^2/numberOfPlayers;
 
-    map = new Field();
-    map.setSeed(seed);
-    map.addCells(false, map.arrayCells(mapSize));
-
-    for (int i=0; i<Math.min(numberOfPlayers,maxTacticians);i++){
+    map = new Field(mapSize,seed);
+    for (int i=0; i<numberOfPlayers;i++){
       tacticians.add(new Tactician("Player " + i));
       tacticians.get(i).setController(this);
     }
@@ -125,6 +121,7 @@ public class GameController {
     }
   }
 
+
   /**
    * Removes a tactician and all of it's units from the game.
    *
@@ -133,6 +130,9 @@ public class GameController {
    */
   public void removeTactician(String tactician) {
     for (int i=0; i<tacticians.size();i++){
+      if (tactician.equals(turnOwner.getName())){
+        endTurn();
+      }
       if(tactician.equals(tacticians.get(i).getName())){
         tacticians.remove(i);
       }
@@ -192,7 +192,11 @@ public class GameController {
   /**
    * @param unit, the turn owner will add this unit
    */
-  public void addUnit(IUnit unit) { turnOwner.addUnit(unit); }
+  public void addUnit(IUnit unit) {
+    if (turnOwner.getUnits().size()<maxUnits){
+      turnOwner.addUnit(unit);
+    }
+  }
 
   /**
    * Moves the turn owner selected unit

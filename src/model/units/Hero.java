@@ -40,6 +40,7 @@ public class Hero extends AbstractUnit {
   @Override
   public void deadUnit() {
     getTactician().gameOver(); //esto debiese hacerse con un handler
+    getTactician().removeUnit(this);
     getLocation().setUnit(null);
   }
 }
