@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -28,6 +27,7 @@ class GameControllerTest {
 
   private GameController controller;
   private long randomSeed;
+  private Random random;
   private List<String> testTacticians;
 
   private AlpacaFactory alpaca;
@@ -52,10 +52,10 @@ class GameControllerTest {
 
   @BeforeEach
   void setUp() {
-    // Se define la semilla como un número aleatorio para generar variedad en los tests
-    randomSeed = new Random().nextLong();
     controller = new GameController(4, 7);
     testTacticians = List.of("Player 0", "Player 1", "Player 2","Player 3");
+    randomSeed = controller.getSeed();
+    random = new Random(randomSeed);
 
     alpaca = new AlpacaFactory();
     archer = new ArcherFactory();
@@ -90,9 +90,7 @@ class GameControllerTest {
     assertEquals(7, gameMap.getSize());
     assertTrue(controller.getGameMap().isConnected());
 
-    long seed = controller.getSeed();
-
-    Field testMap = new Field(7,seed);
+    Field testMap = new Field(7,randomSeed);
     assertTrue(testMap.isConnected());
 
     for (int i = 0; i < 7; i++){
@@ -101,15 +99,47 @@ class GameControllerTest {
         Location tm = testMap.getCell(i,j);
         assertEquals(gm.getNeighbours().size(),tm.getNeighbours().size());
         // I had to convert the Set to an arraylist. Idk why comparing two sets stopped working
-        assertTrue(new ArrayList<Location>(gm.getNeighbours()).containsAll(tm.getNeighbours()));
-        assertTrue(new ArrayList<Location>(tm.getNeighbours()).containsAll(gm.getNeighbours()));
+        assertTrue(new ArrayList<>(gm.getNeighbours()).containsAll(tm.getNeighbours()));
+        assertTrue(new ArrayList<>(tm.getNeighbours()).containsAll(gm.getNeighbours()));
       }
     }
   }
 
+   List<Tactician> roundSequence(List<Tactician> sequence, Tactician turnOwner){
+      int index = random.nextInt(testTacticians.size());
+      while(turnOwner!=null && index==controller.getTacticians().indexOf(turnOwner)){
+          index = random.nextInt(testTacticians.size());
+      }
+      sequence.add(controller.getTacticians().get(index));
+
+      for (int i = 1; i < testTacticians.size(); i++){
+          index = random.nextInt(testTacticians.size());
+          while(sequence.contains(controller.getTacticians().get(index))){
+              index = random.nextInt(testTacticians.size());
+          }
+          sequence.add(controller.getTacticians().get(index));
+      }
+      return sequence;
+  }
+
   @Test
   void getTurnOwner() {
-    //  En este caso deben hacer lo mismo que para el mapa
+    List<Tactician> testSequence = new ArrayList<>(controller.getTacticians());
+    Tactician testTurnOwner = testSequence.get(0);
+    controller.initGame(4);
+    for (int i = 0; i < 16; i++){
+        if (i==4 || i==8 || i ==12){
+            controller.endTurn();
+            assertNotEquals(testTurnOwner,controller.getTurnOwner());
+            testSequence = roundSequence(testSequence, testTurnOwner);
+            testTurnOwner = testSequence.get(0);
+        } else {
+            assertEquals(controller.getTurnOwner(),testTurnOwner);
+            controller.endTurn();
+            testTurnOwner =  testSequence.get(i%4);;
+        }
+
+    }
   }
 
   @Test
@@ -199,7 +229,6 @@ class GameControllerTest {
     assertTrue(List.of("Player 3").containsAll(controller.getWinners()));
   }
 
-  // Desde aquí en adelante, los tests deben definirlos completamente ustedes
 
   @Test
   void getSelectedUnit() {
@@ -304,7 +333,7 @@ class GameControllerTest {
     double fighterHP = controller.getSelectedUnitHP();
     controller.useItemOn(1,0);
     assertEquals(fighterHP-(he.getEquippedItem().getPower()-20), controller.getSelectedUnitHP());
-    assertEquals(heroHP-(controller.getSelectedUnitItemPower()*1.5),he.getCurrentHitPoints());
+    assertEquals(heroHP-(controller.getSelectedUnit().getEquippedItem().getPower()*1.5),he.getCurrentHitPoints());
 
     controller.setTurnOwner(controller.getTacticians().get(0));
     controller.selectUnitIn(2,0);
@@ -320,7 +349,7 @@ class GameControllerTest {
     heroHP = he.getCurrentHitPoints();
     clericHP = controller.getSelectedUnitHP();
     controller.useItemOn(1,0);
-    assertEquals(heroHP+controller.getSelectedUnitItemPower(), he.getCurrentHitPoints());
+    assertEquals(heroHP+controller.getSelectedUnit().getEquippedItem().getPower(), he.getCurrentHitPoints());
     assertEquals(clericHP,controller.getSelectedUnitHP());
 
     // Cleric try to heal Fighter
@@ -367,16 +396,18 @@ class GameControllerTest {
     IUnit an = sorcerer.create(controller.getGameMap().getCell(2,0));
     AnimaBook deadlyBook = new AnimaBook("Deadly dead anima book",1000,1,4);
 
-    IUnit sw = swordMaster.createArmed(controller.getGameMap().getCell(2,1));
+    IUnit an2 = sorcerer.createArmed(controller.getGameMap().getCell(2,1));
 
     Tactician FirstPlayer = controller.getTacticians().get(0);
     controller.setTurnOwner(FirstPlayer);
     controller.addUnit(he);
     controller.addUnit(fi1);
+
     Tactician SecondPlayer = controller.getTacticians().get(1);
     controller.setTurnOwner(SecondPlayer);
     controller.addUnit(fi2);
     controller.addUnit(arc);
+
     Tactician ThirdPlayer = controller.getTacticians().get(2);
     controller.setTurnOwner(ThirdPlayer);
     controller.addUnit(an);
@@ -385,6 +416,15 @@ class GameControllerTest {
     controller.equipItem(0);
     Tactician FourthPlayer = controller.getTacticians().get(3);
 
+    controller.setTurnOwner(FourthPlayer);
+    controller.addUnit(an2);
+    controller.selectUnitIn(2,1);
+    controller.useItemOn(2,0);
+    assertEquals(ThirdPlayer,controller.getTurnOwner());
+    assertFalse(controller.getTacticians().contains(FourthPlayer));
+
+    controller.setTurnOwner(ThirdPlayer);
+    controller.selectUnitIn(2,0);
     controller.useItemOn(0,0);
     assertFalse(controller.getTacticians().contains(FirstPlayer));
     controller.useItemOn(0,1);
@@ -392,10 +432,7 @@ class GameControllerTest {
     controller.useItemOn(1,1);
     assertFalse(controller.getTacticians().contains(SecondPlayer));
 
-    controller.setTurnOwner(FourthPlayer);
-    controller.addUnit(sw);
-    controller.useItemOn(2,0);
-    assertFalse(controller.getTacticians().contains(FourthPlayer));
-    assertEquals(ThirdPlayer,controller.getTurnOwner());
+
+
   }
 }

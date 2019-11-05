@@ -1,11 +1,11 @@
 package model;
 
 import model.map.Field;
-import model.Tactician;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TacticianTest {
     Tactician testTactician;

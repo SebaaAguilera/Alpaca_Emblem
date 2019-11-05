@@ -53,7 +53,6 @@ public class Field {
   }
 
   /**
-   *
    * @param mapSize the size of the map
    * @return an array with the locations of the map
    */

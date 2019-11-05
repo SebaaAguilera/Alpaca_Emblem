@@ -20,7 +20,7 @@ import model.units.IUnit;
 public class GameController {
 
   private List<Tactician> tacticians = new ArrayList<>();
-  private List<Tactician> roundSequence = new ArrayList();
+  private List<Tactician> roundSequence = new ArrayList<>(tacticians);
   private Field map;
   private long seed = new Random().nextLong();
   private Random random = new Random(seed);
@@ -38,13 +38,16 @@ public class GameController {
    *     the dimensions of the map, for simplicity, all maps are squares
    */
   public GameController(int numberOfPlayers, int mapSize) {
-    maxUnits= (int) mapSize^2/numberOfPlayers;
+    maxUnits = mapSize^2/numberOfPlayers;
 
-    map = new Field(mapSize,seed);
     for (int i=0; i<numberOfPlayers;i++){
       tacticians.add(new Tactician("Player " + i));
       tacticians.get(i).setController(this);
     }
+
+    map = new Field(mapSize,seed);
+
+
   }
 
   /**
@@ -60,7 +63,7 @@ public class GameController {
   /**
    * Sets a new round tactician sequence and round number
    */
-  public void newRoundSequence(){
+  private void newRoundSequence(){
     roundSequence.clear();
     roundNumber+=1;
 
@@ -112,6 +115,7 @@ public class GameController {
    * Finish the current player's turn.
    */
   public void endTurn() {
+    if (tacticians.size()==1) turnOwner = roundSequence.get(0);
     turnOwner.clearMovedUnits();
     if (roundSequence.indexOf(turnOwner)<tacticians.size()-1){
       turnOwner = roundSequence.get(roundSequence.indexOf(turnOwner)+1);
@@ -123,18 +127,25 @@ public class GameController {
 
 
   /**
-   * Removes a tactician and all of it's units from the game.
+   * Removes a tactician from the game.
    *
    * @param tactician
    *     the player to be removed
    */
   public void removeTactician(String tactician) {
-    for (int i=0; i<tacticians.size();i++){
-      if (tactician.equals(turnOwner.getName())){
+     if (tactician.equals(turnOwner.getName())){
         endTurn();
-      }
-      if(tactician.equals(tacticians.get(i).getName())){
+     }
+    for (int i=0; i<tacticians.size();i++) {
+      if (tactician.equals(tacticians.get(i).getName())) {
         tacticians.remove(i);
+        break;
+      }
+    }
+    for (int i=0; i<tacticians.size();i++){
+      if(tactician.equals(roundSequence.get(i).getName())){
+        roundSequence.remove(i);
+        break;
       }
     }
   }
@@ -166,7 +177,11 @@ public class GameController {
    * @return the winner of this game, if the match ends in a draw returns a list of all the winners
    */
   public List<String> getWinners() {
-    return null;
+      List<String> winners = new ArrayList<>();
+    for (Tactician tactician : tacticians) {
+      winners.add(tactician.getName());
+    }
+    return winners;
   }
 
   /**

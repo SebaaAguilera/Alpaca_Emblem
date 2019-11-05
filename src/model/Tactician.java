@@ -44,7 +44,10 @@ public class Tactician {
     /**
      * @param unit a unit the tactician is going to play with
      */
-    public void addUnit(IUnit unit) { units.add(unit); }
+    public void addUnit(IUnit unit) {
+        units.add(unit);
+        unit.setTactician(this);
+    }
 
     /**
      * @return the tactician units
