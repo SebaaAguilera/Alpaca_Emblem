@@ -1,10 +1,13 @@
 package model;
 
 import controller.GameController;
+import model.handlers.GameOverHandler;
 import model.items.IEquipableItem;
 import model.map.Location;
 import model.units.IUnit;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,18 +26,13 @@ public class Tactician {
     private IUnit selectedUnit;
     private IEquipableItem selectedItem;
     private GameController controller;
+    private PropertyChangeSupport support;
 
     /**
      * Creates a Tactician, a Game Player
      * @param name the name of the Tactician
      */
     public Tactician(String name){ this.name=name; }
-
-    /**
-     * set the Tactician controller
-     * @param controller
-     */
-    public void setController(GameController controller) { this.controller = controller; }
 
     /**
      *  @return the Tactician Name
@@ -145,7 +143,7 @@ public class Tactician {
             unit.getLocation().setUnit(null);
             units.remove(unit);
         }
-        controller.removeTactician(getName());
+        support.firePropertyChange(new PropertyChangeEvent(this,getName(),null,null));
     }
 
     /**
@@ -155,5 +153,10 @@ public class Tactician {
     public void removeUnit(IUnit unit){
         units.remove(unit);
         if (units.size()==0) this.gameOver(); //esto debiese cambiarse
+    }
+
+    public void suscribeToGOHandler(GameController controller) {
+        support = new PropertyChangeSupport(controller);
+        support.addPropertyChangeListener(new GameOverHandler(controller));
     }
 }

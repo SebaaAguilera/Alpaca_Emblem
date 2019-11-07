@@ -1,10 +1,12 @@
 package controller;
 
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import model.Tactician;
+import model.handlers.GameOverHandler;
 import model.items.IEquipableItem;
 import model.map.Field;
 import model.units.IUnit;
@@ -21,13 +23,16 @@ public class GameController {
 
   private List<Tactician> tacticians = new ArrayList<>();
   private List<Tactician> roundSequence = new ArrayList<>(tacticians);
+
   private Field map;
   private long seed = new Random().nextLong();
   private Random random = new Random(seed);
+
   private Tactician turnOwner;
   private int roundNumber;
   private int maxRounds;
   private int maxUnits;
+
 
   /**
    * Creates the controller for a new game.
@@ -38,15 +43,16 @@ public class GameController {
    *     the dimensions of the map, for simplicity, all maps are squares
    */
   public GameController(int numberOfPlayers, int mapSize) {
-    maxUnits = mapSize^2/numberOfPlayers;
+
 
     for (int i=0; i<numberOfPlayers;i++){
       tacticians.add(new Tactician("Player " + i));
-      tacticians.get(i).setController(this);
+      tacticians.get(i).suscribeToGOHandler(this);
     }
 
     map = new Field(mapSize,seed);
 
+    maxUnits = mapSize^2/numberOfPlayers;
 
   }
 

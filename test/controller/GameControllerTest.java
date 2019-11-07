@@ -443,6 +443,7 @@ class GameControllerTest {
     controller.equipItem(0);
     controller.useItemOn(2,0);
     assertEquals(1,controller.getTacticians().size());
+    assertFalse(controller.getTacticians().contains(ThirdPlayer)); //esto no deberia funcionar, debiese eliminar al 4to (Musica de Naruto triste)
     assertFalse(controller.getTacticians().contains(FourthPlayer));
     assertEquals(ThirdPlayer,controller.getTurnOwner());
 

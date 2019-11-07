@@ -77,6 +77,7 @@ public class ArcherTest extends AbstractTestUnit {
     assertEquals(targetClericHP, targetCleric.getCurrentHitPoints());
     assertEquals(testUnitHP,archer.getCurrentHitPoints());
 
+    /* Unnecesary test, deleted in the 2.5 version cuz the gamecontroller tests it
     testUnitHP = archer.getCurrentHitPoints();
     Bow superBow = new Bow("Alpacaminator", 9999, 2, 3);
     archer.saveItem(superBow);
@@ -85,6 +86,6 @@ public class ArcherTest extends AbstractTestUnit {
     assertTrue(targetAlpaca.getCurrentHitPoints() > 0);
     archer.combat(targetAlpaca);
     assertEquals(0, targetAlpaca.getCurrentHitPoints());
-    assertEquals(testUnitHP,archer.getCurrentHitPoints());
+    assertEquals(testUnitHP,archer.getCurrentHitPoints());*/
   }
 }
