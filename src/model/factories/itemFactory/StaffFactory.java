@@ -1,4 +1,4 @@
-package model.itemFactory;
+package model.factories.itemFactory;
 
 import model.items.IEquipableItem;
 import model.items.Staff;

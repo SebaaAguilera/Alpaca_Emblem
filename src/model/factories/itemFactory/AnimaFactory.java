@@ -1,4 +1,4 @@
-package model.itemFactory;
+package model.factories.itemFactory;
 
 import model.items.AnimaBook;
 import model.items.IEquipableItem;

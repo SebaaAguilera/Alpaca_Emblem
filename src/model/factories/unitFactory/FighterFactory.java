@@ -1,21 +1,21 @@
-package model.unitFactory;
+package model.factories.unitFactory;
 
-import model.itemFactory.DarknessFactory;
+import model.factories.itemFactory.AxeFactory;
 import model.items.IEquipableItem;
 import model.map.Location;
+import model.units.Fighter;
 import model.units.IUnit;
 
 /**
- * Sorcerer factory
- * createArmed gives a Darkness Sorcerer
+ * Fighter factory
  * @author Sebastián Aguilera Valenzuela
  * @since 2.5
  */
-public class DarkSorcererFactory implements UnitFactory {
-    private DarknessFactory iFactory = new DarknessFactory();
+public class FighterFactory implements UnitFactory {
+    private AxeFactory iFactory = new AxeFactory();
 
     @Override
-    public IUnit create(Location location) {return new model.units.Sorcerer(250, 3, location); }
+    public IUnit create(Location location) { return new Fighter(300,5,location); }
 
     @Override
     public IUnit createArmed(Location location) {

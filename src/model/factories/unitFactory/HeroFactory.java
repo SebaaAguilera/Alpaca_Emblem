@@ -1,20 +1,21 @@
-package model.unitFactory;
+package model.factories.unitFactory;
 
-import model.itemFactory.BowFactory;
+import model.factories.itemFactory.SpearFactory;
 import model.items.IEquipableItem;
 import model.map.Location;
+import model.units.Hero;
 import model.units.IUnit;
 
 /**
- * Archer factory
+ * Hero factory
  * @author Sebastián Aguilera Valenzuela
  * @since 2.5
  */
-public class ArcherFactory implements UnitFactory {
-    private BowFactory iFactory = new BowFactory();
+public class HeroFactory implements UnitFactory {
+    private SpearFactory iFactory = new SpearFactory();
 
     @Override
-    public IUnit create(Location location) { return new model.units.Archer(250,3,location);  }
+    public IUnit create(Location location) { return new Hero(400, 5, location); }
 
     @Override
     public IUnit createArmed(Location location) {

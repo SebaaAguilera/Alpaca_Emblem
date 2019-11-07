@@ -1,20 +1,21 @@
-package model.unitFactory;
+package model.factories.unitFactory;
 
-import model.itemFactory.StaffFactory;
+import model.factories.itemFactory.AnimaFactory;
 import model.items.IEquipableItem;
 import model.map.Location;
 import model.units.IUnit;
 
 /**
- * Cleric factory
+ * Sorcerer factory
+ * createArmed gives an Anima Sorcerer
  * @author Sebastián Aguilera Valenzuela
  * @since 2.5
  */
-public class ClericFactory implements UnitFactory {
-    private StaffFactory iFactory = new StaffFactory();
+public class AnimaSorcererFactory implements UnitFactory {
+    private AnimaFactory iFactory = new AnimaFactory();
 
     @Override
-    public IUnit create(Location location) { return new model.units.Cleric(200,2,location); }
+    public IUnit create(Location location) {return new model.units.Sorcerer(250, 3, location); }
 
     @Override
     public IUnit createArmed(Location location) {

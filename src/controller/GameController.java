@@ -65,15 +65,16 @@ public class GameController {
    */
   private void newRoundSequence(){
     roundSequence.clear();
-    roundNumber+=1;
 
     int index = random.nextInt(tacticians.size());
-    while(turnOwner!=null && index==tacticians.indexOf(turnOwner)){
-      index = random.nextInt(tacticians.size());
+    if (turnOwner!=null){
+      while(tacticians.get(index).getName().equals(turnOwner.getName())){
+        index = random.nextInt(tacticians.size());
+      }
     }
     roundSequence.add(tacticians.get(index));
 
-    for (int i = 1; i < tacticians.size(); i++){
+    while (roundSequence.size()!=tacticians.size()){
       index = random.nextInt(tacticians.size());
       while(roundSequence.contains(tacticians.get(index))){
         index = random.nextInt(tacticians.size());
@@ -115,12 +116,18 @@ public class GameController {
    * Finish the current player's turn.
    */
   public void endTurn() {
-    if (tacticians.size()==1) turnOwner = roundSequence.get(0);
     turnOwner.clearMovedUnits();
-    if (roundSequence.indexOf(turnOwner)<tacticians.size()-1){
+    int actualTurn = roundSequence.indexOf(turnOwner);
+    if (tacticians.size()==1) {
+      //End of the game
+      turnOwner = tacticians.get(0);
+    } else if (roundNumber==maxRounds && actualTurn==tacticians.size()-1){
+      //End of the game
+    } else if (actualTurn<tacticians.size()-1){
       turnOwner = roundSequence.get(roundSequence.indexOf(turnOwner)+1);
     } else {
       newRoundSequence();
+      roundNumber+=1;
       turnOwner = roundSequence.get(0);
     }
   }
@@ -133,21 +140,24 @@ public class GameController {
    *     the player to be removed
    */
   public void removeTactician(String tactician) {
-     if (tactician.equals(turnOwner.getName())){
-        endTurn();
-     }
+    if (tactician.equals(turnOwner.getName())){
+      endTurn();
+    }
     for (int i=0; i<tacticians.size();i++) {
       if (tactician.equals(tacticians.get(i).getName())) {
         tacticians.remove(i);
         break;
       }
     }
-    for (int i=0; i<tacticians.size();i++){
+    for (int i=0; i<roundSequence.size();i++){
       if(tactician.equals(roundSequence.get(i).getName())){
         roundSequence.remove(i);
         break;
       }
     }
+
+
+
   }
 
   /**
@@ -157,7 +167,7 @@ public class GameController {
    */
   public void initGame(final int maxRounds) {
     this.maxRounds = maxRounds;
-    roundNumber = 0;
+    roundNumber = 1;
     newRoundSequence();
     turnOwner = roundSequence.get(0);
   }
@@ -168,7 +178,7 @@ public class GameController {
    */
   public void initEndlessGame() {
     this.maxRounds = -1;
-    roundNumber = 0;
+    roundNumber = 1;
     newRoundSequence();
     turnOwner = roundSequence.get(0);
   }
@@ -177,11 +187,16 @@ public class GameController {
    * @return the winner of this game, if the match ends in a draw returns a list of all the winners
    */
   public List<String> getWinners() {
-      List<String> winners = new ArrayList<>();
+    List<String> winners = new ArrayList<>();
     for (Tactician tactician : tacticians) {
       winners.add(tactician.getName());
     }
-    return winners;
+    if ((roundNumber==maxRounds && roundSequence.indexOf(turnOwner)==tacticians.size()-1)
+        || (maxRounds==-1 && tacticians.size()==1)) {
+      return winners;
+    } else {
+      return new ArrayList<>();
+    }
   }
 
   /**

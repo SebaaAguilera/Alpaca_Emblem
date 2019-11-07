@@ -56,7 +56,7 @@ public class Tactician {
 
     /**
      * Select an unit in the map
-     * @param unit
+     * @param unit the unit to be selected
      */
     public void selectUnitIn(IUnit unit){
         if (units.contains(unit)){
@@ -91,7 +91,7 @@ public class Tactician {
 
     /**
      * Moves the tactician selected unit
-     * @param location
+     * @param location the target location
      */
     public void moveUnitTo(Location location){
         if (movedUnits.contains(selectedUnit)) return;
@@ -123,7 +123,7 @@ public class Tactician {
 
     /**
      * Give the selected item to the unit
-     * @param unit
+     * @param unit the unit will receive the item
      */
     public void giveItemTo(IUnit unit) {
         if (units.contains(unit)){

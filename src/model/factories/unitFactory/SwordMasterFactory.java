@@ -1,21 +1,21 @@
-package model.unitFactory;
+package model.factories.unitFactory;
 
-import model.itemFactory.LightFactory;
+import model.factories.itemFactory.SwordFactory;
 import model.items.IEquipableItem;
 import model.map.Location;
 import model.units.IUnit;
+import model.units.SwordMaster;
 
 /**
- * Sorcerer factory
- * createArmed gives a Light Sorcerer
+ * SwordMaster factory
  * @author Sebastián Aguilera Valenzuela
  * @since 2.5
  */
-public class LightSorcererFactory implements UnitFactory {
-    private LightFactory iFactory = new LightFactory();
+public class SwordMasterFactory implements UnitFactory {
+    private SwordFactory iFactory = new SwordFactory();
 
     @Override
-    public IUnit create(Location location) {return new model.units.Sorcerer(250, 3, location); }
+    public IUnit create(Location location) { return new SwordMaster(300, 5, location); }
 
     @Override
     public IUnit createArmed(Location location) {

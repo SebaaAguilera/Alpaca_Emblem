@@ -1,4 +1,4 @@
-package model.unitFactory;
+package model.factories.unitFactory;
 
 import model.map.Location;
 import model.units.IUnit;

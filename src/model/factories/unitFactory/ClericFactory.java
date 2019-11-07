@@ -1,21 +1,20 @@
-package model.unitFactory;
+package model.factories.unitFactory;
 
-import model.itemFactory.AxeFactory;
+import model.factories.itemFactory.StaffFactory;
 import model.items.IEquipableItem;
 import model.map.Location;
-import model.units.Fighter;
 import model.units.IUnit;
 
 /**
- * Fighter factory
+ * Cleric factory
  * @author Sebastián Aguilera Valenzuela
  * @since 2.5
  */
-public class FighterFactory implements UnitFactory {
-    private AxeFactory iFactory = new AxeFactory();
+public class ClericFactory implements UnitFactory {
+    private StaffFactory iFactory = new StaffFactory();
 
     @Override
-    public IUnit create(Location location) { return new Fighter(300,5,location); }
+    public IUnit create(Location location) { return new model.units.Cleric(200,2,location); }
 
     @Override
     public IUnit createArmed(Location location) {

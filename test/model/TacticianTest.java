@@ -26,6 +26,7 @@ public class TacticianTest {
 
     @Test
     public void testName(){
+        testTactician = new Tactician("Player");
         assertEquals("Player", testTactician.getName()); }
 
 }

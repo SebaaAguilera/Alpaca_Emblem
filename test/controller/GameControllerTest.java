@@ -7,8 +7,9 @@ import java.util.stream.IntStream;
 
 import model.Tactician;
 import model.items.AnimaBook;
-import model.unitFactory.*;
-import model.itemFactory.*;
+import model.factories.unitFactory.*;
+import model.factories.itemFactory.*;
+import model.items.DarknessBook;
 import model.items.IEquipableItem;
 import model.map.Field;
 import model.map.Location;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Ignacio Slater Muñoz
@@ -52,7 +54,7 @@ class GameControllerTest {
 
   @BeforeEach
   void setUp() {
-    controller = new GameController(4, 7);
+    controller = new GameController(4, 5);
     testTacticians = List.of("Player 0", "Player 1", "Player 2","Player 3");
     randomSeed = controller.getSeed();
     random = new Random(randomSeed);
@@ -87,10 +89,10 @@ class GameControllerTest {
   @Test
   void getGameMap() {
     Field gameMap = controller.getGameMap();
-    assertEquals(7, gameMap.getSize());
+    assertEquals(5, gameMap.getSize());
     assertTrue(controller.getGameMap().isConnected());
 
-    Field testMap = new Field(7,randomSeed);
+    Field testMap = new Field(5,randomSeed);
     assertTrue(testMap.isConnected());
 
     for (int i = 0; i < 7; i++){
@@ -106,16 +108,20 @@ class GameControllerTest {
   }
 
    List<Tactician> roundSequence(List<Tactician> sequence, Tactician turnOwner){
-      int index = random.nextInt(testTacticians.size());
-      while(turnOwner!=null && index==controller.getTacticians().indexOf(turnOwner)){
-          index = random.nextInt(testTacticians.size());
+      sequence.clear();
+      random = new Random(randomSeed);
+      int index = random.nextInt(controller.getTacticians().size());
+      if (turnOwner!=null) {
+        while(sequence.get(index).getName().equals(turnOwner.getName())){
+          index = random.nextInt(sequence.size());
+        }
       }
       sequence.add(controller.getTacticians().get(index));
 
-      for (int i = 1; i < testTacticians.size(); i++){
-          index = random.nextInt(testTacticians.size());
+      while (sequence.size()!=controller.getTacticians().size()){
+          index = random.nextInt(controller.getTacticians().size());
           while(sequence.contains(controller.getTacticians().get(index))){
-              index = random.nextInt(testTacticians.size());
+              index = random.nextInt(controller.getTacticians().size());
           }
           sequence.add(controller.getTacticians().get(index));
       }
@@ -125,16 +131,17 @@ class GameControllerTest {
   @Test
   void getTurnOwner() {
     List<Tactician> testSequence = new ArrayList<>(controller.getTacticians());
+    testSequence = roundSequence(testSequence, null);
     Tactician testTurnOwner = testSequence.get(0);
-    controller.initGame(4);
-    for (int i = 0; i < 16; i++){
-        if (i==4 || i==8 || i ==12){
+    controller.initGame(2);
+    for (int i = 0; i < 8; i++){
+        if (i==4){
             controller.endTurn();
-            assertNotEquals(testTurnOwner,controller.getTurnOwner());
+            assertNotEquals(testTurnOwner.getName(),controller.getTurnOwner().getName());
             testSequence = roundSequence(testSequence, testTurnOwner);
             testTurnOwner = testSequence.get(0);
         } else {
-            assertEquals(controller.getTurnOwner(),testTurnOwner);
+            assertEquals(controller.getTurnOwner().getName(),testTurnOwner.getName());
             controller.endTurn();
             testTurnOwner =  testSequence.get(i%4);;
         }
@@ -166,7 +173,7 @@ class GameControllerTest {
 
   @Test
   void endTurn() {
-    controller.initGame(1);
+    controller.initGame(2);
     List <Tactician> roundSequence= controller.getRoundSequence();
     Tactician firstPlayer = controller.getTurnOwner();
     Tactician secondPlayer = roundSequence.get(roundSequence.indexOf(controller.getTurnOwner())+1);
@@ -181,12 +188,15 @@ class GameControllerTest {
     controller.endTurn();
 
     Tactician fourthPlayer = controller.getTurnOwner();
-    controller. endTurn();
+    controller.endTurn();
     assertNotEquals(fourthPlayer.getName(), controller.getTurnOwner().getName());
   }
 
   @Test
   void removeTactician() {
+    // Test tactician to set as a turnOwner
+    controller.setTurnOwner(new Tactician("El tontito la lleva"));
+
     assertEquals(4, controller.getTacticians().size());
     controller.getTacticians()
         .forEach(tactician -> Assertions.assertTrue(testTacticians.contains(tactician.getName())));
@@ -207,13 +217,14 @@ class GameControllerTest {
   void getWinners() {
     controller.initGame(2);
     IntStream.range(0, 8).forEach(i -> controller.endTurn());
+    assertEquals(controller.getMaxRounds(),controller.getRoundNumber());
     assertEquals(4, controller.getWinners().size());
     controller.getWinners()
         .forEach(player -> Assertions.assertTrue(testTacticians.contains(player)));
 
     controller.initGame(2);
     IntStream.range(0, 4).forEach(i -> controller.endTurn());
-    assertNull(controller.getWinners());
+    assertEquals(0,controller.getWinners().size());
     controller.removeTactician("Player 0");
     controller.removeTactician("Player 2");
     IntStream.range(0, 2).forEach(i -> controller.endTurn());
@@ -222,8 +233,8 @@ class GameControllerTest {
     assertTrue(List.of("Player 1", "Player 3").containsAll(winners));
 
     controller.initEndlessGame();
-    for (int i = 0; i < 3; i++) {
-      assertNull(controller.getWinners());
+    for (int i = 0; i < 2; i++) {
+      assertEquals(0,controller.getWinners().size());
       controller.removeTactician("Player " + i);
     }
     assertTrue(List.of("Player 3").containsAll(controller.getWinners()));
@@ -387,6 +398,7 @@ class GameControllerTest {
 
   @Test
   void gameOver(){
+    controller.initGame(2);
     IUnit he = hero.create(controller.getGameMap().getCell(0,0));
     IUnit fi1 = fighter.create(controller.getGameMap().getCell(1,0));
 
@@ -396,35 +408,27 @@ class GameControllerTest {
     IUnit an = sorcerer.create(controller.getGameMap().getCell(2,0));
     AnimaBook deadlyBook = new AnimaBook("Deadly dead anima book",1000,1,4);
 
-    IUnit an2 = sorcerer.createArmed(controller.getGameMap().getCell(2,1));
+    IUnit so = sorcerer.create(controller.getGameMap().getCell(2,1));
+    IEquipableItem dk = dark.create();
 
-    Tactician FirstPlayer = controller.getTacticians().get(0);
+    Tactician FirstPlayer = controller.getRoundSequence().get(0);
     controller.setTurnOwner(FirstPlayer);
     controller.addUnit(he);
     controller.addUnit(fi1);
 
-    Tactician SecondPlayer = controller.getTacticians().get(1);
+    Tactician SecondPlayer = controller.getRoundSequence().get(1);
     controller.setTurnOwner(SecondPlayer);
     controller.addUnit(fi2);
     controller.addUnit(arc);
 
-    Tactician ThirdPlayer = controller.getTacticians().get(2);
+    Tactician ThirdPlayer = controller.getRoundSequence().get(2);
     controller.setTurnOwner(ThirdPlayer);
     controller.addUnit(an);
     controller.selectUnitIn(2,0);
     controller.saveItem(deadlyBook);
     controller.equipItem(0);
-    Tactician FourthPlayer = controller.getTacticians().get(3);
+    Tactician FourthPlayer = controller.getRoundSequence().get(3);
 
-    controller.setTurnOwner(FourthPlayer);
-    controller.addUnit(an2);
-    controller.selectUnitIn(2,1);
-    controller.useItemOn(2,0);
-    assertEquals(ThirdPlayer,controller.getTurnOwner());
-    assertFalse(controller.getTacticians().contains(FourthPlayer));
-
-    controller.setTurnOwner(ThirdPlayer);
-    controller.selectUnitIn(2,0);
     controller.useItemOn(0,0);
     assertFalse(controller.getTacticians().contains(FirstPlayer));
     controller.useItemOn(0,1);
@@ -432,7 +436,15 @@ class GameControllerTest {
     controller.useItemOn(1,1);
     assertFalse(controller.getTacticians().contains(SecondPlayer));
 
-
+    controller.setTurnOwner(FourthPlayer);
+    controller.addUnit(so);
+    controller.selectUnitIn(2,1);
+    controller.saveItem(dk);
+    controller.equipItem(0);
+    controller.useItemOn(2,0);
+    assertEquals(1,controller.getTacticians().size());
+    assertFalse(controller.getTacticians().contains(FourthPlayer));
+    assertEquals(ThirdPlayer,controller.getTurnOwner());
 
   }
 }

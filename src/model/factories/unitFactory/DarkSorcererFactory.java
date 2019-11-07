@@ -1,18 +1,18 @@
-package model.unitFactory;
+package model.factories.unitFactory;
 
-import model.itemFactory.AnimaFactory;
+import model.factories.itemFactory.DarknessFactory;
 import model.items.IEquipableItem;
 import model.map.Location;
 import model.units.IUnit;
 
 /**
  * Sorcerer factory
- * createArmed gives an Anima Sorcerer
+ * createArmed gives a Darkness Sorcerer
  * @author Sebastián Aguilera Valenzuela
  * @since 2.5
  */
-public class AnimaSorcererFactory implements UnitFactory {
-    private AnimaFactory iFactory = new AnimaFactory();
+public class DarkSorcererFactory implements UnitFactory {
+    private DarknessFactory iFactory = new DarknessFactory();
 
     @Override
     public IUnit create(Location location) {return new model.units.Sorcerer(250, 3, location); }
