@@ -1,12 +1,10 @@
 package controller;
 
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import model.Tactician;
-import model.handlers.GameOverHandler;
 import model.items.IEquipableItem;
 import model.map.Field;
 import model.units.IUnit;
@@ -43,11 +41,9 @@ public class GameController {
    *     the dimensions of the map, for simplicity, all maps are squares
    */
   public GameController(int numberOfPlayers, int mapSize) {
-
-
     for (int i=0; i<numberOfPlayers;i++){
       tacticians.add(new Tactician("Player " + i));
-      tacticians.get(i).suscribeToGOHandler(this);
+      tacticians.get(i).subscribeToGOHandler(this);
     }
 
     map = new Field(mapSize,seed);
@@ -138,7 +134,6 @@ public class GameController {
     }
   }
 
-
   /**
    * Removes a tactician from the game.
    *
@@ -146,9 +141,6 @@ public class GameController {
    *     the player to be removed
    */
   public void removeTactician(String tactician) {
-    if (tactician.equals(turnOwner.getName())){
-      endTurn();
-    }
     for (int i=0; i<tacticians.size();i++) {
       if (tactician.equals(tacticians.get(i).getName())) {
         tacticians.remove(i);
@@ -161,9 +153,6 @@ public class GameController {
         break;
       }
     }
-
-
-
   }
 
   /**
@@ -221,11 +210,6 @@ public class GameController {
   public void selectUnitIn(int x, int y) { turnOwner.selectUnitIn(map.getCell(x,y).getUnit()); }
 
   /**
-   * @return the max amount of units per tactician
-   */
-  public int getMaxUnits() { return maxUnits; }
-
-  /**
    * @param unit, the turn owner will add this unit
    */
   public void addUnit(IUnit unit) {
@@ -277,6 +261,11 @@ public class GameController {
    *     the location of the item in the inventory.
    */
   public void selectItem(int index) { turnOwner.selectItem(index); }
+
+  /**
+   * @return the turnOwner selectedItem
+   */
+  public IEquipableItem getSelectedItem() { return turnOwner.getSelectedItem(); }
 
   /**
    * Gives the selected item to a target unit.

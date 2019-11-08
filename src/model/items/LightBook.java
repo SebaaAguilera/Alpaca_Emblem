@@ -34,13 +34,13 @@ public class LightBook extends AbstractMagicItem {
 
     @Override
     public void attackedWithAnima(AnimaBook anima) {
-        this.getOwner().attacked(1.5 * this.getPower());
+        this.getOwner().attacked(1.5 * anima.getPower());
     }
 
     @Override
     public void attackedWithDarkness(DarknessBook darkness) {
         if (darkness.getPower() - 20 <= 0) return;
-        this.getOwner().attacked(this.getPower() - 20);
+        this.getOwner().attacked(darkness.getPower() - 20);
     }
 
 }

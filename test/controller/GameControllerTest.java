@@ -9,7 +9,6 @@ import model.Tactician;
 import model.items.AnimaBook;
 import model.factories.unitFactory.*;
 import model.factories.itemFactory.*;
-import model.items.DarknessBook;
 import model.items.IEquipableItem;
 import model.map.Field;
 import model.map.Location;
@@ -38,7 +37,9 @@ class GameControllerTest {
   private FighterFactory fighter;
   private HeroFactory hero;
   private SwordMasterFactory swordMaster;
-  private AnimaSorcererFactory sorcerer;
+  private AnimaSorcererFactory animaSorcerer;
+  private DarkSorcererFactory darkSorcerer;
+  private LightSorcererFactory lightSorcerer;
 
 
 
@@ -65,7 +66,9 @@ class GameControllerTest {
     fighter = new FighterFactory();
     hero   = new HeroFactory();
     swordMaster = new SwordMasterFactory() ;
-    sorcerer = new AnimaSorcererFactory();
+    animaSorcerer = new AnimaSorcererFactory();
+    darkSorcerer = new DarkSorcererFactory();
+    lightSorcerer = new LightSorcererFactory();
 
     anima = new AnimaFactory();
     axe = new AxeFactory();
@@ -258,9 +261,14 @@ class GameControllerTest {
     controller.selectUnitIn(0,0);
     assertEquals(alp,controller.getSelectedUnit());
 
+    assertEquals(alp.getMaxHitPoints(),controller.getSelectedUnitMaxHP());
+    assertEquals(alp.getCurrentHitPoints(),controller.getSelectedUnitHP());
+
     controller.setTurnOwner(controller.getTacticians().get(1));
     controller.selectUnitIn(0,0);
     assertNull(controller.getSelectedUnit());
+
+
   }
 
   @Test
@@ -373,6 +381,14 @@ class GameControllerTest {
 
   @Test
   void selectItem() {
+    IUnit ar = archer.createArmed(controller.getGameMap().getCell(0,0));
+
+    controller.setTurnOwner(controller.getTacticians().get(0));
+    controller.addUnit(ar);
+    controller.selectUnitIn(0,0);
+    controller.selectItem(0);
+    assertEquals("Bow",controller.getSelectedItem().getName());
+    assertEquals(40,controller.getSelectedUnitItemPower());
   }
 
   @Test
@@ -400,25 +416,24 @@ class GameControllerTest {
   void gameOver(){
     controller.initGame(2);
     IUnit he = hero.create(controller.getGameMap().getCell(0,0));
-    IUnit fi1 = fighter.create(controller.getGameMap().getCell(1,0));
+    IUnit fi = fighter.create(controller.getGameMap().getCell(1,0));
 
-    IUnit fi2 = fighter.create(controller.getGameMap().getCell(0,1));
+    IUnit li = lightSorcerer.create(controller.getGameMap().getCell(0,1));
     IUnit arc = archer.create(controller.getGameMap().getCell(1,1));
 
-    IUnit an = sorcerer.create(controller.getGameMap().getCell(2,0));
-    AnimaBook deadlyBook = new AnimaBook("Deadly dead anima book",1000,1,4);
+    IUnit an = animaSorcerer.create(controller.getGameMap().getCell(2,0));
+    AnimaBook deadlyBook = new AnimaBook("Deadly dead anima book",1000,1,10);
 
-    IUnit so = sorcerer.create(controller.getGameMap().getCell(2,1));
-    IEquipableItem dk = dark.create();
+    IUnit dk = darkSorcerer.createArmed(controller.getGameMap().getCell(2,1));
 
     Tactician FirstPlayer = controller.getRoundSequence().get(0);
     controller.setTurnOwner(FirstPlayer);
     controller.addUnit(he);
-    controller.addUnit(fi1);
+    controller.addUnit(fi);
 
     Tactician SecondPlayer = controller.getRoundSequence().get(1);
     controller.setTurnOwner(SecondPlayer);
-    controller.addUnit(fi2);
+    controller.addUnit(li);
     controller.addUnit(arc);
 
     Tactician ThirdPlayer = controller.getRoundSequence().get(2);
@@ -437,14 +452,10 @@ class GameControllerTest {
     assertFalse(controller.getTacticians().contains(SecondPlayer));
 
     controller.setTurnOwner(FourthPlayer);
-    controller.addUnit(so);
+    controller.addUnit(dk);
     controller.selectUnitIn(2,1);
-    controller.saveItem(dk);
-    controller.equipItem(0);
     controller.useItemOn(2,0);
-    assertEquals(1,controller.getTacticians().size());
-    assertFalse(controller.getTacticians().contains(ThirdPlayer)); //esto no deberia funcionar, debiese eliminar al 4to (Musica de Naruto triste)
-    assertFalse(controller.getTacticians().contains(FourthPlayer));
+    assertFalse(controller.getTacticians().contains(FourthPlayer)); // a veces falla pero es culpa del rango del arma
     assertEquals(ThirdPlayer,controller.getTurnOwner());
 
   }

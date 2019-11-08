@@ -15,6 +15,11 @@ public class GameOverHandler implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        controller.removeTactician( (String) evt.getPropertyName());
+
+        controller.removeTactician(evt.getPropertyName());
+
+        if (controller.getTurnOwner().getName().equals(evt.getPropertyName())){
+            controller.endTurn();
+        }
     }
 }

@@ -1,28 +1,16 @@
 package model;
 
-import model.map.Field;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Tactician tests set
+ * the GameController methods includes all the Tactician methods, so, is
+ * unnecessary to build up an entire bunch of tests here :c
+ */
 public class TacticianTest {
     Tactician testTactician;
-    Field map;
-
-    public void setField() {
-        map = new Field();
-        map.addCells(true, map.arrayCells(4));
-    }
-
-    public void setTactician() { testTactician = new Tactician("Player"); }
-
-    @BeforeEach
-    public void setUp(){
-        setField();
-        setTactician();
-    }
 
     @Test
     public void testName(){

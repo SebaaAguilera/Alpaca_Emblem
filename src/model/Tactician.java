@@ -25,7 +25,6 @@ public class Tactician {
     private List<IUnit> movedUnits =  new ArrayList<>();
     private IUnit selectedUnit;
     private IEquipableItem selectedItem;
-    private GameController controller;
     private PropertyChangeSupport support;
 
     /**
@@ -120,6 +119,11 @@ public class Tactician {
     public void selectItem(int index) { selectedItem = selectedUnit.getItems().get(index); }
 
     /**
+     * @return the tactician selected item
+     */
+    public IEquipableItem getSelectedItem() { return selectedItem; }
+
+    /**
      * Give the selected item to the unit
      * @param unit the unit will receive the item
      */
@@ -155,7 +159,7 @@ public class Tactician {
         if (units.size()==0) this.gameOver(); //esto debiese cambiarse
     }
 
-    public void suscribeToGOHandler(GameController controller) {
+    public void subscribeToGOHandler(GameController controller) {
         support = new PropertyChangeSupport(controller);
         support.addPropertyChangeListener(new GameOverHandler(controller));
     }
