@@ -16,12 +16,12 @@ public class DarkSorcererFactory implements UnitFactory {
 
     @Override
     public IUnit create(Location location) {
-        if (location.getUnit()!=null) return null;
+        if (location.getUnit()!=null || (location.getRow()==-1 && location.getColumn()==-1)) return null;
         return new model.units.Sorcerer(250, 3, location); }
 
     @Override
     public IUnit createArmed(Location location) {
-        if (location.getUnit()!=null) return null;
+        if (location.getUnit()!=null || (location.getRow()==-1 && location.getColumn()==-1)) return null;
         IUnit unit = create(location);
         IEquipableItem item = iFactory.create();
         unit.saveItem(item);

@@ -248,27 +248,37 @@ class GameControllerTest {
     units.add(al);
     controller.addUnit(al);
     assertTrue(controller.getTurnOwner().getUnits().containsAll(units));
+    assertEquals(units.size(),controller.getTurnOwner().getUnits().size());
 
     IUnit an = animaSorcerer.createArmed(controller.getGameMap().getCell(0,0));
-    assertFalse(controller.getTurnOwner().getUnits().contains(an));
+    assertNull(an);
+    assertEquals(units.size(),controller.getTurnOwner().getUnits().size());
+
+    IUnit al2 = alpaca.create(controller.getGameMap().getCell(5,4)); // out of the map
+    assertNull(al2);
+    assertEquals(units.size(),controller.getTurnOwner().getUnits().size());
 
     IUnit an2 = animaSorcerer.createArmed(controller.getGameMap().getCell(0,1));
     units.add(an2);
     controller.addUnit(an2);
     assertTrue(controller.getTurnOwner().getUnits().containsAll(units));
+    assertEquals(units.size(),controller.getTurnOwner().getUnits().size());
 
     IUnit li = lightSorcerer.createArmed(controller.getGameMap().getCell(1,1));
     units.add(li);
     controller.addUnit(li);
     assertTrue(controller.getTurnOwner().getUnits().containsAll(units));
+    assertEquals(units.size(),controller.getTurnOwner().getUnits().size());
 
     IUnit sm = swordMaster.createArmed(controller.getGameMap().getCell(2,1));
     units.add(sm);
     controller.addUnit(sm);
     assertTrue(controller.getTurnOwner().getUnits().containsAll(units));
+    assertEquals(units.size(),controller.getTurnOwner().getUnits().size());
 
     IUnit sm2 = animaSorcerer.create(controller.getGameMap().getCell(2,0));
-    assertFalse(controller.getTurnOwner().getUnits().contains(an));
+    assertFalse(controller.getTurnOwner().getUnits().contains(sm2));
+    assertEquals(units.size(),controller.getTurnOwner().getUnits().size());
 
 
   }
