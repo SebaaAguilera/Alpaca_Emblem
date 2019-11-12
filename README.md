@@ -14,35 +14,46 @@ Representa aun jugador, guardando los datos de este y siendo el intermediario en
 - **Unidades desplazadas**: _movedUnits_ es un _ArrayList_ que guarda las unidades del Tactican desplazadas en ese turno por el jugador.
 - **Unidad seleccionada**: _selectedUnit_ es un _IUnit_ con la Unidad seleccionada del Tactician del jugador
 - **Item seleccionado**:_selectedItem_ es un _IEquipableItem_ con el item seleccionado del Tactician del jugador
-- **Controller**: **NO DEBERÍA ESTAR**
-
-El tactician puede realizar lo siguiente: agregarse unidades, seleccionar unidades y guardarles o equiparles items, puede ver sus unidades, sus atributos y los de sus items, tambien intercambiar objetos entre ellas así como usar el item equipado en otras unidades. Puede mover sus unidades una vez por turno, por lo que se aplicó como estrategía que cada vez que el Tactician mueve una unidad, este lo guarda en _movedUnits_
+- **Support**: El _PropertyChangeSupport_ que será utilizado cuando el Tactician pierda el juego.
+ 
+El tactician puede realizar lo siguiente: agregarse unidades, seleccionar unidades y guardarles o equiparles items, puede ver sus unidades, sus atributos y los de sus items, tambien intercambiar objetos entre ellas así como usar el item equipado en otras unidades. Puede mover sus unidades una vez por turno, por lo que se aplicó como estrategía que cada vez que el Tactician mueve una unidad, este lo guarda en _movedUnits_. Tambien puede remover totalmente sus unidades si el _HP_ de estas llega a 0 y notificar que ha perdido al controler si alguno de sus _Hero_'s muere o se queda sin unidades (hará uso del _Support_ para avisar al _GameController_).
 
 ## Game Controller
 
 Maneja todo los inputs dados por el jugador. Y tiene los siguientes atributos:
 
-- **Tacticians**: es un _ArrayList_ con los _tacticians_ en el juego.
+- **Tacticians**: es un _ArrayList_ con los _tacticians_ en el juego (depende de cuantos jugadores se quieran en el juego), luego de crearse cada tactician se le suscribirá a un _support_.
 - **Secuencia**:  es un _ArrayList_ con los _tacticians_ en el juego, pero reordenados según la seed y otras condiciones.
-- **Mapa**: es un _Field_, el mapa donde se desenvolverá el juego (random según la seed).
-- **Seed**: es un _long_ random, que se usará com semilla para la creación del Mapa y la Secuencia.
+- **Mapa**: es un _Field_, el mapa donde se desenvolverá el juego (random según la seed), depende del tamaño que se quiera.
+- **Seed**: es un _long_ random, que se usará com semilla (para crear otra semilla) para la creación del Mapa y la Secuencia.
 - **Ronda**: es un _int_ que corresponde al número de la ronda actual.
 - **Rondas máximas**: es un _int_ que corresponde al número máximo de rondas en el juego actual, una vez la ronda llegue a este número el juego acaba.
 - **Unidades máximas**: Restricción ideada de forma personal, depende de la cantidad de jugadores y el tamaño del mapa.
 
-El game controller puede inicializar un juego (con limite o sin limite), inicializar un juego generará una **Secuencia**, setea el _roundNumber_ en 0 y asigna como _turnOwner_ al primero en la **Secuencia**, al terminar un turno el siguiente _turnOwner_ será el siguiente en la **Secuencia** y de haberse acabado esta se generará otra y se sumará 1 a _roundNumber_.
+El Game Controller puede inicializar un juego (con limite o sin limite), inicializar un juego generará una **Secuencia**, setea el _roundNumber_ en 1 y asigna como _turnOwner_ al primero en la **Secuencia**, tambien puede terminar un turno, con esto el siguiente _turnOwner_ será el siguiente en la **Secuencia** y de haberse acabado esta se generará otra (imposibilitando que el que recién jugo juegue en el primer turno de la nueva ronda) y se sumará 1 a _roundNumber_. 
+
+El Game Controller puede remover _tactician_'s del juego si estos llegan a declarar que perdieron, si se encuentran en su turno se pasará al siguiente jugador. Además puede declarar los ganadores del juego.
 
 Como se dijo antes, el GameController recibe todos los inputs, por lo que tiene muchos métodos que adaptan el input para que sean entendibles para el **Tactician** (como los que tienen que ver con el mapa, el GameController recibe las coordenadas y le da al Tactician el _Location_) y otros métodos que simplemente deliveran la tarea al Tactician.
 
 ## Unidades:
+
+Ahora también tienen una referencia al **Tactician** que les posee.
+
 Esta entrega generó un problema respecto al combate, el GameController y el Tactician tienen un metodo que permite usar el item seleccionado en otra unidad, pero estos no tienen restricciones ya que permiten atacar a una unidad propia o curar a una unidad enemiga. por lo que, para arreglar esto, el Tactician no hará uso del metodo de combate directamente, ahora las unidades tienen un método useItemOn que desambiguará si la unidad es enemiga o no y veráa si activa el combate dependiendo de eso.
 
 Además ahora si una unidad muere en combate, está le enviará un mensaje al tactician para ser borrada de entre sus unidades y tambien se borrará del mapa. Existe el caso especial del _Hero_ si un Hero Muere será un Game Over inmediato para el tactician. 
 
 ## Mapa
 
-Como el mapa se crea desde el GameController y depende de la seed de este se definieron sus constructores: el que no recibe parametros y el que si, este recibe el tamaño del mapa y una seed y crea un mapa uadrado a partir de esta.
+Como el mapa se crea desde el GameController y depende de la seed de este se definieron sus constructores: el que no recibe parametros y el que si, este recibe el tamaño del mapa y una seed y crea un mapa cuadrado a partir de esta. 
 
+## Factories
+
+Hay dos tipos de factories:
+
+1. Unit Factory: Hay 9 de estas (Los sorcerer son un caso especial por lo que se prefirió dejarlos en 3 factories distintos) donde cada factory permite retornar una unidad estandar tanto con un item (correspondiente) equipado o no (1 método para c/ acción).
+2. Item Factory: Hay 8 de estos y simplemente retornan un item estandar.
 
 # Alpaca_Emblem 1.5
 ---
