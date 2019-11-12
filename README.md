@@ -1,5 +1,4 @@
 # Alpaca_Emblem 2.5
----
 
 El proyecto se encuentra en su versión 2.5 acorde a los requisitos de la entrega n°2.
 
@@ -56,7 +55,6 @@ Hay dos tipos de factories:
 2. Item Factory: Hay 8 de estos y simplemente retornan un item estandar.
 
 # Alpaca_Emblem 1.5
----
 
 El proyecto se encuentra en su versión 1.5 acorde a los requisitos de la entrega n°1.
 
