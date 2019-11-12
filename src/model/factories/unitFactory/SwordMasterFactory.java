@@ -15,10 +15,13 @@ public class SwordMasterFactory implements UnitFactory {
     private SwordFactory iFactory = new SwordFactory();
 
     @Override
-    public IUnit create(Location location) { return new SwordMaster(300, 5, location); }
+    public IUnit create(Location location) {
+        if (location.getUnit()!=null) return null;
+        return new SwordMaster(300, 5, location); }
 
     @Override
     public IUnit createArmed(Location location) {
+        if (location.getUnit()!=null) return null;
         IUnit unit = create(location);
         IEquipableItem item = iFactory.create();
         unit.saveItem(item);

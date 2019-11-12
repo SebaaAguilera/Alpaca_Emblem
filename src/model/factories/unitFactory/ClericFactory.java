@@ -14,10 +14,13 @@ public class ClericFactory implements UnitFactory {
     private StaffFactory iFactory = new StaffFactory();
 
     @Override
-    public IUnit create(Location location) { return new model.units.Cleric(200,2,location); }
+    public IUnit create(Location location) {
+        if (location.getUnit()!=null) return null;
+        return new model.units.Cleric(200,2,location); }
 
     @Override
     public IUnit createArmed(Location location) {
+        if (location.getUnit()!=null) return null;
         IUnit unit = create(location);
         IEquipableItem item = iFactory.create();
         unit.saveItem(item);

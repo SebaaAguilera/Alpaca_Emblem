@@ -15,10 +15,13 @@ public class HeroFactory implements UnitFactory {
     private SpearFactory iFactory = new SpearFactory();
 
     @Override
-    public IUnit create(Location location) { return new Hero(400, 5, location); }
+    public IUnit create(Location location) {
+        if (location.getUnit()!=null) return null;
+        return new Hero(500, 5, location); }
 
     @Override
     public IUnit createArmed(Location location) {
+        if (location.getUnit()!=null) return null;
         IUnit unit = create(location);
         IEquipableItem item = iFactory.create();
         unit.saveItem(item);

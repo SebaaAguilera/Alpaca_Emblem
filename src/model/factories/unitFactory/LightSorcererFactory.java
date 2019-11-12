@@ -15,10 +15,13 @@ public class LightSorcererFactory implements UnitFactory {
     private LightFactory iFactory = new LightFactory();
 
     @Override
-    public IUnit create(Location location) {return new model.units.Sorcerer(250, 3, location); }
+    public IUnit create(Location location) {
+        if (location.getUnit()!=null) return null;
+        return new model.units.Sorcerer(250, 3, location); }
 
     @Override
     public IUnit createArmed(Location location) {
+        if (location.getUnit()!=null) return null;
         IUnit unit = create(location);
         IEquipableItem item = iFactory.create();
         unit.saveItem(item);

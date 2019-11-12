@@ -9,6 +9,7 @@ import model.Tactician;
 import model.items.AnimaBook;
 import model.factories.unitFactory.*;
 import model.factories.itemFactory.*;
+import model.items.DarknessBook;
 import model.items.IEquipableItem;
 import model.map.Field;
 import model.map.Location;
@@ -110,23 +111,20 @@ class GameControllerTest {
     }
   }
 
-   List<Tactician> roundSequence(List<Tactician> sequence, Tactician turnOwner){
+   private List<Tactician> roundSequence(List<Tactician> sequence, Tactician turnOwner){
       sequence.clear();
-      random = new Random(randomSeed);
-      int index = random.nextInt(controller.getTacticians().size());
+      int index;
       if (turnOwner!=null) {
-        while(sequence.get(index).getName().equals(turnOwner.getName())){
-          index = random.nextInt(sequence.size());
-        }
-      }
-      sequence.add(controller.getTacticians().get(index));
-
-      while (sequence.size()!=controller.getTacticians().size()){
+        do {
           index = random.nextInt(controller.getTacticians().size());
-          while(sequence.contains(controller.getTacticians().get(index))){
-              index = random.nextInt(controller.getTacticians().size());
-          }
-          sequence.add(controller.getTacticians().get(index));
+        } while(controller.getTacticians().get(index).getName().equals(turnOwner.getName()));
+        sequence.add(controller.getTacticians().get(index));
+      }
+      while (sequence.size()!=controller.getTacticians().size()){
+        do {
+          index = random.nextInt(controller.getTacticians().size());
+        } while(sequence.contains(controller.getTacticians().get(index)));
+        sequence.add(controller.getTacticians().get(index));
       }
       return sequence;
   }
@@ -134,21 +132,21 @@ class GameControllerTest {
   @Test
   void getTurnOwner() {
     List<Tactician> testSequence = new ArrayList<>(controller.getTacticians());
-    testSequence = roundSequence(testSequence, null);
-    Tactician testTurnOwner = testSequence.get(0);
+    Tactician testTurnOwner = null;
     controller.initGame(2);
     for (int i = 0; i < 8; i++){
-        if (i==4){
-            controller.endTurn();
-            assertNotEquals(testTurnOwner.getName(),controller.getTurnOwner().getName());
-            testSequence = roundSequence(testSequence, testTurnOwner);
-            testTurnOwner = testSequence.get(0);
-        } else {
-            assertEquals(controller.getTurnOwner().getName(),testTurnOwner.getName());
-            controller.endTurn();
-            testTurnOwner =  testSequence.get(i%4);;
-        }
+        if (i%4==0){
+          testSequence = roundSequence(testSequence, testTurnOwner);
+          testTurnOwner = testSequence.get(0);
+          assertEquals(controller.getTurnOwner().getName(),testTurnOwner.getName());
+          controller.endTurn();
 
+        } else {
+          testTurnOwner =  testSequence.get(i%4);
+          assertEquals(controller.getTurnOwner().getName(),testTurnOwner.getName());
+          controller.endTurn();
+
+        }
     }
   }
 
@@ -220,7 +218,6 @@ class GameControllerTest {
   void getWinners() {
     controller.initGame(2);
     IntStream.range(0, 8).forEach(i -> controller.endTurn());
-    assertEquals(controller.getMaxRounds(),controller.getRoundNumber());
     assertEquals(4, controller.getWinners().size());
     controller.getWinners()
         .forEach(player -> Assertions.assertTrue(testTacticians.contains(player)));
@@ -243,6 +240,40 @@ class GameControllerTest {
     assertTrue(List.of("Player 3").containsAll(controller.getWinners()));
   }
 
+  @Test
+  void addUnit(){
+    controller.setTurnOwner(controller.getTacticians().get(0));
+    int maxUnits = controller.getMaxUnits(); //should be 4
+    List<IUnit> units = new ArrayList<>();
+
+    IUnit al = alpaca.createArmed(controller.getGameMap().getCell(0,0));
+    units.add(al);
+    controller.addUnit(al);
+    assertTrue(controller.getTurnOwner().getUnits().containsAll(units));
+
+    IUnit an = animaSorcerer.createArmed(controller.getGameMap().getCell(0,0));
+    assertFalse(controller.getTurnOwner().getUnits().contains(an));
+
+    IUnit an2 = animaSorcerer.createArmed(controller.getGameMap().getCell(0,1));
+    units.add(an2);
+    controller.addUnit(an2);
+    assertTrue(controller.getTurnOwner().getUnits().containsAll(units));
+
+    IUnit li = lightSorcerer.createArmed(controller.getGameMap().getCell(1,1));
+    units.add(li);
+    controller.addUnit(li);
+    assertTrue(controller.getTurnOwner().getUnits().containsAll(units));
+
+    IUnit sm = swordMaster.createArmed(controller.getGameMap().getCell(2,1));
+    units.add(sm);
+    controller.addUnit(sm);
+    assertTrue(controller.getTurnOwner().getUnits().containsAll(units));
+
+    IUnit sm2 = animaSorcerer.create(controller.getGameMap().getCell(2,0));
+    assertFalse(controller.getTurnOwner().getUnits().contains(an));
+
+
+  }
 
   @Test
   void getSelectedUnit() {
@@ -275,10 +306,10 @@ class GameControllerTest {
   void moveUnitTo(){
     assertNull(controller.getGameMap().getCell(1,0).getUnit());
     IUnit alp = alpaca.create(controller.getGameMap().getCell(1,0));
-    IUnit arch = archer.create(controller.getGameMap().getCell(1,1));
+    IUnit ds = darkSorcerer.createArmed(controller.getGameMap().getCell(1,1));
     controller.setTurnOwner(controller.getTacticians().get(0));
     controller.addUnit(alp);
-    controller.addUnit(arch);
+    controller.addUnit(ds);
     assertNull(controller.getGameMap().getCell(0,0).getUnit());
     assertEquals(alp,controller.getGameMap().getCell(1,0).getUnit());
 
@@ -297,7 +328,7 @@ class GameControllerTest {
     controller.selectUnitIn(1,1);
     controller.moveUnitTo(1,0);
     assertNull(controller.getGameMap().getCell(1,1).getUnit());
-    assertEquals(arch,controller.getGameMap().getCell(1,0).getUnit());
+    assertEquals(ds,controller.getGameMap().getCell(1,0).getUnit());
   }
 
   @Test
@@ -424,7 +455,8 @@ class GameControllerTest {
     IUnit an = animaSorcerer.create(controller.getGameMap().getCell(2,0));
     AnimaBook deadlyBook = new AnimaBook("Deadly dead anima book",1000,1,10);
 
-    IUnit dk = darkSorcerer.createArmed(controller.getGameMap().getCell(2,1));
+    IUnit dk = darkSorcerer.create(controller.getGameMap().getCell(2,1));
+    DarknessBook theDarkBook = new DarknessBook("Darker darkness book",40,1,10);
 
     Tactician FirstPlayer = controller.getRoundSequence().get(0);
     controller.setTurnOwner(FirstPlayer);
@@ -454,6 +486,8 @@ class GameControllerTest {
     controller.setTurnOwner(FourthPlayer);
     controller.addUnit(dk);
     controller.selectUnitIn(2,1);
+    controller.saveItem(theDarkBook);
+    controller.equipItem(0);
     controller.useItemOn(2,0);
     assertFalse(controller.getTacticians().contains(FourthPlayer)); // a veces falla pero es culpa del rango del arma
     assertEquals(ThirdPlayer,controller.getTurnOwner());

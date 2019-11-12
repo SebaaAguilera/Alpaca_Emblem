@@ -12,10 +12,14 @@ import model.units.IUnit;
  */
 public class AlpacaFactory implements UnitFactory{
     @Override
-    public IUnit create(Location location) { return new Alpaca(200,5,location);}
+    public IUnit create(Location location) {
+        if (location.getUnit()!=null) return null;
+        return new Alpaca(200,5,location);}
 
     @Override
-    public IUnit createArmed(Location location) { return create(location); }
+    public IUnit createArmed(Location location) {
+        if (location.getUnit()!=null) return null;
+        return create(location); }
 
 
 }

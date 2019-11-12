@@ -67,20 +67,17 @@ public class GameController {
    */
   private void newRoundSequence(){
     roundSequence.clear();
-
-    int index = random.nextInt(tacticians.size());
+    int index;
     if (turnOwner!=null){
-      while(tacticians.get(index).getName().equals(turnOwner.getName())){
+      do {
         index = random.nextInt(tacticians.size());
-      }
+      } while(tacticians.get(index).getName().equals(turnOwner.getName()));
+      roundSequence.add(tacticians.get(index));
     }
-    roundSequence.add(tacticians.get(index));
-
     while (roundSequence.size()!=tacticians.size()){
-      index = random.nextInt(tacticians.size());
-      while(roundSequence.contains(tacticians.get(index))){
+      do {
         index = random.nextInt(tacticians.size());
-      }
+      } while(roundSequence.contains(tacticians.get(index)));
       roundSequence.add(tacticians.get(index));
     }
   }
@@ -210,13 +207,18 @@ public class GameController {
   public void selectUnitIn(int x, int y) { turnOwner.selectUnitIn(map.getCell(x,y).getUnit()); }
 
   /**
-   * @param unit, the turn owner will add this unit
+   * @param unit, the turn owner will add this unit if it can
    */
   public void addUnit(IUnit unit) {
-    if (turnOwner.getUnits().size()<maxUnits){
+    if (turnOwner.getUnits().size()<maxUnits && unit!=null){
       turnOwner.addUnit(unit);
     }
   }
+
+  /**
+   * @return the maUnits
+   */
+  public int getMaxUnits() { return maxUnits; }
 
   /**
    * Moves the turn owner selected unit
