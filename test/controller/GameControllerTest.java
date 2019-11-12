@@ -42,8 +42,6 @@ class GameControllerTest {
   private DarkSorcererFactory darkSorcerer;
   private LightSorcererFactory lightSorcerer;
 
-
-
   private AnimaFactory anima;
   private AxeFactory axe;
   private BowFactory bow;
