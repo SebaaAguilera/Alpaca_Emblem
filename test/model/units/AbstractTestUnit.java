@@ -290,7 +290,7 @@ public abstract class AbstractTestUnit implements ITestUnit {
 
       assertNull(hero.getEquippedItem());
       assertNull(item.getOwner());
-      assertTrue(getTestUnit().getItems().contains(item));
+      assertTrue(unit.getItems().contains(item));
   }
 
     /**

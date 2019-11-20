@@ -3,7 +3,7 @@ package model.factories.unitFactory;
 import model.factories.itemFactory.AnimaFactory;
 import model.items.IEquipableItem;
 import model.map.Location;
-import model.units.IUnit;
+import model.units.*;
 
 /**
  * Sorcerer factory
@@ -16,12 +16,11 @@ public class AnimaSorcererFactory implements UnitFactory {
 
     @Override
     public IUnit create(Location location) {
-        if (location.getUnit()!=null || (location.getRow()==-1 && location.getColumn()==-1)) return null;
-        return new model.units.Sorcerer(250, 3, location); }
+        if (location.getUnit()!=null || (location.getRow()==-1 && location.getColumn()==-1)) return new NullUnit();
+        return new Sorcerer(250, 3, location); }
 
     @Override
     public IUnit createArmed(Location location) {
-        if (location.getUnit()!=null || (location.getRow()==-1 && location.getColumn()==-1)) return null;
         IUnit unit = create(location);
         IEquipableItem item = iFactory.create();
         unit.saveItem(item);

@@ -3,8 +3,7 @@ package model.factories.unitFactory;
 import model.factories.itemFactory.SpearFactory;
 import model.items.IEquipableItem;
 import model.map.Location;
-import model.units.Hero;
-import model.units.IUnit;
+import model.units.*;
 
 /**
  * Hero factory
@@ -16,12 +15,11 @@ public class HeroFactory implements UnitFactory {
 
     @Override
     public IUnit create(Location location) {
-        if (location.getUnit()!=null || (location.getRow()==-1 && location.getColumn()==-1)) return null;
+        if (location.getUnit()!=null || (location.getRow()==-1 && location.getColumn()==-1)) return new NullUnit();
         return new Hero(500, 5, location); }
 
     @Override
     public IUnit createArmed(Location location) {
-        if (location.getUnit()!=null || (location.getRow()==-1 && location.getColumn()==-1)) return null;
         IUnit unit = create(location);
         IEquipableItem item = iFactory.create();
         unit.saveItem(item);

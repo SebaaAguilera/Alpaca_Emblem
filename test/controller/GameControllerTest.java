@@ -143,7 +143,6 @@ class GameControllerTest {
           testTurnOwner =  testSequence.get(i%4);
           assertEquals(controller.getTurnOwner().getName(),testTurnOwner.getName());
           controller.endTurn();
-
         }
     }
   }
@@ -251,11 +250,11 @@ class GameControllerTest {
     assertEquals(units.size(),controller.getTurnOwner().getUnits().size());
 
     IUnit an = animaSorcerer.createArmed(controller.getGameMap().getCell(0,0));
-    assertNull(an);
+    assertFalse(controller.getTurnOwner().getUnits().contains(an));
     assertEquals(units.size(),controller.getTurnOwner().getUnits().size());
 
     IUnit al2 = alpaca.create(controller.getGameMap().getCell(5,4)); // out of the map
-    assertNull(al2);
+    assertFalse(controller.getTurnOwner().getUnits().contains(al2));
     assertEquals(units.size(),controller.getTurnOwner().getUnits().size());
 
     IUnit an2 = animaSorcerer.createArmed(controller.getGameMap().getCell(0,1));
@@ -279,8 +278,6 @@ class GameControllerTest {
     IUnit sm2 = animaSorcerer.create(controller.getGameMap().getCell(2,0));
     assertFalse(controller.getTurnOwner().getUnits().contains(sm2));
     assertEquals(units.size(),controller.getTurnOwner().getUnits().size());
-
-
   }
 
   @Test
@@ -306,8 +303,6 @@ class GameControllerTest {
     controller.setTurnOwner(controller.getTacticians().get(1));
     controller.selectUnitIn(0,0);
     assertNull(controller.getSelectedUnit());
-
-
   }
 
   @Test
@@ -497,8 +492,7 @@ class GameControllerTest {
     controller.saveItem(theDarkBook);
     controller.equipItem(0);
     controller.useItemOn(2,0);
-    assertFalse(controller.getTacticians().contains(FourthPlayer)); // a veces falla pero es culpa del rango del arma
+    assertFalse(controller.getTacticians().contains(FourthPlayer));
     assertEquals(ThirdPlayer,controller.getTurnOwner());
-
   }
 }

@@ -210,7 +210,7 @@ public class GameController {
    * @param unit, the turn owner will add this unit if it can
    */
   public void addUnit(IUnit unit) {
-    if (turnOwner.getUnits().size()<maxUnits && unit!=null){
+    if (turnOwner.getUnits().size()<maxUnits && unit.getCurrentHitPoints()>0){
       turnOwner.addUnit(unit);
     }
   }

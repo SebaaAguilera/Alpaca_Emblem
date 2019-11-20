@@ -1,8 +1,7 @@
 package model.factories.unitFactory;
 
 import model.map.Location;
-import model.units.Alpaca;
-import model.units.IUnit;
+import model.units.*;
 
 /**
  * Alpaca factory
@@ -13,12 +12,11 @@ import model.units.IUnit;
 public class AlpacaFactory implements UnitFactory{
     @Override
     public IUnit create(Location location) {
-        if (location.getUnit()!=null || (location.getRow()==-1 && location.getColumn()==-1)) return null;
+        if (location.getUnit()!=null || (location.getRow()==-1 && location.getColumn()==-1)) return new NullUnit();
         return new Alpaca(200,5,location);}
 
     @Override
     public IUnit createArmed(Location location) {
-        if (location.getUnit()!=null || (location.getRow()==-1 && location.getColumn()==-1)) return null;
         return create(location); }
 
 

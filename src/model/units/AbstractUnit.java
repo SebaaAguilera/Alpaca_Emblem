@@ -71,24 +71,16 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
-  public List<IEquipableItem> getItems() {
-    return List.copyOf(items);
-  }
+  public List<IEquipableItem> getItems() { return List.copyOf(items); }
 
   @Override
-  public IEquipableItem getEquippedItem() {
-    return equippedItem;
-  }
+  public IEquipableItem getEquippedItem() { return equippedItem; }
 
   @Override
-  public void setEquippedItem(IEquipableItem item) {
-    this.equippedItem = item;
-  }
+  public void setEquippedItem(IEquipableItem item) { this.equippedItem = item; }
 
   @Override
-  public int getMaxItems() {
-    return this.maxItems;
-  }
+  public int getMaxItems() { return this.maxItems; }
 
   @Override
   public void saveItem(IEquipableItem item) {
@@ -121,15 +113,13 @@ public abstract class AbstractUnit implements IUnit {
   }
 
   @Override
-  public void setLocation(Location location) { //location had a final
+  public void setLocation(Location location) {
     this.location = location;
     location.setUnit(this);
   }
 
   @Override
-  public int getMovement() {
-    return movement;
-  }
+  public int getMovement() { return movement; }
 
   @Override
   public void moveTo(final Location targetLocation) {
@@ -175,7 +165,7 @@ public abstract class AbstractUnit implements IUnit {
 
   @Override
   public void deadUnit() {
-    getTactician().removeUnit(this); //esto debiese hacerse con un handler
+    getTactician().removeUnit(this);
     getLocation().setUnit(null);
   }
 }

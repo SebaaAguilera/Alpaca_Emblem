@@ -17,9 +17,13 @@ public class Hero extends AbstractUnit {
    * Creates a new Unit.
    *
    * @param hitPoints
-   *     the maximum amount of damage a unit can sustain
+   *     maximum hit points of the unit
    * @param movement
-   *     the number of panels a unit can move
+   *     the amount of cells this unit can move
+   * @param location
+   *     the initial position of this unit
+   * @param items
+   *     the items carried by this unit
    */
   public Hero(double hitPoints, final int movement, Location location,
               IEquipableItem... items) {
