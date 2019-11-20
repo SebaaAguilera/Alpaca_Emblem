@@ -2,7 +2,7 @@
 
 El proyecto se encuentra en su versión 2.5 acorde a los requisitos de la entrega n°2.
 
-En esta entrega se diseñaron las clases **GameController** y **Tactician**, junto con otras clases creadas para los patrones de diseño, como factories y handlers/listeners. Se repetirán secciones de la entrega anterior para mostrar las updates de cada clase.
+En esta entrega se diseñaron las clases **GameController** y **Tactician**, junto con otras clases creadas para los patrones de diseño, como factories, handlers/listeners y un **NullUnit**. Se repetirán secciones de la entrega anterior para mostrar las updates de cada clase.
 
 ## Tactician
 
@@ -41,7 +41,12 @@ Ahora también tienen una referencia al **Tactician** que les posee.
 
 Esta entrega generó un problema respecto al combate, el GameController y el Tactician tienen un metodo que permite usar el item seleccionado en otra unidad, pero estos no tienen restricciones ya que permiten atacar a una unidad propia o curar a una unidad enemiga. por lo que, para arreglar esto, el Tactician no hará uso del metodo de combate directamente, ahora las unidades tienen un método useItemOn que desambiguará si la unidad es enemiga o no y veráa si activa el combate dependiendo de eso.
 
-Además ahora si una unidad muere en combate, está le enviará un mensaje al tactician para ser borrada de entre sus unidades y tambien se borrará del mapa. Existe el caso especial del _Hero_ si un Hero Muere será un Game Over inmediato para el tactician. 
+Además ahora si una unidad muere en combate, está le enviará un mensaje al tactician para ser borrada de entre sus unidades y tambien se borrará del mapa. Existe el caso especial del _Hero_ si un Hero Muere será un Game Over inmediato para el tactician.
+
+### NullUnit (Null pattern)
+Este tipo de unidad se creo para efectos de cuando se intenta crear una unidad en una celda no valida (ya existe una unidad en la celda o la celda está fuera del mapa) el factory (que se explicará más adelante) es el que se encarga de decidir si la unidad es valida o no, además un tactician no puede guardar NullUnit's entre sus unidades.
+
+Este tipo de unidad tienen HP=-1, movement=-1, maxItems=0 y location=InvalidLocation. como parametros, además los metodos conflictivos (guardar, dar, equipar items y combatir) se encuentran vacios.
 
 ## Mapa
 
@@ -51,7 +56,7 @@ Como el mapa se crea desde el GameController y depende de la seed de este se def
 
 Hay dos tipos de factories:
 
-1. Unit Factory: Hay 9 de estas (Los sorcerer son un caso especial por lo que se prefirió dejarlos en 3 factories distintos) donde cada factory permite retornar una unidad estandar tanto con un item (correspondiente) equipado o no (1 método para c/ acción).
+1. Unit Factory: Hay 9 de estas (Los sorcerer son un caso especial por lo que se prefirió dejarlos en 3 factories distintos) donde cada factory permite retornar una unidad estandar tanto con un item (correspondiente) equipado o no (1 método para c/ acción) si la posicion de la unidad que se quiere crear no es valido se retornará una NullUnit como se explica más arriba.
 2. Item Factory: Hay 8 de estos y simplemente retornan un item estandar.
 
 # Alpaca_Emblem 1.5
