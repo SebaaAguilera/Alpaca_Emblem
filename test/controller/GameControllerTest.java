@@ -97,8 +97,8 @@ class GameControllerTest {
     Field testMap = new Field(5,randomSeed);
     assertTrue(testMap.isConnected());
 
-    for (int i = 0; i < 7; i++){
-      for (int j = 0; j < 7; j++){
+    for (int i = 0; i < 5; i++){
+      for (int j = 0; j < 5; j++){
         Location gm = gameMap.getCell(i,j);
         Location tm = testMap.getCell(i,j);
         assertEquals(gm.getNeighbours().size(),tm.getNeighbours().size());
