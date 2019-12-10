@@ -59,6 +59,12 @@ Hay dos tipos de factories:
 1. Unit Factory: Hay 9 de estas (Los sorcerer son un caso especial por lo que se prefirió dejarlos en 3 factories distintos) donde cada factory permite retornar una unidad estandar tanto con un item (correspondiente) equipado o no (1 método para c/ acción) si la posicion de la unidad que se quiere crear no es valido se retornará una NullUnit como se explica más arriba.
 2. Item Factory: Hay 8 de estos y simplemente retornan un item estandar.
 
+## Ejecución
+
+En esta versión la ejecución sigue siendo por medio los test, (escribí un script que corría el juego por el command line de intellij pero no lo coloqué en la repo porque era feito, aunque funcional).
+
+Principalmente los test del GameController se colocan en distintos casos de acuerdo a lo que puede ocurrir en un juego, en el caso del Tactician el testeo es para nada extenso (para nada) ya que el GameController al funcionar como su adapter hace uso de todos los métodos del tactician y si el GC funciona bien, el tactician tambien. Los factories tampoco fueron testeados más que su uso dado en el teste del gamecontroller.
+
 # Alpaca_Emblem 1.5
 
 El proyecto se encuentra en su versión 1.5 acorde a los requisitos de la entrega n°1.
