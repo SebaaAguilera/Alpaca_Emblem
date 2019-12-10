@@ -109,7 +109,7 @@ class GameControllerTest {
     }
   }
 
-   private List<Tactician> roundSequence(List<Tactician> sequence, Tactician turnOwner){
+   private void roundSequence(List<Tactician> sequence, Tactician turnOwner){
       sequence.clear();
       int index;
       if (turnOwner!=null) {
@@ -124,7 +124,6 @@ class GameControllerTest {
         } while(sequence.contains(controller.getTacticians().get(index)));
         sequence.add(controller.getTacticians().get(index));
       }
-      return sequence;
   }
 
   @Test
@@ -134,7 +133,7 @@ class GameControllerTest {
     controller.initGame(2);
     for (int i = 0; i < 8; i++){
         if (i%4==0){
-          testSequence = roundSequence(testSequence, testTurnOwner);
+          roundSequence(testSequence, testTurnOwner);
           testTurnOwner = testSequence.get(0);
           assertEquals(controller.getTurnOwner().getName(),testTurnOwner.getName());
           controller.endTurn();
@@ -240,7 +239,6 @@ class GameControllerTest {
   @Test
   void addUnit(){
     controller.setTurnOwner(controller.getTacticians().get(0));
-    int maxUnits = controller.getMaxUnits(); //should be 4
     List<IUnit> units = new ArrayList<>();
 
     IUnit al = alpaca.createArmed(controller.getGameMap().getCell(0,0));
@@ -338,7 +336,7 @@ class GameControllerTest {
   void getItems() {
     IUnit arc = archer.create(controller.getGameMap().getCell(0,0));
     controller.setTurnOwner(controller.getTacticians().get(0));
-    controller.addUnit(arc); // aplicar observer para que esto funcione
+    controller.addUnit(arc);
     List<IEquipableItem> items = new ArrayList<>();
     IEquipableItem ab = anima.create();
     IEquipableItem b = bow.create();

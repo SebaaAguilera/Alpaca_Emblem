@@ -1,7 +1,8 @@
 package model;
 
 import controller.GameController;
-import model.handlers.GameOverHandler;
+import controller.handlers.DeadUnitHandler;
+import controller.handlers.DeadHeroHandler;
 import model.items.IEquipableItem;
 import model.map.Location;
 import model.units.IUnit;
@@ -25,7 +26,8 @@ public class Tactician {
     private List<IUnit> movedUnits =  new ArrayList<>();
     private IUnit selectedUnit;
     private IEquipableItem selectedItem;
-    private PropertyChangeSupport support;
+    private PropertyChangeSupport gameOverNotf;
+    private PropertyChangeSupport deadUnitNotf;
 
     /**
      * Creates a Tactician, a Game Player
@@ -140,27 +142,38 @@ public class Tactician {
     public void useItemOn(IUnit unit) { selectedUnit.useItemOn(unit); }
 
     /**
-     * removes the tactician and its units from THE GAME
-     */
-    public void gameOver() {
-        for (IUnit unit : getUnits()){
-            unit.getLocation().setUnit(null);
-            units.remove(unit);
-        }
-        support.firePropertyChange(new PropertyChangeEvent(this,getName(),null,null));
-    }
-
-    /**
-     * @param unit to be removed from the units list if it die
-     *             if no unit is left the tactician will lose
+     * @param unit an unit is going to be removed from the game
      */
     public void removeUnit(IUnit unit){
         units.remove(unit);
-        if (units.size()==0) this.gameOver(); //esto debiese cambiarse
     }
 
-    public void subscribeToGOHandler(GameController controller) {
-        support = new PropertyChangeSupport(controller);
-        support.addPropertyChangeListener(new GameOverHandler(controller));
+    /**
+     * removes the tactician and its units from THE GAME
+     */
+    public void deadHero() {
+        gameOverNotf.firePropertyChange(new PropertyChangeEvent(this,getName(),null,null));
+    }
+
+    /**
+     * Notifies the controller that an unit just died
+     *
+     * @param unit that has died
+     */
+    public void deadUnit(IUnit unit){
+        deadUnitNotf.firePropertyChange(new PropertyChangeEvent(this,"",units.indexOf(unit),null));
+    }
+
+    /**
+     * Subscribes the tactician to diferent handlers
+     * @param controller the observer
+     */
+    public void subscribeToHandlers(GameController controller) {
+        gameOverNotf = new PropertyChangeSupport(controller);
+        gameOverNotf.addPropertyChangeListener(new DeadHeroHandler(controller));
+
+        deadUnitNotf = new PropertyChangeSupport(controller);
+        deadUnitNotf.addPropertyChangeListener(new DeadUnitHandler(controller));
     }
 }
+

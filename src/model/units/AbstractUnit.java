@@ -165,7 +165,6 @@ public abstract class AbstractUnit implements IUnit {
 
   @Override
   public void deadUnit() {
-    getTactician().removeUnit(this);
-    getLocation().setUnit(null);
+    getTactician().deadUnit(this);
   }
 }

@@ -20,7 +20,7 @@ import model.units.IUnit;
 public class GameController {
 
   private List<Tactician> tacticians = new ArrayList<>();
-  private List<Tactician> roundSequence = new ArrayList<>(tacticians);
+  private List<Tactician> roundSequence = new ArrayList<>();
 
   private Field map;
   private long seed = new Random().nextLong();
@@ -43,7 +43,7 @@ public class GameController {
   public GameController(int numberOfPlayers, int mapSize) {
     for (int i=0; i<numberOfPlayers;i++){
       tacticians.add(new Tactician("Player " + i));
-      tacticians.get(i).subscribeToGOHandler(this);
+      tacticians.get(i).subscribeToHandlers(this);
     }
 
     map = new Field(mapSize,seed);
@@ -132,7 +132,19 @@ public class GameController {
   }
 
   /**
-   * Removes a tactician from the game.
+   * Removes all the tactician units from the map and tactician's list
+   * @param i the index of the tactician
+   */
+  private void removeUnits(int i){
+    for (IUnit unit : tacticians.get(i).getUnits()){
+      unit.getLocation().setUnit(null);
+      tacticians.get(i).removeUnit(unit);
+    }
+  }
+
+
+  /**
+   * Removes a tactician and it units from the game.
    *
    * @param tactician
    *     the player to be removed
@@ -140,6 +152,7 @@ public class GameController {
   public void removeTactician(String tactician) {
     for (int i=0; i<tacticians.size();i++) {
       if (tactician.equals(tacticians.get(i).getName())) {
+        this.removeUnits(i);
         tacticians.remove(i);
         break;
       }
@@ -150,6 +163,9 @@ public class GameController {
         break;
       }
     }
+    if (turnOwner.getName().equals(tactician)){
+      endTurn();
+    }
   }
 
   /**
@@ -157,7 +173,7 @@ public class GameController {
    * @param maxRounds
    *  the maximum number of turns the game can last
    */
-  public void initGame(final int maxRounds) {
+  public void initGame(int maxRounds) {
     this.maxRounds = maxRounds;
     roundNumber = 1;
     newRoundSequence();
@@ -169,10 +185,7 @@ public class GameController {
    * Starts a game without a limit of turns.
    */
   public void initEndlessGame() {
-    this.maxRounds = -1;
-    roundNumber = 1;
-    newRoundSequence();
-    turnOwner = roundSequence.get(0);
+    initGame(-1);
   }
 
   /**
@@ -221,7 +234,8 @@ public class GameController {
   public int getMaxUnits() { return maxUnits; }
 
   /**
-   * Moves the turn owner selected unit
+   *
+   *  Moves the turn owner selected unit
    * @param x the x axis
    * @param y the y axis
    */
