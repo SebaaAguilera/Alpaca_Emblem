@@ -142,7 +142,6 @@ public class GameController {
     }
   }
 
-
   /**
    * Removes a tactician and it units from the game.
    *
@@ -197,7 +196,7 @@ public class GameController {
       winners.add(tactician.getName());
     }
     if ((roundNumber==maxRounds && roundSequence.indexOf(turnOwner)==tacticians.size()-1)
-        || (maxRounds==-1 && tacticians.size()==1)) {
+        || (tacticians.size()==1)) {
       return winners;
     } else {
       return new ArrayList<>();
