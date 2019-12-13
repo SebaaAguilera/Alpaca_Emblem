@@ -130,8 +130,8 @@ class GameControllerTest {
   void getTurnOwner() {
     List<Tactician> testSequence = new ArrayList<>(controller.getTacticians());
     Tactician testTurnOwner = null;
-    controller.initGame(2);
-    for (int i = 0; i < 8; i++){
+    controller.initGame(10);
+    for (int i = 0; i < 40; i++){
         if (i%4==0){
           roundSequence(testSequence, testTurnOwner);
           testTurnOwner = testSequence.get(0);
@@ -479,11 +479,15 @@ class GameControllerTest {
 
     controller.useItemOn(0,0);
     assertFalse(controller.getTacticians().contains(FirstPlayer));
+    assertNull(fi.getLocation().getUnit());
+    assertNull(he.getLocation().getUnit());
+
     controller.useItemOn(0,1);
     assertTrue(controller.getTacticians().contains(SecondPlayer));
     controller.useItemOn(1,1);
     assertFalse(controller.getTacticians().contains(SecondPlayer));
-
+    assertNull(li.getLocation().getUnit());
+    assertNull(arc.getLocation().getUnit());
     controller.setTurnOwner(FourthPlayer);
     controller.addUnit(dk);
     controller.selectUnitIn(2,1);
@@ -491,6 +495,7 @@ class GameControllerTest {
     controller.equipItem(0);
     controller.useItemOn(2,0);
     assertFalse(controller.getTacticians().contains(FourthPlayer));
+    assertNull(li.getLocation().getUnit());
     assertEquals(ThirdPlayer,controller.getTurnOwner());
   }
 }

@@ -33,13 +33,6 @@ public class DeadUnitHandler implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
-        Tactician t = (Tactician) evt.getSource();
-        t.getUnits().get((int) evt.getOldValue()).getLocation().setUnit(null);
-        t.removeUnit(t.getUnits().get((int) evt.getOldValue()));
-
-        if (t.getUnits().size()==0) {
-            controller.removeTactician(t.getName());
-        }
+        controller.removeUnit((Tactician) evt.getSource(), (int) evt.getOldValue());
     }
 }

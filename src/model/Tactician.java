@@ -149,6 +149,13 @@ public class Tactician {
     }
 
     /**
+     * Removes all the tactician units
+     */
+    public void removeUnits() {
+        units.clear();
+    }
+
+    /**
      * removes the tactician and its units from THE GAME
      */
     public void deadHero() {
@@ -161,7 +168,7 @@ public class Tactician {
      * @param unit that has died
      */
     public void deadUnit(IUnit unit){
-        deadUnitNotf.firePropertyChange(new PropertyChangeEvent(this,"",units.indexOf(unit),null));
+        deadUnitNotf.firePropertyChange(new PropertyChangeEvent(this,getName(),units.indexOf(unit),null));
     }
 
     /**

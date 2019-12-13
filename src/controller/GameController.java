@@ -131,15 +131,30 @@ public class GameController {
     }
   }
 
+    /**
+     * Removes an specific unit from the game
+     * @param tactician the name of the owner of the unit
+     * @param index the index of the unit in the list
+     */
+  public void removeUnit(Tactician tactician, int index){
+      IUnit unit = tactician.getUnits().get(index);
+      unit.getLocation().setUnit(null);
+      tactician.removeUnit(unit);
+
+      if (tactician.getUnits().size()==0) {
+          removeTactician(tactician.getName());
+      }
+  }
+
   /**
    * Removes all the tactician units from the map and tactician's list
-   * @param i the index of the tactician
+   * @param tactician with the units to be removed
    */
-  private void removeUnits(int i){
-    for (IUnit unit : tacticians.get(i).getUnits()){
+  private void removeUnits(Tactician tactician){
+    for (IUnit unit : tactician.getUnits()){
       unit.getLocation().setUnit(null);
-      tacticians.get(i).removeUnit(unit);
     }
+    tactician.removeUnits();
   }
 
   /**
@@ -151,7 +166,7 @@ public class GameController {
   public void removeTactician(String tactician) {
     for (int i=0; i<tacticians.size();i++) {
       if (tactician.equals(tacticians.get(i).getName())) {
-        this.removeUnits(i);
+        removeUnits(tacticians.get(i));
         tacticians.remove(i);
         break;
       }
@@ -226,11 +241,6 @@ public class GameController {
       turnOwner.addUnit(unit);
     }
   }
-
-  /**
-   * @return the maUnits
-   */
-  public int getMaxUnits() { return maxUnits; }
 
   /**
    *
