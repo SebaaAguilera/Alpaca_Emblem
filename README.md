@@ -13,7 +13,7 @@ Representa aun jugador, guardando los datos de este y siendo el intermediario en
 - **Unidades desplazadas**: _movedUnits_ es un _ArrayList_ que guarda las unidades del Tactican desplazadas en ese turno por el jugador.
 - **Unidad seleccionada**: _selectedUnit_ es un _IUnit_ con la Unidad seleccionada del Tactician del jugador
 - **Item seleccionado**:_selectedItem_ es un _IEquipableItem_ con el item seleccionado del Tactician del jugador
-- **Supports**: Hay dos _PropertyChangeSupport_ uno para cuando el tactician pierde un Hero y otro para cuando pierde a otro tipo de unidad.
+- **Supports**: Hay dos handlers  (_PropertyChangeSupport_) uno para cuando el tactician pierde un Hero y otro para cuando pierde a otro tipo de unidad.
  
 El tactician puede realizar lo siguiente: agregarse unidades, seleccionar unidades y guardarles o equiparles items, puede ver sus unidades, sus atributos y los de sus items, tambien intercambiar objetos entre ellas así como usar el item equipado en otras unidades. Puede mover sus unidades una vez por turno, por lo que se aplicó como estrategía que cada vez que el Tactician mueve una unidad, este lo guarda en _movedUnits_. Tambien puede remover totalmente sus unidades si el _HP_ de estas llega a 0 y notificar que ha perdido al controler si alguno de sus _Hero_'s muere o muere una de sus otras unidades (hará uso del _Support_ para avisar al _GameController_).
 
