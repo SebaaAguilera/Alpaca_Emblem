@@ -1,8 +1,11 @@
 package model.map;
 
-import java.util.HashSet;
-import java.util.Set;
 import model.units.IUnit;
+
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Set;
 
 /**
  * This class represents a <i>location</i> in the game's map.
@@ -134,10 +137,11 @@ public class Location {
    *
    * @param otherNode
    *     the other location
+   * @param range max cells to search
    * @return the length of the shortest path to the other location
    */
-  public double distanceTo(final Location otherNode) {
-    return shortestPathTo(otherNode, new HashSet<>());
+  public double distanceTo(final Location otherNode, int range) {
+    return shortestPathTo(otherNode, range);
   }
 
   /**
@@ -145,19 +149,29 @@ public class Location {
    *
    * @return the distance between the nodes
    */
-  private double shortestPathTo(final Location otherNode, final Set<Location> visited) {
+  private double shortestPathTo(final Location otherNode, int range) {
     if (otherNode.equals(this)) {
       return 0;
     }
-    visited.add(this);
-    double distance = Double.POSITIVE_INFINITY;
-    for (Location node : neighbours) {
-      if (!visited.contains(node)) {
-        distance = Math.min(distance, 1 + node.shortestPathTo(otherNode, new HashSet<>(visited)));
+    Path shortestPath = null;
+    Queue<Path> toVisit = new PriorityQueue<>();
+    toVisit.add(new Path(null, this));
+    while (!toVisit.isEmpty() && shortestPath == null) {
+      final Path candidate = toVisit.poll();
+      final int candidatePriority = candidate.getLength();
+      if (candidate.endsIn(otherNode)) {
+        shortestPath = candidate;
+      } else {
+        for (final Location neighbour : candidate.reachableLocations()) {
+          if (candidatePriority < range) {
+            toVisit.add(new Path(candidate, neighbour));
+          }
+        }
       }
     }
-    return distance;
+    return shortestPath == null ? Double.POSITIVE_INFINITY : shortestPath.getLength();
   }
+
 
   /**
    * @return the row of the current location

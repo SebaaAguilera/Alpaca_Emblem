@@ -92,7 +92,7 @@ public abstract class AbstractUnit implements IUnit {
   @Override
   public void giveItem(IUnit unit, IEquipableItem item) {
       if (this.getItems().contains(item) && unit.getItems().size() < unit.getMaxItems() &&
-              this.getLocation().distanceTo(unit.getLocation()) == 1) {
+              this.getLocation().distanceTo(unit.getLocation(),1) == 1) {
         if (this.getEquippedItem()==item) {
           this.unEquipItem();
         }
@@ -123,7 +123,7 @@ public abstract class AbstractUnit implements IUnit {
 
   @Override
   public void moveTo(final Location targetLocation) {
-    if (getLocation().distanceTo(targetLocation) <= getMovement()
+    if (getLocation().distanceTo(targetLocation,getMovement()) <= getMovement()
         && targetLocation.getUnit() == null) {
       getLocation().setUnit(null);
       setLocation(targetLocation);

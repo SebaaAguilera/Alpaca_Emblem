@@ -1,11 +1,9 @@
 package model.map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test set for the field component of the game model.
@@ -88,13 +86,13 @@ class FieldTest {
   @Test
   public void testDistances() {
     Location location00 = map.getCell(0, 0);
-    assertEquals(0, location00.distanceTo(location00));
-    assertEquals(1, location00.distanceTo(map.getCell(0, 1)));
-    assertEquals(1, location00.distanceTo(map.getCell(1, 0)));
-    assertEquals(2, location00.distanceTo(map.getCell(0, 2)));
-    assertEquals(2, location00.distanceTo(map.getCell(1, 1)));
-    assertEquals(3, location00.distanceTo(map.getCell(1, 2)));
-    assertEquals(4, location00.distanceTo(map.getCell(2, 2)));
+    assertEquals(0, location00.distanceTo(location00,0));
+    assertEquals(1, location00.distanceTo(map.getCell(0, 1),1));
+    assertEquals(1, location00.distanceTo(map.getCell(1, 0),1));
+    assertEquals(2, location00.distanceTo(map.getCell(0, 2),2));
+    assertEquals(2, location00.distanceTo(map.getCell(1, 1),2));
+    assertEquals(3, location00.distanceTo(map.getCell(1, 2),3));
+    assertEquals(4, location00.distanceTo(map.getCell(2, 2),4));
   }
 
   @Test
